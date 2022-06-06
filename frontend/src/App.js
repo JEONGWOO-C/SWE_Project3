@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Nav from './pages/Nav';
 import Home from './pages/Home';
 import Register from './pages/Register';
+import Login from './pages/Login';
 import MyShop from './pages/MyShop';
 import Wish from './pages/Wish';
 import Viewed from './pages/Viewed';
@@ -30,6 +31,7 @@ class App extends Component {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login/>} />
           <Route path='/myshop' element={<MyShop />} />
           <Route path='/wish' element={<Wish />} />
           <Route path='/viewed' element={<Viewed />} />
