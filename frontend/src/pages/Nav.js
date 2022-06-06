@@ -84,7 +84,7 @@ const Nav = ({ history }) => {
             </CardFieldset>
             <CardBody>
               <CardFieldset style={{ marginLeft: '20px' }}>
-                <CardLink to = '/register'>
+                <CardLink to = '/login'>
                   로그인 / 회원가입
                 </CardLink>
               </CardFieldset>

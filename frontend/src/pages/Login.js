@@ -77,7 +77,7 @@ const Login = ({ history }) => {
           </CardFieldset>
 
           <CardFieldset>
-            <CardLink to="/register">계정이 없으신가요?</CardLink>
+            <CardLink to="/register">회원가입</CardLink>
           </CardFieldset>
         </CardBody>
       </CardWrapper>

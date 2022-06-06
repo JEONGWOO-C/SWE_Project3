@@ -63,9 +63,9 @@ const Register = ({ history }) => {
           </CardFieldset>
 
           <CardFieldset>
-            <CardTitle>주소</CardTitle>
+            <CardTitle>나이</CardTitle>
             <CardInput
-              placeholder='시 구 동'
+              placeholder='숫자로만 입력 ex) 23'
               type='text'
             />
           </CardFieldset>
