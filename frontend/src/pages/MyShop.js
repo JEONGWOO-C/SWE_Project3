@@ -15,8 +15,7 @@ import styled from 'styled-components';
 import { BiUser, BiCog } from "react-icons/bi"
 import { Link } from 'react-router-dom';
 import logo from '../imgs/logo192.png'; // 예시 사진
-
-import {ProductWrapper, Product} from '../components/Product'
+import {ProductWrapper, Product, Title} from '../components/Product'
 
 const Body = styled.div`
   display: flex;
@@ -24,17 +23,9 @@ const Body = styled.div`
   justify-content: 'center';
   width: 100%;
 `;
-const Title = styled.div`
-  padding-top: 48px;
-  padding-bottom : 64px;
-  padding-left: 64px;
-  font-size: 40px;
-  font-weight: bold;
-`
 
 const MyShop = ({ history }) => {
   return (
-
     <Body style={{}}>
       <CardWrapper style={{ display: 'flex' }}>
         <div style={{
