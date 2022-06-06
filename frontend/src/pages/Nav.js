@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   CardWrapper,
   CardHeader,
@@ -14,6 +14,7 @@ import {
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useNavigate, withRouter } from 'react-router';
+import '../dropdown.css';
 
 const Body = styled.div`
   //position: fixed;
@@ -55,6 +56,35 @@ const UnSel = styled.div`
 const Nav = ({ history }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(window.location.pathname);
+  
+  //카테고리 드롭다운
+  const dropdownRef = useRef(null);
+  const useDetectOutsideClick = (el, initialState) => {
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+      const pageClickEvent = (e) => {
+        if (el.current !== null && !el.current.contains(e.target)) {
+          setIsActive(!isActive);
+        }
+      };
+  
+      if (isActive) {
+        window.addEventListener('click', pageClickEvent);
+      }
+  
+      return () => {
+        window.removeEventListener('click', pageClickEvent);
+      }
+  
+    }, [isActive, el]);
+
+    return [isActive, setIsActive];
+  }
+  
+  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
+  const onClick = () => setIsActive(!isActive);
+  
   return (
     <Body>
       <CardWrapper style={{ paddingTop: 0, paddingBottom: 0 }}>
@@ -94,7 +124,19 @@ const Nav = ({ history }) => {
         <TitleWrapper style={{
           paddingBottom: '20px'
         }}>
-          <CardBody>카테고리</CardBody>
+
+          <div className='menu-container'>
+            <button onClick={onClick} className='menu-trigger'>
+              <span><CardBody>카테고리</CardBody></span>
+            </button>
+            <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
+              <ul>
+                <li><a href='#'>여성의류</a></li>
+                <li><a href='#'>남성의류</a></li>
+                <li><a href='#'>여성잡화</a></li>
+              </ul>
+            </nav>
+          </div>
 
           <TitleWrapper style={{
             width: '700px'
@@ -130,8 +172,7 @@ const Nav = ({ history }) => {
               </CardLink>
             </CardBody>
         </TitleWrapper>
-      </CardWrapper>
-
+      </CardWrapper>       
     </Body>
   );
 };
