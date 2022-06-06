@@ -56,37 +56,35 @@ const UnSel = styled.div`
 const Nav = ({ history }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(window.location.pathname);
-
-  //카테고리 리스트
-  const [catList, setCatList] = useState([
-    '여성의류', '남성의류', '여성잡화', '남성잡화', '시계/쥬얼리', '디지털/가전', '스포츠/레저',
-    '가구/인테리어', '유아동/유아도서', '생활/가공식품', '게임/취미', '도서/티켓/음반',
-    '반려동물용품', '기타 중고물품'
-  ]);
   
   //카테고리 드롭다운
   const dropdownRef = useRef(null);
   const useDetectOutsideClick = (el, initialState) => {
     const [isActive, setIsActive] = useState(false);
+
     useEffect(() => {
       const pageClickEvent = (e) => {
         if (el.current !== null && !el.current.contains(e.target)) {
           setIsActive(!isActive);
         }
       };
+  
       if (isActive) {
         window.addEventListener('click', pageClickEvent);
       }
+  
       return () => {
         window.removeEventListener('click', pageClickEvent);
       }
+  
     }, [isActive, el]);
+
     return [isActive, setIsActive];
   }
   
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
-
+  
   return (
     <Body>
       <CardWrapper style={{ paddingTop: 0, paddingBottom: 0 }}>
@@ -94,7 +92,7 @@ const Nav = ({ history }) => {
           <TitleWrapper>
             <CardHeading
               style={{
-                color: '#033a7a',
+                color: '#1b5ac2',
                 paddingLeft: '20px',
                 paddingTop: '4px',
                 paddingRight: '20px'
@@ -133,20 +131,9 @@ const Nav = ({ history }) => {
             </button>
             <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
               <ul>
-                <li><a href='#'>{ catList[0] }</a></li>
-                <li><a href='#'>{ catList[1] }</a></li>
-                <li><a href='#'>{ catList[2] }</a></li>
-                <li><a href='#'>{ catList[3] }</a></li>
-                <li><a href='#'>{ catList[4] }</a></li>
-                <li><a href='#'>{ catList[5] }</a></li>
-                <li><a href='#'>{ catList[6] }</a></li>
-                <li><a href='#'>{ catList[7] }</a></li>
-                <li><a href='#'>{ catList[8] }</a></li>
-                <li><a href='#'>{ catList[9] }</a></li>
-                <li><a href='#'>{ catList[10] }</a></li>
-                <li><a href='#'>{ catList[11] }</a></li>
-                <li><a href='#'>{ catList[12] }</a></li>
-                <li><a href='#'>{ catList[13] }</a></li>
+                <li><a href='#'>여성의류</a></li>
+                <li><a href='#'>남성의류</a></li>
+                <li><a href='#'>여성잡화</a></li>
               </ul>
             </nav>
           </div>
