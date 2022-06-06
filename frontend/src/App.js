@@ -15,7 +15,7 @@ import Sell from './pages/Sell';
 import './App.css';
 
 const Body = styled.div`
-  width: 80%;
+  width: 1300px;
   margin-left: auto;
   margin-right: auto;
 `;

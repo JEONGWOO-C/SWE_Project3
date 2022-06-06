@@ -20,7 +20,7 @@ const Body = styled.div`
   width: 100%;
 `;
 
-const Home = ({ history }) => {
+const MyShop = ({ history }) => {
   return(
   
     <Body style={{}}>
@@ -31,4 +31,4 @@ const Home = ({ history }) => {
   )
 }
 
-export default Home;
+export default MyShop;
