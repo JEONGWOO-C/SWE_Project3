@@ -108,11 +108,13 @@ const Nav = ({ history }) => {
               <CardLink to = '/wish'>
                   찜목록
               </CardLink>
-            </CardBody><CardBody>
+            </CardBody>
+            <CardBody>
               <CardLink to = '/viewed'>
                   최근본상품
               </CardLink>
-            </CardBody><CardBody>
+            </CardBody>
+            <CardBody>
               <CardLink to = '/talk'>
                   OO톡
               </CardLink>

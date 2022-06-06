@@ -12,8 +12,6 @@ import {
   CardLink,
 } from '../components/Card';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 
 const Body = styled.div`
   display: flex;
