@@ -47,7 +47,7 @@ const Login = ({history}) => {
 
                 <CardBody>
                     <CardFieldset>
-                        <CardInput placeholder="이메일" type="text" onChange={e => setId(e.target.value)} />
+                        <CardInput placeholder="아이디" type="text" onChange={e => setId(e.target.value)} />
                     </CardFieldset>
 
                     <CardFieldset>
