@@ -15,6 +15,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useNavigate, withRouter } from 'react-router';
 import '../dropdown.css';
+import { Routes, Route, Switch } from 'react-router-dom';
+import Home from './Home';
+import Register from './Register';
+import Login from './Login';
+import MyShop from './MyShop';
+import Wish from './Wish';
+import Viewed from './Viewed';
+import Talk from './Talk';
+import FAQ from './FAQ';
+import Sell from './Sell';
 
 const Body = styled.div`
   //position: fixed;
@@ -27,7 +37,7 @@ const StyledLink = styled(Link)`
 
 const TitleWrapper = styled.div`
   display: flex;
-  flex-direction: horizontal;
+  //flex-direction: horizontal;
   align-items: center;
   justify-content: center;
 `;
@@ -87,7 +97,7 @@ const Nav = ({ history }) => {
   
   return (
     <Body>
-      <CardWrapper style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <CardWrapper style={{ paddingTop: 0, paddingBottom: 0, overflow: 'visible' }}>
         <CardHeader style={{ paddingTop: 12, paddingBottom: 12 }}>
           <TitleWrapper>
             <CardHeading
