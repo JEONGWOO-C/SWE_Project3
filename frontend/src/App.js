@@ -23,11 +23,8 @@ const Body = styled.div`
 class App extends Component {
   render() {
     return (
-      <div>
       <Body style>
         <Nav />
-      </Body>
-      <Body>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
@@ -40,7 +37,6 @@ class App extends Component {
           <Route path='/sell' element={<Sell />} />
         </Routes>
       </Body>
-      </div>
     );
   }
 }

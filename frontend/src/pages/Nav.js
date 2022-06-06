@@ -65,7 +65,8 @@ const Nav = ({ history }) => {
                 color: '#1b5ac2',
                 paddingLeft: '20px',
                 paddingTop: '4px',
-                paddingRight: '20px'
+                paddingRight: '20px',
+                fontSize: '36px'
               }}
               onClick={()=>{
                 navigate("/");
