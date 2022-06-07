@@ -9,7 +9,7 @@ import MyShop from './pages/MyShop';
 import Wish from './pages/Wish';
 import Viewed from './pages/Viewed';
 import Talk from './pages/Talk';
-import FAQ from './pages/FAQ';
+import CustCenter from './pages/CustCenter';
 import Sell from './pages/Sell';
 import MyPage from './pages/MyPage';
 import Post from './pages/Post';
@@ -35,7 +35,7 @@ class App extends Component {
           <Route path='/wish' element={<Wish />} />
           <Route path='/viewed' element={<Viewed />} />
           <Route path='/talk' element={<Talk />} />
-          <Route path='/faq' element={<FAQ />} />
+          <Route path='/custcenter' element={<CustCenter />} />
           <Route path='/sell' element={<Sell />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/post' element={<Post />} />

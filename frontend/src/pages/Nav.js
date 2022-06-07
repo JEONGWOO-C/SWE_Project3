@@ -283,7 +283,7 @@ const Nav = ({ history }) => {
             <CardBody
               style={{ cursor: "pointer" }}
               onClick={() => {
-                navigate("/FAQ");
+                navigate("/custcenter");
               }}
             >
               고객센터
