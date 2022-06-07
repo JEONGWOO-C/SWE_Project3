@@ -1,1 +1,2 @@
+DROP DATABASE if exists DB;
 CREATE DATABASE market_db default CHARACTER SET UTF8;
