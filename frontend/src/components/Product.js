@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router';
 
 export const ProductWrapper = styled.div`
   display: flex;
@@ -21,19 +21,23 @@ export const Title = styled.div`
   font-size: 40px;
   font-weight: bold;
 `
-export const Product = (logo, name, price) =>{
+export const Product = ({logo, name, price}) => {
+
+  const navigate = useNavigate();
+
   // 화면을 채울 정도의 개수보다 작을경우 데이터가 없을 수 있음
- if(name == '없음'){ // 데이터가 없으면
- return(
-   <div></div>
- )}
- return(
-   <ProducBody>
-         <div>
-           <img src={logo} width={128} height={128} alt="logo" />
-           </div>
-         <div>{name}</div>
-         <div>{price}</div>
-   </ProducBody>
- )
+  if (name === '없음') { // 데이터가 없으면
+    return (
+      <div></div>
+    )
+  }
+  return (
+    <ProducBody onClick={()=>{navigate('/post')}}>
+      <div>
+        <img src={logo} width={128} height={128} alt="logo" />
+      </div>
+      <div>{name}</div>
+      <div>{price}</div>
+    </ProducBody>
+  )
 }
