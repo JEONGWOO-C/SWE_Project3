@@ -12,8 +12,28 @@ import {
   CardSelect,
   CardSelectOption,
 } from '../components/Card';
+import Swal from 'sweetalert2';
+import { CheckID } from '../components/Auth';
+const id_check = async (id) => {
+  const result = await CheckID(id);
+  console.log(result);
+  if (result == true) {
+    Swal.fire(
+      '아이디 사용 가능 합니다.',
+      'success',
+    );
+  } else {
+    Swal.fire(
+      '아이디가 이미 사용 중 입니다.',
+      'error',
+    );
+  }
+
+  return result;
+};
 
 const Register = ({ history }) => {
+  const [id, setID] = useState('');
   return(
     <div>
       <CardWrapper>
@@ -27,15 +47,16 @@ const Register = ({ history }) => {
             <div style={{display: 'flex'}}>
             <CardInput
               placeholder='5~15 영문 및 숫자를 포함'
-              type='text'>
+              type='text'
+              onChange={(e) => setID(e.target.value)}>
             </CardInput>
             <CardButton style={{width: '350px'}}
               type="button"
-              // onClick={async (e) => {
-              //   console.log("id: ",id)
-              //   if (await id_check(id)) {
-              //   }
-              // }}
+              onClick={async (e) => {
+                console.log("id: ",id)
+                if (await id_check(id)) {
+                }
+              }}
             >아이디 중복확인
             </CardButton>
             </div>
