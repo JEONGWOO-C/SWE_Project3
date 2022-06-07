@@ -276,14 +276,13 @@ const Nav = ({ history }) => {
               고객센터
             </CardBody>
           </TitleWrapper>
-          <CardBody
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/sell");
-            }}
-          >
-            판매하기
-          </CardBody>
+          <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => { info?
+                <div>{navigate("/sell")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
+              판매하기
+            </CardBody>
         </TitleWrapper>
       </CardWrapper>
     </Body>
