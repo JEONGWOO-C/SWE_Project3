@@ -108,6 +108,23 @@ const Nav = ({ history }) => {
     "기타 중고물품",
   ]);
 
+  function list() {
+    var array = [];
+    for (let i = 0; i < 14; i++) {
+      array.push(
+        <li>
+          <div onClick={()=>{
+            navigate('/category', {state: {category: catList[i]}});
+            onClick();
+            }}>
+              {catList[i]}
+            </div>
+        </li>
+      )
+    }
+    return array;
+  }
+  
   return (
     <Body>
       <CardWrapper
@@ -190,48 +207,7 @@ const Nav = ({ history }) => {
             >
               {isActive? (
               <ul>
-                <li>
-                  <a href="#">{catList[0]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[1]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[2]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[3]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[4]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[5]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[6]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[7]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[8]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[9]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[10]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[11]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[12]}</a>
-                </li>
-                <li>
-                  <a href="#">{catList[13]}</a>
-                </li>
+                {list()}
               </ul>
               ): null}
             </nav>
