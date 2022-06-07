@@ -10,12 +10,17 @@ import {
   CardSelect,
   CardSelectOption,
   CardLink,
-} from "../components/Card";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useNavigate, withRouter } from "react-router";
-import "../dropdown.css";
-import { getInfoFromCookie, logout } from "../components/Auth";
+
+} from '../components/Card';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useNavigate, withRouter } from 'react-router';
+import '../dropdown.css';
+import { getInfoFromCookie, logout } from '../components/Auth';
+import Swal from 'sweetalert2';
+
+
+
 
 const Body = styled.div`
   //position: fixed;
@@ -230,41 +235,47 @@ const Nav = ({ history }) => {
             </nav>
           </div>
 
-          <TitleWrapper
-            style={{
-              width: "700px",
-            }}
-          >
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/myshop");
-              }}
-            >
+          <TitleWrapper style={{
+            width: '700px'
+          }}>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => { info?
+                <div>{navigate("/myshop")}</div>:
+                <div>{Swal.fire(
+                  '로그인이 필요합니다.',
+                  '로그인 창으로 이동합니다.'
+                )}{navigate("/login")}</div> 
+               }}>
               내상점
             </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/wish");
-              }}
-            >
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => { info?
+                <div>{navigate("/wish")}</div>:
+                <div>{Swal.fire(
+                  '로그인이 필요합니다.',
+                  '로그인 창으로 이동합니다.'
+                )}{navigate("/login")}</div> 
+               }}>
               찜목록
             </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/viewed");
-              }}
-            >
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => { info?
+                <div>{navigate("/viewed")}</div>:
+                <div>{Swal.fire(
+                  '로그인이 필요합니다.',
+                  '로그인 창으로 이동합니다.'
+                )}{navigate("/login")}</div> 
+               }}>
               최근본상품
             </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/talk");
-              }}
-            >
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => { info?
+                <div>{navigate("/talk")}</div>:
+                <div>{Swal.fire(
+                  '로그인이 필요합니다.',
+                  '로그인 창으로 이동합니다.'
+                )}{navigate("/login")}</div> 
+               }}>
               OO톡
             </CardBody>
             <CardBody
@@ -279,7 +290,10 @@ const Nav = ({ history }) => {
           <CardBody style={{ cursor: 'pointer' }}
               onClick={() => { info?
                 <div>{navigate("/sell")}</div>:
-                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+                <div>{Swal.fire(
+                  '로그인이 필요합니다.',
+                  '로그인 창으로 이동합니다.'
+                )}{navigate("/login")}</div> 
                }}>
               판매하기
             </CardBody>
