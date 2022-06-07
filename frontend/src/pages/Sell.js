@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from 'react';
+=======
+import React, { useState, useEffect, useRef } from "react";
+>>>>>>> Stashed changes
 import {
   CardWrapper,
   CardHeader,
@@ -56,7 +60,36 @@ export const StateButton = styled.button`
 `;
 
 const Sell = ({ history }) => {
+<<<<<<< Updated upstream
   return(
+=======
+  const [img, setImg] = useState("");
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [imageUrl, setImageUrl] = useState(null);
+  const imgRef = useRef();
+
+  const handleClick = () => {
+    imgRef.current.click()
+  }
+
+  const onChangeImage = () => {
+    const reader = new FileReader();
+    const file = imgRef.current.files[0];
+    console.log(file);
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+      console.log("이미지주소", reader.result);
+    };
+  };
+
+  return (
+>>>>>>> Stashed changes
     <Body>
       <CardWrapper>
         <Title>
@@ -65,6 +98,7 @@ const Sell = ({ history }) => {
         
         <SubTitle>
           상품사진
+<<<<<<< Updated upstream
           <div style={{ marginTop: '-27px'}}>
           <ImageUpload style={{ marginLeft: '200px' }}>
             사진 업로드
@@ -81,6 +115,17 @@ const Sell = ({ history }) => {
           <ImageUpload>
             사진 업로드
           </ImageUpload>
+=======
+          <div style={{ marginTop: "-27px" , marginLeft: '200px' }}>
+            <img src={ imageUrl ? imageUrl : '../imgs/image.PNG' } onClick={ handleClick }/>
+            <input 
+              type='file' 
+              accept='image/jpg, image/jpeg, image/png, image/svg'
+              ref={ imgRef }
+              onChange={ onChangeImage }
+              style={{ display: 'none' }}
+            />
+>>>>>>> Stashed changes
           </div>
         </SubTitle>
 
