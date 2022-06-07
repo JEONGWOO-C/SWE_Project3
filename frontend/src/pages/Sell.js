@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   CardWrapper,
   CardHeader,
@@ -88,6 +88,25 @@ const Sell = ({ history }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
 
+  const [imageUrl, setImageUrl] = useState(null);
+  const imgRef = useRef();
+
+  const handleClick = () => {
+    imgRef.current.click()
+  }
+
+  const onChangeImage = () => {
+    const reader = new FileReader();
+    const file = imgRef.current.files[0];
+    console.log(file);
+
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+      console.log("이미지주소", reader.result);
+    };
+  };
+  
   return (
     <Body>
       <CardWrapper>
@@ -95,13 +114,15 @@ const Sell = ({ history }) => {
 
         <SubTitle>
           상품사진
-          <div style={{ marginTop: "-27px" }}>
-            <ImageUpload
-              style={{ marginLeft: "200px" }}
-              onChange={(e) => setImg(" ")}
-            >
-              사진 업로드
-            </ImageUpload>
+          <div style={{ marginTop: "-27px" , marginLeft: '200px' }}>
+            <img src={ imageUrl ? imageUrl : '../imgs/image.PNG' } onClick={ handleClick }/>
+            <input 
+              type='file' 
+              accept='image/jpg, image/jpeg, image/png, image/svg'
+              ref={ imgRef }
+              onChange={ onChangeImage }
+              style={{ display: 'none' }}
+            />
           </div>
         </SubTitle>
 

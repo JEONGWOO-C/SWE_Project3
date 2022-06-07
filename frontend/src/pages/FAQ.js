@@ -20,12 +20,21 @@ const Body = styled.div`
   width: 100%;
 `;
 
+export const Title = styled.div`
+  padding-top: 48px;
+  padding-bottom : 64px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+`;
+
 const FAQ = ({ history }) => {
   return(
-  
-    <Body style={{}}>
+    <Body>
       <CardWrapper>
-        고객센터
+        <Title>
+          고객센터
+        </Title>
       </CardWrapper>
     </Body>
   )
