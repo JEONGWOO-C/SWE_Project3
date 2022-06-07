@@ -24,18 +24,21 @@ const Register = ({ history }) => {
         <CardBody>
           <CardFieldset>
             <CardTitle>아이디</CardTitle>
+            <div style={{display: 'flex'}}>
             <CardInput
               placeholder='5~15 영문 및 숫자를 포함'
               type='text'>
             </CardInput>
-            <CardButton
+            <CardButton style={{width: '350px'}}
               type="button"
-              onClick={async (e) => {
-                console.log("id: ",id)
-                if (await id_check(id)) {
-                }
-              }}
-            >아이디확인</CardButton>
+              // onClick={async (e) => {
+              //   console.log("id: ",id)
+              //   if (await id_check(id)) {
+              //   }
+              // }}
+            >아이디 중복확인
+            </CardButton>
+            </div>
           </CardFieldset>
 
           <CardFieldset>
@@ -80,7 +83,7 @@ const Register = ({ history }) => {
 
           <CardFieldset>
             <CardButton
-              type="button"
+              type="submit"
             >
               회원가입
             </CardButton>
