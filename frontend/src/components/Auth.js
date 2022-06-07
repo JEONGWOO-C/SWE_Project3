@@ -40,3 +40,18 @@ export const handleLogin = async (id, pw) => {
     return false;
   }
 };
+
+export const CheckID = async (id) => {
+  console.log("CheckID: ",id)
+  const res = await axios.post('http://localhost:4000/idCheck', {
+    id: id
+  });
+  console.log("res:",res);
+  if (res.data.msg==='EIXST') {
+    console.log('아이디 이미 존재');
+    return false;
+  } else if(res.data.msg==='OK'){
+    console.log('사용 가능');
+    return true;
+  }
+};
