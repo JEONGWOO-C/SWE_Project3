@@ -188,6 +188,7 @@ const Nav = ({ history }) => {
               ref={dropdownRef}
               className={`menu ${isActive ? "active" : "inactive"}`}
             >
+              {isActive? (
               <ul>
                 <li>
                   <a href="#">{catList[0]}</a>
@@ -232,6 +233,7 @@ const Nav = ({ history }) => {
                   <a href="#">{catList[13]}</a>
                 </li>
               </ul>
+              ): null}
             </nav>
           </div>
 

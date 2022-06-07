@@ -43,15 +43,15 @@ const Home = ({ history }) => {
       <CardWrapper>
         <Title>금일 인기 매물</Title>
         <ProductWrapper>
-          {popularPosts.map((item) => {
-            return Product(logo, item.title, item.price + "원");
-          })}
+          {popularPosts.map((item) => 
+             <Product key={item.title} logo={logo} name={item.title} price={item.price + "원"}/>
+          )}
         </ProductWrapper>
         <Title>최근 등록된 매물</Title>
         <ProductWrapper>
-          {recentPosts.map((item) => {
-            return Product(logo, item.title, item.price + "원");
-          })}
+          {recentPosts.map((item) => 
+             <Product key={item.title} logo={logo} name={item.title} price={item.price + "원"}/>
+          )}
         </ProductWrapper>
       </CardWrapper>
     </Body>

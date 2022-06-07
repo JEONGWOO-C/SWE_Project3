@@ -51,7 +51,7 @@ const MyShop = ({ history }) => {
 
             {/* 마이페이지로 이동하는 버튼 */}
             <CardHeading >
-              <BiCog style={{ width: '32px', height: '32px' }} onClick={(e)=>{ navigate('/mypage');}}/>
+              <BiCog style={{ width: '32px', height: '32px', cursor: "pointer" }} onClick={(e)=>{ navigate('/mypage');}}/>
             </CardHeading>
             
           </div>
@@ -83,14 +83,14 @@ const MyShop = ({ history }) => {
             판매상품
           </Title>
           <ProductWrapper>
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
+          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'}/>
+          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'}/>
+          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'}/>
         </ProductWrapper>
         <ProductWrapper>
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
+        <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'}/>
+        <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'}/>
+        <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'}/>
         </ProductWrapper>
         </CardBody>
       </CardWrapper>
