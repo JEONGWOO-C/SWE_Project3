@@ -32,12 +32,12 @@
   border-bottom: 1px solid #dddddd;
 }
 
-.menu li a {
-  text-decoration: none;
+.menu li div {
   font-size: 14px;
   color: #333333;
   padding: 10px 15px;
   display: block;
+  cursor: pointer;
 }
 
 .menu-trigger {

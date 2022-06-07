@@ -13,6 +13,7 @@ import CustCenter from './pages/CustCenter';
 import Sell from './pages/Sell';
 import MyPage from './pages/MyPage';
 import Post from './pages/Post';
+import Category from './pages/Category';
 
 import './App.css';
 
@@ -39,6 +40,8 @@ class App extends Component {
           <Route path='/sell' element={<Sell />} />
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/post' element={<Post />} />
+          <Route path='/category' element={<Category />} />
+
         </Routes>
       </Body>
     );
