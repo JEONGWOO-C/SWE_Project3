@@ -13,9 +13,9 @@ import {
 } from '../components/Card';
 import styled from 'styled-components';
 import { BiUser, BiCog } from "react-icons/bi"
-import { Link } from 'react-router-dom';
 import logo from '../imgs/logo192.png'; // 예시 사진
-import {ProductWrapper, Product, Title} from '../components/Product'
+import { ProductWrapper, Product, Title } from '../components/Product'
+import { useNavigate } from 'react-router';
 
 const Body = styled.div`
   display: flex;
@@ -25,8 +25,9 @@ const Body = styled.div`
 `;
 
 const MyShop = ({ history }) => {
+  const navigate = useNavigate();
   return (
-    <Body style={{}}>
+    <Body >
       <CardWrapper style={{ display: 'flex' }}>
         <div style={{
           width: '30%',
@@ -44,17 +45,14 @@ const MyShop = ({ history }) => {
           }}>
 
             {/* 사용자 이름 */}
-            <CardHeading style={{ width: '33%' }}>
+            <CardHeading style={{ width: '33%' }} >
               김광운
             </CardHeading>
 
             {/* 마이페이지로 이동하는 버튼 */}
-            <CardHeading>
-              <Link to='/' style={{ textDecoration: 'none', color: "black" }}>
-                <BiCog style={{ width: '32px', height: '32px' }} />
-              </Link>
+            <CardHeading >
+              <BiCog style={{ width: '32px', height: '32px' }} onClick={(e) => { navigate('/mypage'); }} />
             </CardHeading>
-
           </div>
           {/* 사용자 자기소개 */}
           <div style={{
@@ -84,15 +82,15 @@ const MyShop = ({ history }) => {
             판매상품
           </Title>
           <ProductWrapper>
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-        </ProductWrapper>
-        <ProductWrapper>
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-          {Product(logo, '컨테이너', '1,000,000원')}
-        </ProductWrapper>
+            {Product(logo, '컨테이너', '1,000,000원')}
+            {Product(logo, '컨테이너', '1,000,000원')}
+            {Product(logo, '컨테이너', '1,000,000원')}
+          </ProductWrapper>
+          <ProductWrapper>
+            {Product(logo, '컨테이너', '1,000,000원')}
+            {Product(logo, '컨테이너', '1,000,000원')}
+            {Product(logo, '컨테이너', '1,000,000원')}
+          </ProductWrapper>
         </CardBody>
       </CardWrapper>
     </Body>
