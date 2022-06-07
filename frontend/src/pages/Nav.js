@@ -189,19 +189,31 @@ const Nav = ({ history }) => {
             width: '700px'
           }}>
             <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => {navigate("/myshop"); }}>
+              onClick={() => { info?
+                <div>{navigate("/myshop")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
               내상점
             </CardBody>
             <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => {navigate("/wish"); }}>
+              onClick={() => { info?
+                <div>{navigate("/wish")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
               찜목록
             </CardBody>
             <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => {navigate("/viewed"); }}>
+              onClick={() => { info?
+                <div>{navigate("/viewed")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
               최근본상품
             </CardBody>
             <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => {navigate("/talk"); }}>
+              onClick={() => { info?
+                <div>{navigate("/talk")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
               OO톡
             </CardBody>
             <CardBody style={{ cursor: 'pointer' }}
@@ -211,7 +223,10 @@ const Nav = ({ history }) => {
 
           </TitleWrapper>
           <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => {navigate("/sell"); }}>
+              onClick={() => { info?
+                <div>{navigate("/sell")}</div>:
+                <div>{alert("로그인이 필요합니다")}{navigate("/login")}</div> 
+               }}>
               판매하기
             </CardBody>
         </TitleWrapper>
