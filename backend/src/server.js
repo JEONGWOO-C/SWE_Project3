@@ -1,7 +1,7 @@
 import express from "express";
 import { init } from "./config/db.js";
 import login from "./api/User/login.js";
-import register from "./api/User/register.js";
+import register, { id_check } from "./api/User/register.js";
 //import {kakao_register, naver_register, google_register} from './api/User/register.js';
 import popularPost from "./api/Post/popularPosts.js";
 import recentPosts from "./api/Post/recentPosts.js";
@@ -29,6 +29,7 @@ login(app, connection);
 register(app, connection);
 popularPost(app, connection);
 recentPosts(app, connection);
+id_check(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
