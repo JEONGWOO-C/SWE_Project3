@@ -20,15 +20,15 @@ const Body = styled.div`
   width: 100%;
 `;
 
-const Talk = ({ history }) => {
+const MyPage = ({ history }) => {
   return(
   
     <Body style={{}}>
       <CardWrapper>
-        OO톡
+        마이페이지
       </CardWrapper>
     </Body>
   )
 }
 
-export default Talk;
+export default MyPage;
