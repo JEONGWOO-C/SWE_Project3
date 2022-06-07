@@ -28,6 +28,14 @@ const Register = ({ history }) => {
               placeholder='5~15 영문 및 숫자를 포함'
               type='text'>
             </CardInput>
+            <CardButton
+              type="button"
+              onClick={async (e) => {
+                console.log("id: ",id)
+                if (await id_check(id)) {
+                }
+              }}
+            >아이디확인</CardButton>
           </CardFieldset>
 
           <CardFieldset>
