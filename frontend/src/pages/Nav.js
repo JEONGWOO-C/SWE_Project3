@@ -15,16 +15,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useNavigate, withRouter } from 'react-router';
 import '../dropdown.css';
-import { Routes, Route, Switch } from 'react-router-dom';
-import Home from './Home';
-import Register from './Register';
-import Login from './Login';
-import MyShop from './MyShop';
-import Wish from './Wish';
-import Viewed from './Viewed';
-import Talk from './Talk';
-import FAQ from './FAQ';
-import Sell from './Sell';
+import { getInfoFromCookie, logout } from '../components/Auth';
+
 
 const Body = styled.div`
   //position: fixed;
@@ -64,9 +56,10 @@ const UnSel = styled.div`
 
 //홈페이지 로고, 통계, 마이페이지, 로그인
 const Nav = ({ history }) => {
+  const info = getInfoFromCookie();
   const navigate = useNavigate();
   const [page, setPage] = useState(window.location.pathname);
-  
+
   //카테고리 드롭다운
   const dropdownRef = useRef(null);
   const useDetectOutsideClick = (el, initialState) => {
@@ -78,20 +71,20 @@ const Nav = ({ history }) => {
           setIsActive(!isActive);
         }
       };
-  
+
       if (isActive) {
         window.addEventListener('click', pageClickEvent);
       }
-  
+
       return () => {
         window.removeEventListener('click', pageClickEvent);
       }
-  
+
     }, [isActive, el]);
 
     return [isActive, setIsActive];
   }
-  
+
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
   const onClick = () => setIsActive(!isActive);
 
@@ -100,7 +93,7 @@ const Nav = ({ history }) => {
     '스포츠/레저', '가구/인테리어', '유아동/유아도서', '생활/가공식품', '게임/취미',
     '도서/티켓/음반', '반려동물용품', '기타 중고물품'
   ]);
-  
+
   return (
     <Body>
       <CardWrapper style={{ paddingTop: 0, paddingBottom: 0, overflow: 'visible' }}>
@@ -114,7 +107,7 @@ const Nav = ({ history }) => {
                 paddingRight: '20px',
                 fontSize: '36px'
               }}
-              onClick={()=>{
+              onClick={() => {
                 navigate("/");
               }}
             >
@@ -129,13 +122,39 @@ const Nav = ({ history }) => {
                 type="text"
               />
             </CardFieldset>
-            <CardBody>
-              <CardFieldset style={{ marginLeft: '20px' }}>
-                <CardLink to = '/login'>
+            {info ? (
+              <TitleWrapper>
+                <CardBody
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
+                  로그아웃
+                </CardBody>
+                <CardBody
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate("/mypage");
+                  }}
+                >
+                  마이페이지
+                </CardBody>
+              </TitleWrapper>
+            ) :
+              <TitleWrapper>
+                <CardBody
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    logout();
+                    navigate("/login");
+                  }}
+                >
                   로그인 / 회원가입
-                </CardLink>
-              </CardFieldset>
-            </CardBody>
+                </CardBody>
+              </TitleWrapper>
+            }
           </TitleWrapper>
         </CardHeader>
         <TitleWrapper style={{
@@ -148,20 +167,20 @@ const Nav = ({ history }) => {
             </button>
             <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
               <ul>
-                <li><a href='#'>{ catList[0] }</a></li>
-                <li><a href='#'>{ catList[1] }</a></li>
-                <li><a href='#'>{ catList[2] }</a></li>
-                <li><a href='#'>{ catList[3] }</a></li>
-                <li><a href='#'>{ catList[4] }</a></li>
-                <li><a href='#'>{ catList[5] }</a></li>
-                <li><a href='#'>{ catList[6] }</a></li>
-                <li><a href='#'>{ catList[7] }</a></li>
-                <li><a href='#'>{ catList[8] }</a></li>
-                <li><a href='#'>{ catList[9] }</a></li>
-                <li><a href='#'>{ catList[10] }</a></li>
-                <li><a href='#'>{ catList[11] }</a></li>
-                <li><a href='#'>{ catList[12] }</a></li>
-                <li><a href='#'>{ catList[13] }</a></li>
+                <li><a href='#'>{catList[0]}</a></li>
+                <li><a href='#'>{catList[1]}</a></li>
+                <li><a href='#'>{catList[2]}</a></li>
+                <li><a href='#'>{catList[3]}</a></li>
+                <li><a href='#'>{catList[4]}</a></li>
+                <li><a href='#'>{catList[5]}</a></li>
+                <li><a href='#'>{catList[6]}</a></li>
+                <li><a href='#'>{catList[7]}</a></li>
+                <li><a href='#'>{catList[8]}</a></li>
+                <li><a href='#'>{catList[9]}</a></li>
+                <li><a href='#'>{catList[10]}</a></li>
+                <li><a href='#'>{catList[11]}</a></li>
+                <li><a href='#'>{catList[12]}</a></li>
+                <li><a href='#'>{catList[13]}</a></li>
               </ul>
             </nav>
           </div>
@@ -169,40 +188,34 @@ const Nav = ({ history }) => {
           <TitleWrapper style={{
             width: '700px'
           }}>
-            <CardBody>
-              <CardLink to = '/myshop'>
-                  내상점
-              </CardLink>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/myshop"); }}>
+              내상점
             </CardBody>
-            <CardBody>
-              <CardLink to = '/wish'>
-                  찜목록
-              </CardLink>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/wish"); }}>
+              찜목록
             </CardBody>
-            <CardBody>
-              <CardLink to = '/viewed'>
-                  최근본상품
-              </CardLink>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/viewed"); }}>
+              최근본상품
             </CardBody>
-            <CardBody>
-              <CardLink to = '/talk'>
-                  OO톡
-              </CardLink>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/talk"); }}>
+              OO톡
             </CardBody>
-            <CardBody>
-              <CardLink to = '/faq'>
-                  고객센터
-              </CardLink>
+            <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/FAQ"); }}>
+              고객센터
             </CardBody>
-            
+
           </TitleWrapper>
-          <CardBody>
-              <CardLink to = '/sell'>
-                  판매하기
-              </CardLink>
+          <CardBody style={{ cursor: 'pointer' }}
+              onClick={() => {navigate("/sell"); }}>
+              판매하기
             </CardBody>
         </TitleWrapper>
-      </CardWrapper>       
+      </CardWrapper>
     </Body>
   );
 };
