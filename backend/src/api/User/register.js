@@ -2,12 +2,12 @@ export const kakao_register = (app, connection) => {
   const apiKey = "c7a9b9859afe2c34985625025e4b14a0";
   const redirect_uri = "http://localhost:3000/register";
   const hostUrl = "https://kauth.kakao.com";
-  const subUrl =
-    "/oauth/authorize?client_id=${" +
-    apiKey +
-    "}&redirect_uri=${" +
-    redirect_uri +
-    "}&response_type=code";
+  const subUrl = 
+    "/oauth/authorize?client_id=${" 
+    + apiKey 
+    + "}&redirect_uri=${" 
+    + redirect_uri 
+    + "}&response_type=code";
 };
 
 export const id_check = (app, connection) => {

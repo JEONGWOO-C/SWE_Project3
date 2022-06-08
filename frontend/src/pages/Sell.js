@@ -70,12 +70,17 @@ const upload = async (img, title, category, price, description) => {
       "\ndescription : " +
       description
   );
-  const res = await axios.post("http://localhost:4000/register", {
-    img: img,
-    title: title,
-    category: category,
-    price: price,
-    description: description,
+  var uploadData = new FormData()
+  uploadData.append("title",title)
+  uploadData.append("category",category)
+  uploadData.append("price",price)
+  uploadData.append("description",description)
+  uploadData.append("seller_id",'test')
+  uploadData.append("img_file",img)
+  const res = await axios.post("http://localhost:4000/sell_write", uploadData, {
+    headers:{
+      'Content-Type': 'multipart/form-data'
+    }
   });
 
   return res.data;
@@ -105,6 +110,8 @@ const Sell = ({ history }) => {
       setImageUrl(reader.result);
       console.log("이미지주소", reader.result);
     };
+
+    setImg(file);
   };
   
   return (
