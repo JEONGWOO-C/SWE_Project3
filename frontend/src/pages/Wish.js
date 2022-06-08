@@ -13,7 +13,7 @@ import {
 } from "../components/Card";
 import styled from "styled-components";
 import logo from "../imgs/logo192.png"; // 예시 사진
-import { ProductWrapper, Product, Title } from "../components/Product";
+import { ProductWrapper, Product, Title, PrintProducts} from "../components/Product";
 import { getInfoFromCookie } from "../components/Auth";
 import axios from "axios";
 
@@ -36,21 +36,12 @@ const Wish = ({ history }) => {
       .then(({ data }) => setWishList(data));
   }, []);
   console.log(wishList);
-
+  
   return (
     <Body style={{}}>
       <CardWrapper>
         <Title>찜목록</Title>
-        <ProductWrapper>
-          {wishList.map((post) => (
-            <Product
-              key={post.title}
-              logo={logo}
-              name={post.title}
-              price={post.price}
-            />
-          ))}
-        </ProductWrapper>
+          {PrintProducts(wishList, wishList.length, 5, logo)}
         <ProductWrapper>
           <Product
             key={"컨테이너"}
