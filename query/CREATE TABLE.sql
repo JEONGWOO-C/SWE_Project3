@@ -9,7 +9,7 @@ CREATE TABLE users(
     age int not null,
     id varchar(32) not null primary key,
     pw varchar(16) not null,
-    info varchar(512),
+    info varchar(512) default '',
     score int default 5 -- default 5 range 0 ~ 10
 );
     
