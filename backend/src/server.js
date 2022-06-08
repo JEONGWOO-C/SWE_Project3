@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { init } from "./config/db.js";
 import login from "./api/User/login.js";
 import register, { id_check } from "./api/User/register.js";
@@ -7,8 +8,8 @@ import popularPost from "./api/Post/popularPosts.js";
 import recentPosts from "./api/Post/recentPosts.js";
 import myShopInfo from "./api/User/myShopInfo.js";
 import userProducts from "./api/User/userProducts.js";
-import cors from "cors";
 import uploadPost from "./api/Post/uploadPost.js";
+import wishlist from "./api/User/wishlist.js";
 
 const connection = init();
 const app = express();
@@ -36,6 +37,7 @@ id_check(app, connection);
 myShopInfo(app, connection);
 userProducts(app, connection);
 uploadPost(app, connection);
+wishlist(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
