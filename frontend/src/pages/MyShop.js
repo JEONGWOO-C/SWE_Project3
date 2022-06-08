@@ -47,7 +47,41 @@ const MyShop = ({ history }) => {
       })
       .then(({ data }) => setUserProducts(data));
   }, []);
-  console.log(userProducts);
+  console.log('userProudcts:' + userProducts);
+
+  function printProduct(start, num) {
+    let array = [];
+    for (let i = start; i < start + num; i++) {
+      array.push(
+        <Product
+          key={userProducts[i].title}
+          logo={logo}
+          name={userProducts[i].title}
+          price={userProducts[i].price}
+        />
+      )
+    }
+    return array;
+  }
+  function printProducts() {
+    let array = [];
+    let i = 0;
+    for (; i < userProducts.length / 3 -1; i++) {
+      array.push(
+        <ProductWrapper>
+          {printProduct(3*i, 3)}
+        </ProductWrapper>
+      )
+    }
+    if (userProducts.length % 3) {
+      array.push(
+        <ProductWrapper>
+          {printProduct(i * 3, userProducts.length % 3)}
+        </ProductWrapper>
+      )
+    }
+    return array;
+  }
 
   return (
     <Body>
@@ -112,36 +146,8 @@ const MyShop = ({ history }) => {
         </div>
         <CardBody>
           <Title>판매상품</Title>
-          {/* <ProductWrapper>
-            {userProducts.map((post) => (
-              <Product
-                key={post.title}
-                logo={logo}
-                name={post.title}
-                price={post.price + "원"}
-              />
-            ))}
-          </ProductWrapper> */}
-          <ProductWrapper>
-            <Product
-              key={"컨테이너"}
-              logo={logo}
-              name={"컨테이너"}
-              price={"1,000,000원"}
-            />
-            <Product
-              key={"없음"}
-              logo={logo}
-              name={"없음"}
-              price={"1,000,000원"}
-            />
-            <Product
-              key={"없음"}
-              logo={logo}
-              name={"없음"}
-              price={"1,000,000원"}
-            />
-          </ProductWrapper>
+          {printProducts(0)} 
+          
         </CardBody>
       </CardWrapper>
     </Body>
