@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -8,36 +9,36 @@ import {
   CardInput,
   CardButton,
   CardLink,
-} from '../components/Card';
-import Swal from 'sweetalert2';
-import { handleLogin } from '../components/Auth';
+} from "../components/Card";
+import Swal from "sweetalert2";
+import { handleLogin } from "../components/Auth";
 
 const login = async (id, pw) => {
   const result = await handleLogin(id, pw);
   console.log(result);
   if (result === true) {
-    Swal.fire(
-      '로그인이 성공하였습니다.',
-      'success',
-    ).then((result) => {
-      if (result.isConfirmed) {
-        window.location.reload();
+    Swal.fire("로그인이 성공하였습니다.", "환영합니다.", "success").then(
+      (result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
       }
-    });
+    );
   } else {
     Swal.fire(
-      '아이디 또는 비밀번호가 틀립니다.',
-      '회원가입 또는 계정찾기를 진행해주세요.',
-      'error',
+      "아이디 또는 비밀번호가 틀립니다.",
+      "회원가입 또는 계정찾기를 진행해주세요.",
+      "error"
     );
   }
 
   return result;
 };
 
-const Login = ({ history }) => {
-  const [id, setID] = useState('');
-  const [pw, setPassword] = useState('');
+const Login = ({}) => {
+  const [id, setID] = useState("");
+  const [pw, setPassword] = useState("");
+  let navigate = useNavigate();
 
   return (
     <div>
@@ -68,7 +69,7 @@ const Login = ({ history }) => {
               type="button"
               onClick={async (e) => {
                 if (await login(id, pw)) {
-                  window.location.href = '/';
+                  navigate("/");
                 }
               }}
             >
