@@ -55,3 +55,11 @@ VALUES
 (11, 1, 'null'),
 (12, 1, 'null'),
 (13, 1, 'null');
+
+INSERT favorite(id, postnum)
+VALUES
+('test2', 13),
+('test2', 10),
+('test2', 5),
+('test2', 4),
+('test2', 1);

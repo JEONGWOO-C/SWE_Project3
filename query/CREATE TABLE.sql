@@ -16,7 +16,7 @@ CREATE TABLE users(
 #찜 table
 DROP TABLE if exists favorite;
 CREATE TABLE favorite(
-    id varchar(32) not null primary key,
+    id varchar(32) not null,
     postnum int not null
 );
 

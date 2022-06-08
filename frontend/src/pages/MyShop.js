@@ -14,7 +14,7 @@ import {
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
 import logo from "../imgs/logo192.png"; // 예시 사진
-import { getInfoFromCookie, logout } from "../components/Auth";
+import { getInfoFromCookie } from "../components/Auth";
 import { ProductWrapper, Product, Title } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
