@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
 import logo from "../imgs/logo192.png"; // 예시 사진
 import { getInfoFromCookie } from "../components/Auth";
-import { ProductWrapper, Product, Title } from "../components/Product";
+import { ProductWrapper, Product, Title, PrintProducts } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -48,40 +48,6 @@ const MyShop = ({ history }) => {
       .then(({ data }) => setUserProducts(data));
   }, []);
   console.log('userProudcts:' + userProducts);
-
-  function printProduct(start, num) {
-    let array = [];
-    for (let i = start; i < start + num; i++) {
-      array.push(
-        <Product
-          key={userProducts[i].title}
-          logo={logo}
-          name={userProducts[i].title}
-          price={userProducts[i].price}
-        />
-      )
-    }
-    return array;
-  }
-  function printProducts() {
-    let array = [];
-    let i = 0;
-    for (; i < userProducts.length / 3 -1; i++) {
-      array.push(
-        <ProductWrapper>
-          {printProduct(3*i, 3)}
-        </ProductWrapper>
-      )
-    }
-    if (userProducts.length % 3) {
-      array.push(
-        <ProductWrapper>
-          {printProduct(i * 3, userProducts.length % 3)}
-        </ProductWrapper>
-      )
-    }
-    return array;
-  }
 
   return (
     <Body>
@@ -146,8 +112,8 @@ const MyShop = ({ history }) => {
         </div>
         <CardBody>
           <Title>판매상품</Title>
-          {printProducts(0)} 
-          
+          {PrintProducts(userProducts, userProducts.length, 3, logo)} 
+
         </CardBody>
       </CardWrapper>
     </Body>

@@ -41,3 +41,37 @@ export const Product = ({logo, name, price}) => {
     </ProducBody>
   )
 }
+export function PrintProduct(list, start, num, logo) {
+  let array = [];
+  for (let i = start; i < start + num; i++) {
+    array.push(
+      <Product
+        key={list[i].title}
+        logo={logo}
+        name={list[i].title}
+        price={list[i].price}
+      />
+    )
+  }
+  return array;
+}
+
+export function PrintProducts(list, length, num, logo) {
+  let array = [];
+  let i = 0;
+  for (; i < parseInt(length / num); i++) {
+    array.push(
+      <ProductWrapper>
+        {PrintProduct(list, num*i, num, logo)}
+      </ProductWrapper>
+    )
+  }
+  if (length % num) {
+    array.push(
+      <ProductWrapper>
+        {PrintProduct(list, i * num, length % num, logo)}
+      </ProductWrapper>
+    )
+  }
+  return array;
+}
