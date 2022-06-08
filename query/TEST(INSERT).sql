@@ -1,11 +1,11 @@
 USE market_db;
 
-INSERT users(name, phone, email, age, id, pw)
+INSERT users(name, phone, email, age, id, pw, info)
 VALUES
-('임경택', '01011111111', 'tester1@market.com', 45, 'test1', 'test1111' ),
-('조정우', '01022222222', 'tester2@market.com', 34, 'test2', 'test2222' ),
-('이민석', '01033333333', 'tester3@market.com', 23, 'test3', 'test3333' ),
-('이세연', '01044444444', 'tester4@market.com', 12, 'test4', 'test4444' );
+('임경택', '01011111111', 'tester1@market.com', 45, 'test1', 'test1111', '나는 임경택' ),
+('조정우', '01022222222', 'tester2@market.com', 34, 'test2', 'test2222', ''),
+('이민석', '01033333333', 'tester3@market.com', 23, 'test3', 'test3333', ''),
+('이세연', '01044444444', 'tester4@market.com', 12, 'test4', 'test4444', '');
 
 INSERT posts(title, postDate, views)
 VALUES

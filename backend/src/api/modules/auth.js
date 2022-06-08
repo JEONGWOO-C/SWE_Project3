@@ -1,12 +1,13 @@
-import { verify } from './jwt.js'; 
-import { MSG, CODE } from '../../config/message.js';
-import { fail } from './util.js';``
+import { verify } from "./jwt.js";
+import { MSG, CODE } from "../../config/message.js";
+import { fail } from "./util.js";
+``;
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 export default async (req, res, next) => {
-  console.log('r1:'+req.headers.token);
-  var token = req.headers.token
+  console.log("r1:" + req.headers.token);
+  var token = req.headers.token;
   // 토큰 없음
   if (!token) return res.json(fail(CODE.BAD_REQUEST, MSG.EMPTY_TOKEN));
   // decode
@@ -19,7 +20,7 @@ export default async (req, res, next) => {
     return res.json(fail(CODE.UNAUTHORIZED, MSG.INVALID_TOKEN));
   if (user === undefined)
     return res.json(fail(CODE.UNAUTHORIZED, MSG.INVALID_TOKEN));
-  console.log('u1:'+user.id);
+  console.log("u1:" + user.id);
   req.query.id = user.id;
 
   next();
