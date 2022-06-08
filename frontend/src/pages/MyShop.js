@@ -101,7 +101,7 @@ const MyShop = ({ history }) => {
             <div style={{ display: "flex", paddingLeft: "110px" }}>
               <div>상품</div>
               {/* 사용자 상품 개수 */}
-              <div style={{ paddingLeft: "110px" }}>3</div>
+              <div style={{ paddingLeft: "110px" }}>{userProducts.length}</div>
             </div>
             <div style={{ display: "flex", paddingLeft: "110px" }}>
               <div>평점</div>
@@ -112,7 +112,7 @@ const MyShop = ({ history }) => {
         </div>
         <CardBody>
           <Title>판매상품</Title>
-          <ProductWrapper>
+          {/* <ProductWrapper>
             {userProducts.map((post) => (
               <Product
                 key={post.title}
@@ -121,7 +121,7 @@ const MyShop = ({ history }) => {
                 price={post.price + "원"}
               />
             ))}
-          </ProductWrapper>
+          </ProductWrapper> */}
           <ProductWrapper>
             <Product
               key={"컨테이너"}
