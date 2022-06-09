@@ -10,17 +10,13 @@ import {
   CardSelect,
   CardSelectOption,
   CardLink,
-
-} from '../components/Card';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { useNavigate, withRouter } from 'react-router';
-import '../dropdown.css';
-import { getInfoFromCookie, logout } from '../components/Auth';
-import Swal from 'sweetalert2';
-
-
-
+} from "../components/Card";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useNavigate, withRouter } from "react-router";
+import "../dropdown.css";
+import { getInfoFromCookie, logout } from "../components/Auth";
+import Swal from "sweetalert2";
 
 const Body = styled.div`
   //position: fixed;
@@ -113,18 +109,21 @@ const Nav = ({ history }) => {
     for (let i = 0; i < 14; i++) {
       array.push(
         <li>
-          <div onClick={()=>{
-            navigate('/category', {state: {category: catList[i]}});
-            onClick();
-            }}>
-              {catList[i]}
-            </div>
+          <div
+            onClick={() => {
+              navigate("/category", { state: { category: catList[i] } });
+              window.location.reload();
+              onClick();
+            }}
+          >
+            {catList[i]}
+          </div>
         </li>
-      )
+      );
     }
     return array;
   }
-  
+
   return (
     <Body>
       <CardWrapper
@@ -205,55 +204,85 @@ const Nav = ({ history }) => {
               ref={dropdownRef}
               className={`menu ${isActive ? "active" : "inactive"}`}
             >
-              {isActive? (
-              <ul>
-                {list()}
-              </ul>
-              ): null}
+              {isActive ? <ul>{list()}</ul> : null}
             </nav>
           </div>
 
-          <TitleWrapper style={{
-            width: '700px'
-          }}>
-            <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => { info?
-                <div>{navigate("/myshop")}</div>:
-                <div>{Swal.fire(
-                  '로그인이 필요합니다.',
-                  '로그인 창으로 이동합니다.'
-                )}{navigate("/login")}</div> 
-               }}>
+          <TitleWrapper
+            style={{
+              width: "700px",
+            }}
+          >
+            <CardBody
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                info ? (
+                  <div>{navigate("/myshop")}</div>
+                ) : (
+                  <div>
+                    {Swal.fire(
+                      "로그인이 필요합니다.",
+                      "로그인 창으로 이동합니다."
+                    )}
+                    {navigate("/login")}
+                  </div>
+                );
+              }}
+            >
               내상점
             </CardBody>
-            <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => { info?
-                <div>{navigate("/wish")}</div>:
-                <div>{Swal.fire(
-                  '로그인이 필요합니다.',
-                  '로그인 창으로 이동합니다.'
-                )}{navigate("/login")}</div> 
-               }}>
+            <CardBody
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                info ? (
+                  <div>{navigate("/wish")}</div>
+                ) : (
+                  <div>
+                    {Swal.fire(
+                      "로그인이 필요합니다.",
+                      "로그인 창으로 이동합니다."
+                    )}
+                    {navigate("/login")}
+                  </div>
+                );
+              }}
+            >
               찜목록
             </CardBody>
-            <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => { info?
-                <div>{navigate("/viewed")}</div>:
-                <div>{Swal.fire(
-                  '로그인이 필요합니다.',
-                  '로그인 창으로 이동합니다.'
-                )}{navigate("/login")}</div> 
-               }}>
+            <CardBody
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                info ? (
+                  <div>{navigate("/viewed")}</div>
+                ) : (
+                  <div>
+                    {Swal.fire(
+                      "로그인이 필요합니다.",
+                      "로그인 창으로 이동합니다."
+                    )}
+                    {navigate("/login")}
+                  </div>
+                );
+              }}
+            >
               최근본상품
             </CardBody>
-            <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => { info?
-                <div>{navigate("/talk")}</div>:
-                <div>{Swal.fire(
-                  '로그인이 필요합니다.',
-                  '로그인 창으로 이동합니다.'
-                )}{navigate("/login")}</div> 
-               }}>
+            <CardBody
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                info ? (
+                  <div>{navigate("/talk")}</div>
+                ) : (
+                  <div>
+                    {Swal.fire(
+                      "로그인이 필요합니다.",
+                      "로그인 창으로 이동합니다."
+                    )}
+                    {navigate("/login")}
+                  </div>
+                );
+              }}
+            >
               OO톡
             </CardBody>
             <CardBody
@@ -265,16 +294,24 @@ const Nav = ({ history }) => {
               고객센터
             </CardBody>
           </TitleWrapper>
-          <CardBody style={{ cursor: 'pointer' }}
-              onClick={() => { info?
-                <div>{navigate("/sell")}</div>:
-                <div>{Swal.fire(
-                  '로그인이 필요합니다.',
-                  '로그인 창으로 이동합니다.'
-                )}{navigate("/login")}</div> 
-               }}>
-              판매하기
-            </CardBody>
+          <CardBody
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              info ? (
+                <div>{navigate("/sell")}</div>
+              ) : (
+                <div>
+                  {Swal.fire(
+                    "로그인이 필요합니다.",
+                    "로그인 창으로 이동합니다."
+                  )}
+                  {navigate("/login")}
+                </div>
+              );
+            }}
+          >
+            판매하기
+          </CardBody>
         </TitleWrapper>
       </CardWrapper>
     </Body>

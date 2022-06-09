@@ -42,13 +42,13 @@ export const Product = ({ img, name, price }) => {
     </ProducBody>
   );
 };
-export function PrintProduct(list, start, num, img) {
+export function PrintProduct(list, start, num) {
   let array = [];
   for (let i = start; i < start + num; i++) {
     array.push(
       <Product
         key={list[i].title}
-        img={img}
+        img={list[i].photo}
         name={list[i].title}
         price={list[i].price}
       />
@@ -57,18 +57,18 @@ export function PrintProduct(list, start, num, img) {
   return array;
 }
 
-export function PrintProducts(list, length, num, img) {
+export function PrintProducts(list, length, num) {
   let array = [];
   let i = 0;
   for (; i < parseInt(length / num); i++) {
     array.push(
-      <ProductWrapper>{PrintProduct(list, num * i, num, img)}</ProductWrapper>
+      <ProductWrapper>{PrintProduct(list, num * i, num)}</ProductWrapper>
     );
   }
   if (length % num) {
     array.push(
       <ProductWrapper>
-        {PrintProduct(list, i * num, length % num, img)}
+        {PrintProduct(list, i * num, length % num)}
       </ProductWrapper>
     );
   }
