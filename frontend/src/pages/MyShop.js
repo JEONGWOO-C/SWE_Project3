@@ -15,7 +15,12 @@ import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
 import logo from "../imgs/logo192.png"; // 예시 사진
 import { getInfoFromCookie } from "../components/Auth";
-import { ProductWrapper, Product, Title, PrintProducts } from "../components/Product";
+import {
+  ProductWrapper,
+  Product,
+  Title,
+  PrintProducts,
+} from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -47,7 +52,7 @@ const MyShop = ({ history }) => {
       })
       .then(({ data }) => setUserProducts(data));
   }, []);
-  console.log('userProudcts:' + userProducts);
+  console.log("userProudcts:" + userProducts);
 
   return (
     <Body>
@@ -112,8 +117,7 @@ const MyShop = ({ history }) => {
         </div>
         <CardBody>
           <Title>판매상품</Title>
-          {PrintProducts(userProducts, userProducts.length, 3, logo)} 
-
+          {PrintProducts(userProducts, userProducts.length, 3)}
         </CardBody>
       </CardWrapper>
     </Body>

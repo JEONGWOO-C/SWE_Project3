@@ -10,6 +10,7 @@ import myShopInfo from "./api/User/myShopInfo.js";
 import userProducts from "./api/User/userProducts.js";
 import uploadPost from "./api/Post/uploadPost.js";
 import wishlist from "./api/User/wishlist.js";
+import categoryPosts from "./api/Post/categoryPosts.js";
 
 const connection = init();
 const app = express();
@@ -38,6 +39,7 @@ myShopInfo(app, connection);
 userProducts(app, connection);
 uploadPost(app, connection);
 wishlist(app, connection);
+categoryPosts(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

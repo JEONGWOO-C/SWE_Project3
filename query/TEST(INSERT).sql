@@ -54,7 +54,7 @@ VALUES
 (3, 1, '/imgs/1654769544683/iphone12pro.JPG'),
 (4, 1, '/imgs/1654769587963/iphone12promax.JPG'),
 (5, 1, '/imgs/1654769672485/iphone13mini.JPG'),
-(6, 1, '/imgs/1654769640354/iphone13.JPG.JPG'),
+(6, 1, '/imgs/1654769640354/iphone13.JPG'),
 (7, 1, '/imgs/1654769701341/iphone13pro.JPG'),
 (8, 1, '/imgs/1654769723581/iphone13promax.JPG'),
 (9, 1, '/imgs/1654769796176/galaxys21.JPG'),

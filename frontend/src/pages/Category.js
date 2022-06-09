@@ -1,57 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink,
-} from '../components/Card';
-import styled from 'styled-components';
-import logo from '../imgs/logo192.png'; // 예시 사진
-import { ProductWrapper, Product, Title } from '../components/Product'
-import { useLocation, useNavigate } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { CardWrapper } from "../components/Card";
+import styled from "styled-components";
+import { ProductWrapper, Title, PrintProducts } from "../components/Product";
+import { useLocation } from "react-router";
+import axios from "axios";
 
 const Body = styled.div`
   display: flex;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: "center";
+  justify-content: "center";
   width: 100%;
 `;
 
-
 const Category = ({ history }) => {
   const navigateState = useLocation().state;
-  const category = (navigateState && navigateState.category );
-  
+  const category = navigateState && navigateState.category;
+
+  var [categoryPosts, setCategoryPosts] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/categoryPosts", {
+        params: {
+          category: category,
+        },
+      })
+      .then(({ data }) => setCategoryPosts(data));
+  }, []);
+  console.log(categoryPosts);
+
   return (
     <Body style={{}}>
       <CardWrapper>
-        <Title>
-          {category}
-        </Title>
+        <Title>{category}</Title>
         <ProductWrapper>
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-        </ProductWrapper>
-        <ProductWrapper>
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
+          {categoryPosts.length === 0
+            ? "해당 카테고리의 게시물이 존재하지 않습니다."
+            : PrintProducts(categoryPosts, categoryPosts.length, 5)}
         </ProductWrapper>
       </CardWrapper>
-
-    </Body >
-  )
-}
+    </Body>
+  );
+};
 
 export default Category;
