@@ -26,4 +26,4 @@ yarn-error.log*
 /config/db.js
 
 # image
-/public/imgs
+# /public/imgs
