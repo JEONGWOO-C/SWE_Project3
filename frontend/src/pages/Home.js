@@ -46,7 +46,7 @@ const Home = ({ history }) => {
           {popularPosts.map((item) => (
             <Product
               key={item.title}
-              logo={logo}
+              img={item.photo}
               name={item.title}
               price={item.price + "원"}
             />
@@ -57,7 +57,7 @@ const Home = ({ history }) => {
           {recentPosts.map((item) => (
             <Product
               key={item.title}
-              logo={logo}
+              img={item.photo}
               name={item.title}
               price={item.price + "원"}
             />
