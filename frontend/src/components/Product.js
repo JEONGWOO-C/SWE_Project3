@@ -20,11 +20,14 @@ export const Title = styled.div`
   font-size: 40px;
   font-weight: bold;
 `;
-export const Product = ({ img, name, price }) => {
+export const Product = ({ item }) => {
   const navigate = useNavigate();
 
+  // 3자리 마다 , 추가
+  let price = item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+'원';
+
   // 화면을 채울 정도의 개수보다 작을경우 데이터가 없을 수 있음
-  if (name === "없음") {
+  if (item.name === "없음") {
     // 데이터가 없으면
     return <div></div>;
   }
@@ -35,10 +38,13 @@ export const Product = ({ img, name, price }) => {
       }}
     >
       <div>
-        <img src={img} width={128} height={128} alt="이미지없음" />
+        <img src={item.photo} width={128} height={128} alt="이미지없음" />
       </div>
-      <div>{name}</div>
-      <div>{price}</div>
+      {item.title}
+      <div style={{fontSize: '18px', fontWeight: 'bold'}}>
+        {price}
+      </div>
+      <div>찜{item.fav}, 조회{item.views}</div>
     </ProducBody>
   );
 };
@@ -47,10 +53,7 @@ export function PrintProduct(list, start, num) {
   for (let i = start; i < start + num; i++) {
     array.push(
       <Product
-        key={list[i].title}
-        img={list[i].photo}
-        name={list[i].title}
-        price={list[i].price}
+        item = {list[i]}
       />
     );
   }

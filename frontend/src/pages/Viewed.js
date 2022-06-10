@@ -30,20 +30,7 @@ const Viewed = ({ history }) => {
         <Title>
           최근본상품
         </Title>
-        <ProductWrapper>
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-        </ProductWrapper>
-        <ProductWrapper>
-          <Product key={'컨테이너'} logo={logo} name={'컨테이너'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-          <Product key={'없음'} logo={logo} name={'없음'} price={'1,000,000원'} />
-        </ProductWrapper>
+        최근본상품 데이터 준비중
       </CardWrapper>
 
     </Body >
