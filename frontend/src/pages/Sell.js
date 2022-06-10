@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -70,18 +71,26 @@ const upload = async (img, title, category, price, description) => {
       "\ndescription : " +
       description
   );
-  const res = await axios.post("http://localhost:4000/register", {
-    img: img,
-    title: title,
-    category: category,
-    price: price,
-    description: description,
+
+  var uploadData = new FormData();
+  uploadData.append("title", title);
+  uploadData.append("category", category);
+  uploadData.append("price", price);
+  uploadData.append("description", description);
+  uploadData.append("seller_id", "test");
+  uploadData.append("img_file", img);
+  const res = await axios.post("http://localhost:4000/sell_write", uploadData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
+  console.log("결과");
+  console.log(res);
 
   return res.data;
 };
 
-const Sell = ({ history }) => {
+const Sell = ({}) => {
   const [img, setImg] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -90,10 +99,11 @@ const Sell = ({ history }) => {
 
   const [imageUrl, setImageUrl] = useState(null);
   const imgRef = useRef();
+  let navigate = useNavigate();
 
   const handleClick = () => {
-    imgRef.current.click()
-  }
+    imgRef.current.click();
+  };
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -105,8 +115,10 @@ const Sell = ({ history }) => {
       setImageUrl(reader.result);
       console.log("이미지주소", reader.result);
     };
+
+    setImg(file);
   };
-  
+
   return (
     <Body>
       <CardWrapper>
@@ -114,14 +126,17 @@ const Sell = ({ history }) => {
 
         <SubTitle>
           상품사진
-          <div style={{ marginTop: "-27px" , marginLeft: '200px' }}>
-            <img src={ imageUrl ? imageUrl : '/image.PNG' } onClick={ handleClick }/>
-            <input 
-              type='file' 
-              accept='image/jpg, image/jpeg, image/png, image/svg'
-              ref={ imgRef }
-              onChange={ onChangeImage }
-              style={{ display: 'none' }}
+          <div style={{ marginTop: "-27px", marginLeft: "200px" }}>
+            <img
+              src={imageUrl ? imageUrl : "/image.PNG"}
+              onClick={handleClick}
+            />
+            <input
+              type="file"
+              accept="image/jpg, image/jpeg, image/png, image/svg"
+              ref={imgRef}
+              onChange={onChangeImage}
+              style={{ display: "none" }}
             />
           </div>
         </SubTitle>
@@ -213,6 +228,9 @@ const Sell = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
+            onClick={async (e)=>{
+              navigate(-1)
+            }}
           >
             취소
           </button>
@@ -229,7 +247,13 @@ const Sell = ({ history }) => {
               boxShadow: 0,
             }}
             onClick={async (e) => {
-              if (title === "")
+              if (img === "")
+                Swal.fire(
+                  "이미지를 추가해주세요.",
+                  "상품 등록에 실패하였습니다.",
+                  "error"
+                );
+              else if (title === "")
                 Swal.fire(
                   "상품제목을 입력하세요.",
                   "상품 등록에 실패하셨습니다.",
@@ -253,8 +277,15 @@ const Sell = ({ history }) => {
                   "상품 등록에 실패하셨습니다.",
                   "error"
                 );
-              if (await upload(img, title, category, price, description))
-                history.push("/");
+              else {
+                if (await upload(img, title, category, price, description)) {
+                  Swal.fire({
+                    title: "상품 등록에 성공하셨습니다.",
+                    icon: "success",
+                  });
+                  navigate("/");
+                }
+              }
             }}
           >
             상품등록 완료
