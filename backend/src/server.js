@@ -12,6 +12,7 @@ import userProducts from "./api/User/userProducts.js";
 import uploadPost from "./api/Post/uploadPost.js";
 import wishlist from "./api/User/wishlist.js";
 import categoryPosts from "./api/Post/categoryPosts.js";
+import getPostData from "./api/Post/getPostData.js";
 
 const connection = init();
 const app = express();
@@ -27,7 +28,7 @@ app.use(
   })
 );
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ uploadPost(app, connection);
 wishlist(app, connection);
 categoryPosts(app, connection);
 userRecentPosts(app, connection);
+getPostData(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

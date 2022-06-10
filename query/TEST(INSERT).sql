@@ -63,8 +63,8 @@ VALUES
 (12, 1, '/imgs/1654769883046/galaxys22.JPG'),
 (13, 1, '/imgs/1654769898767/galaxys22+.JPG'),
 (14, 1, '/imgs/1654769916672/galaxys22ultra.JPG'),
-(15, 1, '/imgs/1654769947715/galaxyszflip3.JPG'),
-(16, 1, '/imgs/1654769967458/galaxyszfold3.JPG');
+(15, 1, '/imgs/1654769947715/galaxyzflip3.JPG'),
+(16, 1, '/imgs/1654769967458/galaxyzfold3.JPG');
 
 INSERT favorite(id, postnum)
 VALUES
