@@ -26,14 +26,13 @@ const Body = styled.div`
 
 
 const Viewed = ({ history }) => {
-  var [recentViewTop5,setRecentViewTop5] = useState([]);
-  var [recentViewTop10,setRecentViewTop10] = useState([]);
+  const info = getInfoFromCookie();
   var [recentView,setRecentView] = useState([]);
   useEffect(() => {
     console.log(getInfoFromCookie());
     axios
-      .post("http://localhost:4000/userRecentPosts",{
-        id:'test1'
+      .get("http://localhost:4000/userRecentPosts",{
+        headers: { token: info.token },
       })
       .then(({ data }) => setRecentView(data));
   }, [])
