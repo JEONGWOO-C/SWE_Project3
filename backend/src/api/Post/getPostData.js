@@ -1,7 +1,6 @@
 export default async (app, connection) => {
   app.get("/getPostData", async (req, res, next) => {
     const { postnum } = req.query;
-    console.log("postnum : " + postnum);
     await connection.query(
       "SELECT * FROM posts PO, product PR, photos PH WHERE PO.postnum = ? AND PO.postnum = PR.postnum AND PO.postnum = PH.postnum",
       [postnum],
@@ -12,7 +11,6 @@ export default async (app, connection) => {
           result[i].photo =
             req.protocol + "://" + req.get("host") + result[i].photo;
         }
-        console.log(result);
         return res.send(result);
       }
     );

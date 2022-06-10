@@ -7,12 +7,14 @@ import register, { id_check } from "./api/User/register.js";
 import popularPost from "./api/Post/popularPosts.js";
 import recentPosts from "./api/Post/recentPosts.js";
 import userRecentPosts from "./api/Post/userRecentPosts.js";
-import myShopInfo from "./api/User/myShopInfo.js";
+import userInfo from "./api/User/userInfo.js";
 import userProducts from "./api/User/userProducts.js";
 import uploadPost from "./api/Post/uploadPost.js";
 import wishlist from "./api/User/wishlist.js";
 import categoryPosts from "./api/Post/categoryPosts.js";
 import getPostData from "./api/Post/getPostData.js";
+import getFavorite from "./api/User/getFavorite.js";
+import setFavorite from "./api/User/setFavorite.js";
 
 const connection = init();
 const app = express();
@@ -39,13 +41,15 @@ register(app, connection);
 popularPost(app, connection);
 recentPosts(app, connection);
 id_check(app, connection);
-myShopInfo(app, connection);
+userInfo(app, connection);
 userProducts(app, connection);
 uploadPost(app, connection);
 wishlist(app, connection);
 categoryPosts(app, connection);
 userRecentPosts(app, connection);
 getPostData(app, connection);
+getFavorite(app, connection);
+setFavorite(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
