@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import { updateView } from "./updateView";
+import { updateView } from "./clickPost";
 
 export const ProductWrapper = styled.div`
   display: flex;
