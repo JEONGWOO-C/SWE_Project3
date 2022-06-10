@@ -123,7 +123,8 @@ const Nav = ({ history }) => {
     }
     return array;
   }
-
+  // admin값이 true면 admin 네비게이션
+  let admin = false;
   return (
     <Body>
       <CardWrapper
@@ -166,14 +167,15 @@ const Nav = ({ history }) => {
                 >
                   로그아웃
                 </CardBody>
-                <CardBody
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    navigate("/mypage");
-                  }}
-                >
-                  마이페이지
-                </CardBody>
+                {admin ? null : (
+                  <CardBody style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      navigate("/mypage");
+                    }}>
+                    마이페이지
+                  </CardBody>
+                )}
+
               </TitleWrapper>
             ) : (
               <TitleWrapper>
@@ -214,38 +216,46 @@ const Nav = ({ history }) => {
               width: "700px",
             }}
           >
-            <CardBody
+            {admin ? <CardBody
               style={{ cursor: "pointer" }}
               onClick={() => {
-                info ? (
-                  <div>{navigate("/myshop")}</div>
-                ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
-                );
+                <div>{navigate("/admin")}</div>
               }}
             >
-              내상점
+              회원 관리
             </CardBody>
+              : <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? <div>{navigate("/myshop")}</div>
+                    : (
+                      <div>
+                        {Swal.fire(
+                          "로그인이 필요합니다.",
+                          "로그인 창으로 이동합니다."
+                        )}
+                        {navigate("/login")}
+                      </div>
+                    );
+                }}
+              >
+                내상점
+              </CardBody>}
+
+
             <CardBody
               style={{ cursor: "pointer" }}
               onClick={() => {
-                info ? (
-                  <div>{navigate("/wish")}</div>
-                ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
-                );
+                info ? <div>{navigate("/wish")}</div>
+                  : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
               }}
             >
               찜목록
