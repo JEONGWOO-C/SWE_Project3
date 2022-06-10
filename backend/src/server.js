@@ -17,6 +17,7 @@ import getFavorite from "./api/User/getFavorite.js";
 import setFavorite from "./api/User/setFavorite.js";
 import updateView from "./api/Post/updateView.js";
 import updateRecentPosts from "./api/User/updateRecentPosts.js";
+import updateAgeGroupOfPost from "./api/Post/updateAgeGroupOfPost.js";
 
 const connection = init();
 const app = express();
@@ -54,6 +55,7 @@ getFavorite(app, connection);
 setFavorite(app, connection);
 updateView(app, connection);
 updateRecentPosts(app, connection);
+updateAgeGroupOfPost(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
