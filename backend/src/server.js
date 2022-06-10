@@ -26,6 +26,8 @@ app.use(
   })
 );
 
+app.use(express.static('public'));
+
 const router = express.Router();
 
 app.set("port", process.env.PORT || 4000);
