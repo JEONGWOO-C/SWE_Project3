@@ -13,7 +13,6 @@ export default async (app, connection) => {
           result[i].photo =
             req.protocol + "://" + req.get("host") + result[i].photo;
         }
-        console.log(result);
         return res.send(result);
       }
     );
