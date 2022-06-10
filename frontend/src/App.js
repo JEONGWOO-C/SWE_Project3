@@ -26,7 +26,7 @@ const Body = styled.div`
 class App extends Component {
   render() {
     return (
-      <Body style>
+      <Body style={{marginBottom:'500px'}}>
         <Nav />
         <Routes>
           <Route path='/' element={<Home />} />
