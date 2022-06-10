@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router";
 import {
   CardWrapper,
   CardHeader,
@@ -13,7 +14,7 @@ import {
 } from '../components/Card';
 import styled from 'styled-components';
 
-const Body = styled.div`
+export const Body = styled.div`
   display: flex;
   align-items: 'center';
   justify-content: 'center';
@@ -33,6 +34,9 @@ export const ProdBody = styled.div`
   height: 200px;
   width: 200px;
   margin: 20px;
+  &:hover {
+    border: 1px solid #f9f9f9;
+  }
 `;
 
 export const Button = styled.div`
@@ -40,6 +44,9 @@ export const Button = styled.div`
   width: 130px;
   text-align: center;
   padding: 35px;
+  &:hover {
+    background-color: #f9f9f9;
+  }
 `;
 
 export const FAQIcon = styled.img`
@@ -63,6 +70,8 @@ export const Explain = styled.span`
 `;
 
 const CustCenter = ({ history }) => {
+  const navigate = useNavigate();
+
   return(
     <Body>
       <CardWrapper>
@@ -70,15 +79,15 @@ const CustCenter = ({ history }) => {
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <ProdBody>
-            <Button>
+            <Button onClick={(e) => {navigate("/faq");}}>
               <FAQIcon src='/faq.png'/><br />
               <SubTitle>FAQ</SubTitle><br />
-              <ExplainBox><Explain>자주 묻는 질문을<br />찾아보세요</Explain></ExplainBox>
+              <ExplainBox><Explain>자주 묻는 질문을<br />확인해보세요</Explain></ExplainBox>
             </Button>
           </ProdBody>
 
           <ProdBody>
-            <Button>
+            <Button onClick={(e) => {navigate("/notice");}}>
               <FAQIcon src='/speaker.png'/><br />
               <SubTitle>Notice</SubTitle><br />
               <ExplainBox><Explain>쇼핑시 공지사항을<br />참고하세요</Explain></ExplainBox>
@@ -86,7 +95,7 @@ const CustCenter = ({ history }) => {
           </ProdBody>
 
           <ProdBody>
-            <Button>
+            <Button onClick={(e) => {navigate("/QnA");}}>
               <FAQIcon src='/contract.png'/><br />
               <SubTitle>Q & A</SubTitle><br />
               <ExplainBox><Explain>궁금한 사항은<br />문의해주세요</Explain></ExplainBox>
