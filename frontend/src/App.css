@@ -36,3 +36,96 @@
     transform: rotate(360deg);
   }
 }
+
+/* FAQ 글 List */
+.List {
+  padding: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.list_tit {
+  border-bottom: solid 1px #ababab;
+  color : #ababab;
+}
+
+.list_grid {
+  display: grid;
+  grid-template-columns: 10% 75% 15%;
+}
+
+.list_grid_qna {
+  display: grid;
+  grid-template-columns: 10% 55% 10% 15% 10%;
+}
+
+.list_data {
+  line-height: 40px;
+}
+
+.acenter {
+  text-align: center;
+}
+
+.text-link {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.View {
+  padding: 80px 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  min-height: 400px;
+}
+
+.date_div {
+  text-align: right;
+  font-size: 16px;
+  color: #ababab;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+
+.top_title #title_txt {
+  border: none;
+  padding-bottom: 30px;
+}
+
+.top_title {
+  border-bottom: solid 1px #ababab;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.content {
+  padding-top: 30px;
+  font-size: 17px;
+}
+
+.comment {
+  padding: 80px 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  min-height: 200px;
+  font-size: 20px;
+}
+
+.review-input {
+  border-radius: 5px;
+  width: 98%;
+  height: 100px;
+  padding: 10px;
+}
+
+.review-input:focus {
+  outline-color: #033a7a;
+}
+
+.admin {
+  padding: 20px 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: large;
+  font-weight: bold;
+}

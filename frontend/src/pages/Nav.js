@@ -138,6 +138,7 @@ const Nav = ({ history }) => {
                 paddingTop: "4px",
                 paddingRight: "20px",
                 fontSize: "36px",
+                cursor: "pointer"
               }}
               onClick={() => {
                 navigate("/");
