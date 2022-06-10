@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardWrapper, CardHeading, CardBody } from "../components/Card";
+import { CardWrapper, CardHeading, CardBody, CardButton } from "../components/Card";
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
 import { getTokenFromCookie } from "../components/Auth";
@@ -96,6 +96,14 @@ const MyShop = ({ history }) => {
               {/* 사용자 평점 */}
               <div style={{ paddingLeft: "110px" }}>{shopInfo.score}</div>
             </div>
+          </div>
+          <div style={{marginTop:'40px'}}>
+          <div style={{padding:'10px 100px'}}>
+          <CardButton onClick={(e)=>navigate("/salesdetail")}>판매내역</CardButton>
+          </div>
+          <div style={{padding:'10px 100px'}}>
+          <CardButton onClick={(e)=>navigate("/purchasedetail")}>구매내역</CardButton>
+          </div>
           </div>
         </div>
         <CardBody>
