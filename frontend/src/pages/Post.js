@@ -18,6 +18,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import logo from '../imgs/logo192.png'; // 예시 사진
 import { BiUser, BiHeart } from "react-icons/bi"
+import { useLocation } from "react-router";
+import Category from './Category';
+
 
 const Body = styled.div`
   display: flex;
@@ -32,42 +35,56 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1
 };
-const items = [logo, logo, logo, logo];
-const items_num = 4;
-function slider() {
-  var array = [];
-  for (var i = 0; i < items_num; i++) {
-    array.push(
-      <div>
-        <img src={items[i]} width={'100%'} height={'100%'} alt="logo" />
-      </div>
-    )
-  }
-  return array;
-}
+
+// const items = [logo, logo, logo, logo];
+// const items_num = 4;
+// function slider() {
+//   var array = [];
+//   for (var i = 0; i < items_num; i++) {
+//     array.push(
+//       <div>
+//         <img src={items[i]} width={'100%'} height={'100%'} alt="logo" />
+//       </div>
+//     )
+//   }
+//   return array;
+// }
+
 
 const Post = ({ history }) => {
+  const navigateState = useLocation().state;
+  const postnum = navigateState && navigateState.postnum;
 
-
+  let isSelling=0;
   return (
     <Body style={{}}>
 
       <CardWrapper style={{ display: 'flex' }}>
         <CardBody style={{ width: '36%', padding: '64px' }}>
-          <Slider {...settings}>
+          {/* <Slider {...settings}>
             {slider()}
-          </Slider>
+          </Slider> */}
+          <img src={logo} width='100%' heightL='100%' alt="이미지 없음" style={isSelling ? null : { opacity: 0.5 }} />
         </CardBody>
         <CardBody style={{ width: '40%', padding: '64px' }}>
-          <div style={{ background: 'lightgray', width: '100px', height: '32px', textAlign: 'center', borderRadius: '5px', fontSize: '20px', fontWeight: 'bold' }}>
-            판매중
-          </div>
+
+          {isSelling
+            ? <div style={{ padding: '4px 0', background: '#033a7a', color: '#fff', width: '100px', height: '32px', textAlign: 'center', borderRadius: '5px', fontSize: '20px', fontWeight: 'bold' }}>
+              판매중
+            </div>
+            : <div style={{ padding: '4px 0', background: 'lightgray', width: '100px', height: '32px', textAlign: 'center', borderRadius: '5px', fontSize: '20px', fontWeight: 'bold' }}>
+              판매완료
+            </div>
+          }
+
           <div style={{ display: 'flex', paddingTop: '24px', paddingBottom: '8px' }}>
             <div>
               <BiUser style={{ width: '80px', height: '80px' }} />
             </div>
             <div style={{ margin: '16px', width: '400px' }}>
-              <div style={{ fontWeight: 'bold', fontSize: '36px' }}>거래중독</div>
+              <div style={{ fontWeight: 'bold', fontSize: '36px' }}>
+                item.user
+              </div>
             </div>
             <div style={{ marginTop: '30px', fontWeight: 'bold', fontSize: '24px' }}>
               0
@@ -76,9 +93,9 @@ const Post = ({ history }) => {
           <hr />
           <div style={{ marginTop: '16px' }}>
             <div style={{ fontWeight: 'bold', fontSize: '28px' }}>
-              컨버스 운동화
+              item.title
             </div>
-            <div style={{ marginTop: '8px', marginBottom: '8px', color: 'lightgray' }}>
+            <div style={{ marginTop: '8px', marginBottom: '8px', color: '#858688' }}>
               여성신발 - 10시간 전
             </div>
             <div style={{ fontWeight: 'bold', fontSize: '28px' }}>
@@ -95,12 +112,12 @@ const Post = ({ history }) => {
             <div style={{ display: 'flex', paddingTop: '24px', paddingBottom: '8px' }}>
               <BiHeart style={{ width: '60px', height: '60px', paddingRight: '16px' }} />
               <div style={{ paddingRight: '16px', paddingLeft: '16px' }}>
-                <CardButton style={{ width: '140px', height: '60px', fontSize: '20px', backgroundColor: '#033a7a' , color: 'white'}}>
+                <CardButton style={{ width: '140px', height: '60px', fontSize: '20px', backgroundColor: '#033a7a', color: 'white' }}>
                   채팅하기
                 </CardButton>
               </div>
               <div style={{ paddingRight: '16px', paddingLeft: '16px' }}>
-                <CardButton style={{ width: '210px', height: '60px', fontSize: '20px', backgroundColor: 'lightgray' , color: 'white'}}>
+                <CardButton style={{ width: '210px', height: '60px', fontSize: '20px', backgroundColor: 'lightgray', color: 'white' }}>
                   이 게시글 신고하기
                 </CardButton>
               </div>
