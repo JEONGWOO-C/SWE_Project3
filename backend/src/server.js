@@ -15,6 +15,7 @@ import categoryPosts from "./api/Post/categoryPosts.js";
 import getPostData from "./api/Post/getPostData.js";
 import getFavorite from "./api/User/getFavorite.js";
 import setFavorite from "./api/User/setFavorite.js";
+import updateView from "./api/Post/updateView.js";
 
 const connection = init();
 const app = express();
@@ -50,6 +51,7 @@ userRecentPosts(app, connection);
 getPostData(app, connection);
 getFavorite(app, connection);
 setFavorite(app, connection);
+updateView(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

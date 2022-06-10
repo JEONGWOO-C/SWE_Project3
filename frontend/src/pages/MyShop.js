@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CardWrapper, CardHeading, CardBody } from "../components/Card";
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
-import { getInfoFromCookie, getTokenFromCookie } from "../components/Auth";
+import { getTokenFromCookie } from "../components/Auth";
 import { Title, PrintProducts } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
