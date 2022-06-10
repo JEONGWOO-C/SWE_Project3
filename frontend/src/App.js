@@ -25,6 +25,7 @@ import Post from './pages/Post';
 import Category from './pages/Category';
 import SalesDetail from './pages/SalesDetail';
 import PurchaseDetail from './pages/PurchaseDetail';
+import Admin from './pages/Admin';
 
 import './App.css';
 
@@ -63,6 +64,7 @@ class App extends Component {
           <Route path='/category' element={<Category />} />
           <Route path='/salesdetail' element={<SalesDetail />} />
           <Route path='/purchasedetail' element={<PurchaseDetail />} />
+          <Route path='/admin' element={<Admin />} />
 
         </Routes>
       </Body>
