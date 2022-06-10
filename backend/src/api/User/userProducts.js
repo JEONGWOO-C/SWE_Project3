@@ -9,6 +9,10 @@ export default async (app, connection) => {
       (error, data) => {
         if (error) console.log(error);
         const result = data;
+        for (var i = 0; i < result.length; i++) {
+          result[i].photo =
+            req.protocol + "://" + req.get("host") + result[i].photo;
+        }
         console.log(result);
         return res.send(result);
       }
