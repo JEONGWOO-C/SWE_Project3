@@ -3,14 +3,26 @@ export default async (app, connection) => {
     const { id } = req.body;
     const { postnum } = req.body;
     const { isFavorite } = req.body;
-    console.log(req.body);
+    const { fav } = req.body;
+    console.log("fav : " + fav);
+
     if (isFavorite) {
       connection.query(
         "DELETE FROM favorite WHERE id = ? AND postnum = ?;",
         [id, postnum],
         (error, data) => {
+          console.log(data);
           if (error) console.log(error);
-          else res.send({ result: true, msg: "찜 목록에서 해제되었습니다." });
+          else {
+            connection.query(
+              "UPDATE posts SET fav = ? WHERE postnum = ?;",
+              [fav - 1, postnum],
+              (error) => {
+                if (error) console.log(error);
+              }
+            );
+          }
+          res.send({ result: true, msg: "찜 목록에서 해제되었습니다." });
         }
       );
     } else {
@@ -18,8 +30,18 @@ export default async (app, connection) => {
         "INSERT into favorite(id, postnum) values(?,?);",
         [id, postnum],
         (error, data) => {
+          console.log(data);
           if (error) console.log(error);
-          else res.send({ result: true, msg: "찜 목록에 추가되었습니다." });
+          else {
+            connection.query(
+              "UPDATE posts SET fav = ? WHERE postnum = ?;",
+              [fav + 1, postnum],
+              (error) => {
+                if (error) console.log(error);
+              }
+            );
+          }
+          res.send({ result: true, msg: "찜 목록에 추가되었습니다." });
         }
       );
     }
