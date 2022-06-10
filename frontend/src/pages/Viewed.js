@@ -51,10 +51,7 @@ const Viewed = ({ history }) => {
             if(ind<5)
               return(
                 <Product
-                  key={item.title}
-                  img={item.photo}
-                  name={item.title}
-                  price={item.price + "원"}
+                  item={item}
                 />)
           })}
         </ProductWrapper>
@@ -63,10 +60,7 @@ const Viewed = ({ history }) => {
             if(ind>=5)
               return(
                 <Product
-                  key={item.title}
-                  img={item.photo}
-                  name={item.title}
-                  price={item.price + "원"}
+                  item={item}
                 />)
           })}
         </ProductWrapper>
