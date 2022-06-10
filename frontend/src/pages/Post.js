@@ -41,26 +41,39 @@ const setFav = async (id, postnum, isFavorite, fav) => {
   else return true;
 };
 
-
-function calDiff(data){
-  if(data){
-  const data_split = data.split(/[-T:.]/);
-  // index 0:년, 1:월 2:일 3:시 4:분 5:초
-  const start = new Date(data_split[0]+'-'+data_split[1]+'-'+data_split[2]+' '+data_split[3]+':'+data_split[4]+':'+data_split[5]);
-  const now = new Date();
-  const diff = (now.getTime()-start.getTime())/(1000);
-  if(diff<60) return('방금 전')
-  if(diff<60*60) return(parseInt(diff/(60))+'분 전')
-  if(diff<60*60*24) return(parseInt(diff/(60*60))+'시간 전')
-  if(diff<60*60*24*14) return(parseInt(diff/(60*60*24))+'일 전')
-  if(diff<60*60*24*30) return(parseInt(diff/(60*60*24*7))+'주 전')
-  if(diff<60*60*24*365) return(parseInt(diff/(60*60*24*30))+'개월 전')
-  return(parseInt(diff/(60*60*24*365))+'년 전')
+function calDiff(data) {
+  if (data) {
+    const data_split = data.split(/[-T:.]/);
+    // index 0:년, 1:월 2:일 3:시 4:분 5:초
+    const start = new Date(
+      data_split[0] +
+        "-" +
+        data_split[1] +
+        "-" +
+        data_split[2] +
+        " " +
+        data_split[3] +
+        ":" +
+        data_split[4] +
+        ":" +
+        data_split[5]
+    );
+    const now = new Date();
+    const diff = (now.getTime() - start.getTime()) / 1000;
+    if (diff < 60) return "방금 전";
+    if (diff < 60 * 60) return parseInt(diff / 60) + "분 전";
+    if (diff < 60 * 60 * 24) return parseInt(diff / (60 * 60)) + "시간 전";
+    if (diff < 60 * 60 * 24 * 14)
+      return parseInt(diff / (60 * 60 * 24)) + "일 전";
+    if (diff < 60 * 60 * 24 * 30)
+      return parseInt(diff / (60 * 60 * 24 * 7)) + "주 전";
+    if (diff < 60 * 60 * 24 * 365)
+      return parseInt(diff / (60 * 60 * 24 * 30)) + "개월 전";
+    return parseInt(diff / (60 * 60 * 24 * 365)) + "년 전";
   }
 }
-function Price(data){
-  if(data)
-    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+function Price(data) {
+  if (data) return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
 const Post = ({ history }) => {
@@ -157,7 +170,7 @@ const Post = ({ history }) => {
             </div>
             <div style={{ margin: "16px", width: "400px" }}>
               <div style={{ fontWeight: "bold", fontSize: "36px" }}>
-                {userInfo.name}
+                {postData.name}
               </div>
             </div>
             <div
@@ -167,7 +180,7 @@ const Post = ({ history }) => {
                 fontSize: "24px",
               }}
             >
-              {userInfo.score}
+              {postData.score}
             </div>
           </div>
           <hr />
