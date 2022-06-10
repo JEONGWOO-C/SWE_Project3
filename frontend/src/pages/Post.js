@@ -41,6 +41,28 @@ const setFav = async (id, postnum, isFavorite, fav) => {
   else return true;
 };
 
+
+function calDiff(data){
+  if(data){
+  const data_split = data.split(/[-T:.]/);
+  // index 0:년, 1:월 2:일 3:시 4:분 5:초
+  const start = new Date(data_split[0]+'-'+data_split[1]+'-'+data_split[2]+' '+data_split[3]+':'+data_split[4]+':'+data_split[5]);
+  const now = new Date();
+  const diff = (now.getTime()-start.getTime())/(1000);
+  if(diff<60) return('방금 전')
+  if(diff<60*60) return(parseInt(diff/(60))+'분 전')
+  if(diff<60*60*24) return(parseInt(diff/(60*60))+'시간 전')
+  if(diff<60*60*24*14) return(parseInt(diff/(60*60*24))+'일 전')
+  if(diff<60*60*24*30) return(parseInt(diff/(60*60*24*7))+'주 전')
+  if(diff<60*60*24*365) return(parseInt(diff/(60*60*24*30))+'개월 전')
+  return(parseInt(diff/(60*60*24*365))+'년 전')
+  }
+}
+function Price(data){
+  if(data)
+    return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+}
+
 const Post = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
@@ -48,6 +70,7 @@ const Post = ({ history }) => {
   var [postData, setPostData] = useState([]);
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
+  var [date, setdate] = useState([]);
 
   useEffect(() => {
     axios
@@ -160,10 +183,10 @@ const Post = ({ history }) => {
                 color: "#858688",
               }}
             >
-              {postData.category} / {postData.postDate}
+              {postData.category} - {calDiff(postData.postDate)}
             </div>
             <div style={{ fontWeight: "bold", fontSize: "28px" }}>
-              {postData.price}
+              {Price(postData.price)}
             </div>
             <div
               style={{
