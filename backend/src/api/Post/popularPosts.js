@@ -19,8 +19,10 @@ export default async (app, connection) => {
               nowYear === itemYear &&
               nowMonth === itemMonth &&
               nowDate === itemDate
-            )
+            ){
+              data[i].photo = req.protocol + '://' +req.get('host') + data[i].photo;
               result.push(data[i]);
+            }
             if (result.length == 5) break;
           }
         }
