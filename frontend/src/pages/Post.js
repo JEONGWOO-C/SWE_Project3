@@ -23,31 +23,22 @@ const settings = {
   slidesToScroll: 1,
 };
 
-// const items = [logo, logo, logo, logo];
-// const items_num = 4;
-// function slider() {
-//   var array = [];
-//   for (var i = 0; i < items_num; i++) {
-//     array.push(
-//       <div>
-//         <img src={items[i]} width={'100%'} height={'100%'} alt="logo" />
-//       </div>
-//     )
-//   }
-//   return array;
-// }
-
-const setFav = async (id, postnum, isFavorite) => {
+const setFav = async (id, postnum, isFavorite, fav) => {
   const res = await axios.post("http://localhost:4000/setFavorite", {
     id: id,
     postnum: postnum,
     isFavorite: isFavorite,
+    fav: fav,
   });
   const { result, msg } = res.data;
   if (result === true) {
-    Swal.fire(msg, " ", "success");
+    Swal.fire(msg, " ", "success").then((result) => {
+      if (result.isConfirmed) window.location.reload();
+    });
   }
-  return result;
+  console.log(res);
+  if (isFavorite === true) return false;
+  else return true;
 };
 
 const Post = ({ history }) => {
@@ -195,9 +186,13 @@ const Post = ({ history }) => {
             >
               <BiHeart
                 style={{ width: "60px", height: "60px", paddingRight: "16px" }}
-                onclick={async (e) => {
-                  if (await setFav(userInfo.id, postnum, isFavorite))
-                    window.location.reload();
+                onClick={async (e) => {
+                  isFavorite = setFav(
+                    userInfo.id,
+                    postnum,
+                    isFavorite,
+                    postData.fav
+                  );
                 }}
               />
               <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
