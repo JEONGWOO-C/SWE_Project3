@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import { updateView } from "./clickPost";
+import { updateView, updateRecentPosts } from "./clickPost";
 
 export const ProductWrapper = styled.div`
   display: flex;
@@ -37,6 +37,7 @@ export const Product = ({ item }) => {
     <ProducBody
       onClick={() => {
         updateView(item.views, item.postnum);
+        updateRecentPosts(item.postnum);
         navigate("/post", { state: { postnum: item.postnum } });
       }}
     >

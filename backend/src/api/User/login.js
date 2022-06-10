@@ -8,7 +8,6 @@ export default (app, connection) => {
       [id, pw],
       async (error, data) => {
         if (error) throw error;
-        console.log(data);
         const result = data[0] && data[0].id ? true : false;
         console.log("r : " + result);
         if (result === true) {
