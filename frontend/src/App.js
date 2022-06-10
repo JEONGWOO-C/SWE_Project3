@@ -10,6 +10,15 @@ import Wish from './pages/Wish';
 import Viewed from './pages/Viewed';
 import Talk from './pages/Talk';
 import CustCenter from './pages/CustCenter';
+import FAQ from './pages/FAQ';
+import ViewFAQ from './pages/ViewFAQ';
+import WriteFAQ from './pages/WriteFAQ';
+import Notice from './pages/Notice';
+import ViewNotice from './pages/ViewNotice';
+import WriteNotice from './pages/WriteNotice';
+import QnA from './pages/QnA';
+import ViewQnA from './pages/ViewQnA';
+import WriteQnA from './pages/WriteQnA';
 import Sell from './pages/Sell';
 import MyPage from './pages/MyPage';
 
@@ -24,7 +33,7 @@ const Body = styled.div`
 class App extends Component {
   render() {
     return (
-      <Body style>
+      <Body style={{marginBottom: '500px'}}>
         <Nav />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -35,6 +44,15 @@ class App extends Component {
           <Route path='/viewed' element={<Viewed />} />
           <Route path='/talk' element={<Talk />} />
           <Route path='/custcenter' element={<CustCenter />} />
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='/viewFAQ/:data' element={<ViewFAQ />} />
+          <Route path='/writeFAQ' element={<WriteFAQ />} />
+          <Route path='/notice' element={<Notice />} />
+          <Route path='/viewNotice/:data' element={<ViewNotice />} />
+          <Route path='/writeNotice' element={<WriteNotice />} />
+          <Route path='/QnA' element={<QnA />} />
+          <Route path='/viewQnA/:data' element={<ViewQnA />} />
+          <Route path='/writeQnA' element={<WriteQnA />} />
           <Route path='/sell' element={<Sell />} />
           <Route path='/mypage' element={<MyPage />} />
         </Routes>
