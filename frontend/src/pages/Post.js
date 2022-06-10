@@ -70,7 +70,6 @@ const Post = ({ history }) => {
   var [postData, setPostData] = useState([]);
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
-  var [date, setdate] = useState([]);
 
   useEffect(() => {
     axios
