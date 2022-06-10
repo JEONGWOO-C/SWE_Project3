@@ -228,6 +228,9 @@ const Sell = ({}) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
+            onClick={async (e)=>{
+              navigate(-1)
+            }}
           >
             취소
           </button>
