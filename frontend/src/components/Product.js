@@ -34,7 +34,7 @@ export const Product = ({ item }) => {
   return (
     <ProducBody
       onClick={() => {
-        navigate("/post");
+        navigate("/post", { state: {postnum: item.postnum}});
       }}
     >
       <div>
