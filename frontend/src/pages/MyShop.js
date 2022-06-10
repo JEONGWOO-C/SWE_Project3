@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CardWrapper, CardHeading, CardBody } from "../components/Card";
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
-import { getInfoFromCookie } from "../components/Auth";
+import { getInfoFromCookie, getTokenFromCookie } from "../components/Auth";
 import { Title, PrintProducts } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -15,15 +15,15 @@ const Body = styled.div`
 `;
 
 const MyShop = ({ history }) => {
-  const info = getInfoFromCookie();
+  const token = getTokenFromCookie();
   const navigate = useNavigate();
   var [shopInfo, setShopInfo] = useState([]);
   var [userProducts, setUserProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/myShopInfo", {
-        headers: { token: info.token },
+      .get("http://localhost:4000/userInfo", {
+        headers: { token: token },
       })
       .then(({ data }) => setShopInfo(data[0]));
   }, []);
@@ -31,7 +31,7 @@ const MyShop = ({ history }) => {
   useEffect(() => {
     axios
       .get("http://localhost:4000/userProducts", {
-        headers: { token: info.token },
+        headers: { token: token },
       })
       .then(({ data }) => setUserProducts(data));
   }, []);
@@ -60,7 +60,7 @@ const MyShop = ({ history }) => {
             }}
           >
             {/* 사용자 이름 */}
-            <CardHeading style={{ width: "33%" }}>{info.name}</CardHeading>
+            <CardHeading style={{ width: "33%" }}>{shopInfo.name}</CardHeading>
 
             {/* 마이페이지로 이동하는 버튼 */}
             <CardHeading>

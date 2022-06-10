@@ -3,8 +3,9 @@ import { CardWrapper, CardBody, CardButton } from "../components/Card";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getInfoFromCookie } from "../components/Auth";
+import { getTokenFromCookie } from "../components/Auth";
 import { BiUser, BiHeart } from "react-icons/bi";
+import Swal from "sweetalert2";
 import { useLocation } from "react-router";
 import axios from "axios";
 
@@ -36,24 +37,51 @@ const settings = {
 //   return array;
 // }
 
+const setFav = async (id, postnum, isFavorite) => {
+  const res = await axios.post("http://localhost:4000/setFavorite", {
+    id: id,
+    postnum: postnum,
+    isFavorite: isFavorite,
+  });
+  const { result, msg } = res.data;
+  if (result === true) {
+    Swal.fire(msg, " ", "success");
+  }
+  return result;
+};
+
 const Post = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
-  const sellerInfo = getInfoFromCookie();
-  console.log("게시글 번호 : " + postnum);
+  const token = getTokenFromCookie();
   var [postData, setPostData] = useState([]);
+  var [userInfo, setUserInfo] = useState([]);
+  var [isFavorite, setIsFavorite] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/getPostData", {
-        params: {
-          postnum: postnum,
-        },
+        params: { postnum: postnum },
       })
       .then(({ data }) => setPostData(data[0]));
   }, []);
 
-  console.log(postData);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/userInfo", {
+        headers: { token: token },
+      })
+      .then(({ data }) => setUserInfo(data[0]));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFavorite", {
+        headers: { token: token },
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => setIsFavorite(data));
+  }, []);
 
   return (
     <Body style={{}}>
@@ -116,7 +144,7 @@ const Post = ({ history }) => {
             </div>
             <div style={{ margin: "16px", width: "400px" }}>
               <div style={{ fontWeight: "bold", fontSize: "36px" }}>
-                {sellerInfo.name}
+                {userInfo.name}
               </div>
             </div>
             <div
@@ -126,7 +154,7 @@ const Post = ({ history }) => {
                 fontSize: "24px",
               }}
             >
-              0
+              {userInfo.score}
             </div>
           </div>
           <hr />
@@ -167,6 +195,10 @@ const Post = ({ history }) => {
             >
               <BiHeart
                 style={{ width: "60px", height: "60px", paddingRight: "16px" }}
+                onclick={async (e) => {
+                  if (await setFav(userInfo.id, postnum, isFavorite))
+                    window.location.reload();
+                }}
               />
               <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                 <CardButton
