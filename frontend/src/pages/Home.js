@@ -12,7 +12,6 @@ import {
   CardLink,
 } from "../components/Card";
 import styled from "styled-components";
-import logo from "../imgs/logo192.png"; // 예시 사진
 import { ProductWrapper, Product, Title } from "../components/Product";
 import axios from "axios";
 
@@ -27,14 +26,14 @@ const Home = ({ history }) => {
   var [popularPosts, setPopularPosts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/popularPosts")
+      .get("http://localhost:4000/todayPopularPosts")
       .then(({ data }) => setPopularPosts(data));
   }, []);
 
   var [recentPosts, setRecentPosts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:4000/recentPosts")
+      .get("http://localhost:4000/recentUploadedPosts")
       .then(({ data }) => setRecentPosts(data));
   }, []);
 
@@ -44,17 +43,13 @@ const Home = ({ history }) => {
         <Title>금일 인기 매물</Title>
         <ProductWrapper>
           {popularPosts.map((item) => (
-            <Product
-              item={item}
-            />
+            <Product item={item} />
           ))}
         </ProductWrapper>
         <Title>최근 등록된 매물</Title>
         <ProductWrapper>
           {recentPosts.map((item) => (
-            <Product
-              item={item}
-            />
+            <Product item={item} />
           ))}
         </ProductWrapper>
       </CardWrapper>
