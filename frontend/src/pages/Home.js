@@ -45,10 +45,7 @@ const Home = ({ history }) => {
         <ProductWrapper>
           {popularPosts.map((item) => (
             <Product
-              key={item.title}
-              img={item.photo}
-              name={item.title}
-              price={item.price + "원"}
+              item={item}
             />
           ))}
         </ProductWrapper>
@@ -56,10 +53,7 @@ const Home = ({ history }) => {
         <ProductWrapper>
           {recentPosts.map((item) => (
             <Product
-              key={item.title}
-              img={item.photo}
-              name={item.title}
-              price={item.price + "원"}
+              item={item}
             />
           ))}
         </ProductWrapper>

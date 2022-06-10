@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardWrapper } from "../components/Card";
+import { CardWrapper, CardHeading } from "../components/Card";
 import styled from "styled-components";
 import { ProductWrapper, Title, PrintProducts } from "../components/Product";
 import { useLocation } from "react-router";
@@ -34,7 +34,7 @@ const Category = ({ history }) => {
         <Title>{category}</Title>
         <ProductWrapper>
           {categoryPosts.length === 0
-            ? "해당 카테고리의 게시물이 존재하지 않습니다."
+            ? <CardHeading style={{width: '100%'}}>"해당 카테고리의 게시물이 존재하지 않습니다."</CardHeading>
             : PrintProducts(categoryPosts, categoryPosts.length, 5)}
         </ProductWrapper>
       </CardWrapper>
