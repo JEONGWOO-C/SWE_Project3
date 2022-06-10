@@ -13,7 +13,7 @@ import {
 } from '../components/Card';
 import styled from 'styled-components';
 import logo from '../imgs/logo192.png'; // 예시 사진
-import { ProductWrapper, Product, Title } from '../components/Product';
+import { PrintProducts, Product, Title } from '../components/Product';
 import { getInfoFromCookie } from '../components/Auth';
 import axios from "axios";
 
@@ -46,24 +46,9 @@ const Viewed = ({ history }) => {
         <Title>
           최근본상품
         </Title>
-        <ProductWrapper>
-          {recentView.map((item, ind) => {
-            if(ind<5)
-              return(
-                <Product
-                  item={item}
-                />)
-          })}
-        </ProductWrapper>
-        <ProductWrapper>
-          {recentView.map((item, ind) => {
-            if(ind>=5)
-              return(
-                <Product
-                  item={item}
-                />)
-          })}
-        </ProductWrapper>
+        {recentView.length === 0
+            ? <CardHeading style={{width: '100%'}}>"최근 본 상품이 존재하지 않습니다."</CardHeading>
+            : PrintProducts(recentView, recentView.length, 5)}
       </CardWrapper>
 
     </Body >
