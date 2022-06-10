@@ -6,6 +6,7 @@ import register, { id_check } from "./api/User/register.js";
 //import {kakao_register, naver_register, google_register} from './api/User/register.js';
 import popularPost from "./api/Post/popularPosts.js";
 import recentPosts from "./api/Post/recentPosts.js";
+import userRecentPosts from "./api/Post/userRecentPosts.js";
 import myShopInfo from "./api/User/myShopInfo.js";
 import userProducts from "./api/User/userProducts.js";
 import uploadPost from "./api/Post/uploadPost.js";
@@ -42,6 +43,7 @@ userProducts(app, connection);
 uploadPost(app, connection);
 wishlist(app, connection);
 categoryPosts(app, connection);
+userRecentPosts(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

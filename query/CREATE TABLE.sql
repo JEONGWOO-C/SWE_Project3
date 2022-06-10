@@ -100,7 +100,7 @@ CREATE TABLE agePreffered(
 #최근 본 게시물 table 
 DROP TABLE if exists recentPosts;
 CREATE TABLE recentPosts(
-	id varchar(32) not null primary key,
+	id varchar(32) not null,
     postnum int not null,
     viewDate datetime not null
 );
