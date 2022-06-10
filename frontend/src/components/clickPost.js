@@ -19,3 +19,13 @@ export const updateRecentPosts = async (postnum) => {
   const { result } = res.data;
   return result;
 };
+
+export const updateAgeGroupOfPost = async (postnum) => {
+  const token = getTokenFromCookie();
+  const res = await axios.get("http://localhost:4000/updateAgeGroupOfPost", {
+    headers: { token: token },
+    params: { postnum: postnum },
+  });
+  const { result } = res.data;
+  return result;
+};

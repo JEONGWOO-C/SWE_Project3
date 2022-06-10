@@ -1,5 +1,4 @@
 import auth from "../modules/auth.js";
-import userRecentViewedPosts from "../Post/userRecentViewedPosts.js";
 export default async (app, connection) => {
   app.get("/updateRecentPosts", auth);
   app.use("/updateRecentPosts", async (req, res, next) => {
