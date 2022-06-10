@@ -1,26 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink,
-} from "../components/Card";
+import { CardWrapper, CardHeading, CardBody } from "../components/Card";
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
-import logo from "../imgs/logo192.png"; // 예시 사진
 import { getInfoFromCookie } from "../components/Auth";
-import {
-  ProductWrapper,
-  Product,
-  Title,
-  PrintProducts,
-} from "../components/Product";
+import { Title, PrintProducts } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
