@@ -32,11 +32,9 @@ const Category = ({ history }) => {
     <Body style={{}}>
       <CardWrapper>
         <Title>{category}</Title>
-        <ProductWrapper>
           {categoryPosts.length === 0
             ? <CardHeading style={{width: '100%'}}>"해당 카테고리의 게시물이 존재하지 않습니다."</CardHeading>
             : PrintProducts(categoryPosts, categoryPosts.length, 5)}
-        </ProductWrapper>
       </CardWrapper>
     </Body>
   );

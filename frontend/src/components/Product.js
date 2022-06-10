@@ -63,6 +63,7 @@ export function PrintProduct(list, start, num) {
 export function PrintProducts(list, length, num) {
   let array = [];
   let i = 0;
+  console.log(parseInt(length / num))
   for (; i < parseInt(length / num); i++) {
     array.push(
       <ProductWrapper>{PrintProduct(list, num * i, num)}</ProductWrapper>
