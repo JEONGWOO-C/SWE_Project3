@@ -19,7 +19,7 @@ export const Body = styled.div`
 
 const WriteQnA = ({ history }) => {
   let navigate = useNavigate();
-  const [selectedValue,setSelectedValue] = useState(true);
+  const [IsOpen, setIsOpen] = useState(true);
 
   // function getSelectValue(){
   //   var secret = document.getElementsByName('secret');
@@ -31,7 +31,7 @@ const WriteQnA = ({ history }) => {
   //     else {
   //       setSelectedValue(false);
   //     }
-    
+
   // }
 
   return (
@@ -70,34 +70,26 @@ const WriteQnA = ({ history }) => {
         <SubTitle>
           공개여부
           <div style={{ marginLeft: '200px', marginTop: '-28px' }}>
-            <div className='select'>
-              <input
-                type='radio'
-                id='open'
-                value='open'
-                name='secret'
-                checked
-              />
-              <label for='open' 
-                onClick={()=>{setSelectedValue(true)}}
-              >공개</label>
-              <input
-                type='radio'
-                id='notopen'
-                value='notopen'
-                name='secret'
-              />
-              <label for='notopen'
-                onClick={()=>{setSelectedValue(false)}}
-              >비공개</label>
-            </div>
+
+            {IsOpen ?
+              <div style={{ display: 'flex', fontWeight:'500'}}>
+                <div style={{ height: '28px', width: '80px', textAlign: 'center', background: '#033a7a', color: '#fff' }} onClick={(e) => { setIsOpen(true) }}>공개</div>
+                <div style={{ height: '28px', width: '80px', textAlign: 'center', background: '#ddd' }} onClick={(e) => { setIsOpen(false) }}>비공개</div>
+              </div>
+              :
+              <div style={{ display: 'flex' }}>
+                <div style={{ height: '28px', width: '80px', textAlign: 'center', background: '#ddd'}} onClick={(e) => { setIsOpen(true) }}>공개</div>
+                <div style={{ height: '28px', width: '80px', textAlign: 'center', background: '#033a7a', color: '#fff' }} onClick={(e) => { setIsOpen(false) }}>비공개</div>
+              </div>
+            }
+
           </div>
         </SubTitle>
 
-        { selectedValue ? (
+        {IsOpen ? (
           <div />
         )
-        :
+          :
           <SubTitle>
             비밀번호
             <div style={{ marginTop: "-28px" }}>
