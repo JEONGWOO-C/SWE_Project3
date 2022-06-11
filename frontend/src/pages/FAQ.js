@@ -41,7 +41,6 @@ export const CardButton = styled.button`
 `;
 
 function printList(list, navigate) {
-  
   let array = [];
   for (let i = 0; i < list.length; i++) {
     array.push(

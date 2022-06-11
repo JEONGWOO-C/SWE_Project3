@@ -28,7 +28,7 @@ const adminlogin = async (id, pw) => {
     } else {
       logout();
       Swal.fire(
-        "로그인이 성공하였습니다.",
+        "로그인이 실패하였습니다.",
         "관리자 승인 대기중입니다.",
         "error"
       ).then((result) => {
