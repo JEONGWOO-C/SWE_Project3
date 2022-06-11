@@ -38,10 +38,7 @@ export const CardButton = styled.button`
 const info = getInfoFromCookie();
 
 let admin = false;
-if (info)
-  if (info.token)
-    admin = (info.token.type == 'admin')
-
+if (info) if (info.token) admin = info.token.type == "admin";
 
 const ViewFAQ = ({ history }) => {
   let navigate = useNavigate();
@@ -61,19 +58,29 @@ const ViewFAQ = ({ history }) => {
   return (
     <Body>
       <CardWrapper>
-        {FAQdata[0]?
-        <div className="View">
-          <div className="top_title">
-            <div id="title_txt">{FAQdata[0].title}</div>
-            <div className="date_div">{FAQdata[0].postDate.split('T')[0]}</div>
-          </div>
+        {FAQdata[0] ? (
+          <div className="View">
+            <div className="top_title">
+              <div id="title_txt">{FAQdata[0].title}</div>
+              <div className="date_div">
+                {FAQdata[0].postDate.split("T")[0]}
+              </div>
+            </div>
 
-          <div>
-            <div className="content">{FAQdata[0].postBody}</div>
+            <div>
+              <div className="content">{FAQdata[0].postBody}</div>
+            </div>
           </div>
-        </div>
-        :null}
-        {admin?<CardButton onClick={() => navigate("/modifyFAQ",{state:{FAQdata:FAQdata[0]}})}>수정하기</CardButton>:null}
+        ) : null}
+        {admin ? (
+          <CardButton
+            onClick={() =>
+              navigate("/modifyFAQ", { state: { postnum: postnum } })
+            }
+          >
+            수정하기
+          </CardButton>
+        ) : null}
         <CardButton onClick={() => navigate(-1)}>목록</CardButton>
       </CardWrapper>
     </Body>
