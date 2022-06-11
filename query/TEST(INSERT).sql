@@ -1,6 +1,6 @@
 USE market_db;
 
-INSERT users(name, phone, email, age, id, pw, info)
+INSERT users(username, phone, email, age, id, pw, info)
 VALUES
 ('임경택', '01011111111', 'tester1@market.com', 45, 'test1', 'test1111', '나는 임경택' ),
 ('조정우', '01022222222', 'tester2@market.com', 34, 'test2', 'test2222', ''),
@@ -104,6 +104,11 @@ VALUES
 ("구매는 어떻게 하면 되나요?", '2022-06-11', "알아서 하세요"),
 ("판매 상태 변경은 무엇인가요?", '2022-06-11', "나도 몰라요"),
 ("사기를 당했을땐 어덯게 하나요?", '2022-06-11', "ㅋㅋ 바보멍청이");
+
+INSERT NOTICE(title, postDate, postBody)
+VALUES
+("OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
+("현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
 
 INSERT QnA(writerID, title, postDate, postBody)
 VALUES

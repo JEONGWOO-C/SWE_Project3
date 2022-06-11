@@ -3,7 +3,7 @@ use market_db;
 #유저 정보 table
 DROP TABLE if exists users;
 CREATE TABLE users(
-	name varchar(16) not null,
+	username varchar(16) not null,
     phone varchar(11) not null,
     email varchar(32),
     age int not null,
@@ -11,6 +11,15 @@ CREATE TABLE users(
     pw varchar(16) not null,
     info varchar(512) default '',
     score int default 5 -- default 5 range 0 ~ 10
+);
+
+DROP TABLE if exists admins;
+CREATE TABLE admins(
+	adminname varchar(16) not null,
+    phone varchar(11) not null,
+    email varchar(32),
+    id varchar(32) not null primary key,
+    pw varchar(16) not null
 );
     
 #찜 table
@@ -143,22 +152,31 @@ CREATE trigger CHECK_USER_DATA
 	BEFORE INSERT on users
     FOR EACH ROW
     BEGIN
-		if new.id is null or "" then
-			SIGNAL SQLSTATE '10001' SET MESSAGE_TEXT = "아이디는 필수 입니다.";
-		elseif (NEW.id REGEXP '[A-za-z0-9]{5,15}') = 0 then
-			SIGNAL SQLSTATE '10002' SET MESSAGE_TEXT = "아이디는 영문이나 숫자고 길이는 5~15자 입니다.";
-		elseif new.pw is null or "" then
-			SIGNAL SQLSTATE '10003' SET MESSAGE_TEXT = "패스워드는 필수 입니다.";
+		if (NEW.id REGEXP '[A-za-z0-9]{5,15}') = 0 then
+			SIGNAL SQLSTATE '10001' SET MESSAGE_TEXT = "아이디는 영문이나 숫자고 길이는 5~15자 입니다.";
 		elseif (NEW.pw REGEXP '(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{8,20}') = 0 then 
-			SIGNAL SQLSTATE '10004' SET MESSAGE_TEXT = "비밀번호는 8~20자 최소 하나의 문자 및 하나의 숫자를 포함해야 합니다.";
-		elseif new.name is null or "" then
-			SIGNAL SQLSTATE '10005' SET MESSAGE_TEXT = "닉네임은 필수 입니다.";
+			SIGNAL SQLSTATE '10002' SET MESSAGE_TEXT = "비밀번호는 8~20자 최소 하나의 문자 및 하나의 숫자를 포함해야 합니다.";
 		elseif (NEW.phone REGEXP '[0-9]{9,12}' ) = 0 then
-			SIGNAL SQLSTATE '10006' SET MESSAGE_TEXT = "전화번호는 9~11자 입니다.";
+			SIGNAL SQLSTATE '10003' SET MESSAGE_TEXT = "전화번호는 9~11자 입니다.";
 		elseif (NEW.age REGEXP '[0-9]') = 0 then
-			SIGNAL SQLSTATE '10007' SET MESSAGE_TEXT = "나이는 숫자만 입력해주세요.";
+			SIGNAL SQLSTATE '10004' SET MESSAGE_TEXT = "나이는 숫자만 입력해주세요.";
 		elseif (NEW.age > 0 AND NEW.age < 150) = 0 then
-			SIGNAL SQLSTATE '10008' SET MESSAGE_TEXT = "나이는 1 ~ 150 사이의 값만 입력 가능합니다.";
+			SIGNAL SQLSTATE '10005' SET MESSAGE_TEXT = "나이는 1 ~ 150 사이의 값만 입력 가능합니다.";
+		end if;
+	END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE trigger CHECK_ADMIN_DATA
+	BEFORE INSERT on admins
+    FOR EACH ROW
+    BEGIN
+		if (NEW.id REGEXP '[A-za-z0-9]{5,15}') = 0 then
+			SIGNAL SQLSTATE '10001' SET MESSAGE_TEXT = "아이디는 영문이나 숫자고 길이는 5~15자 입니다.";
+		elseif (NEW.pw REGEXP '(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{8,20}') = 0 then 
+			SIGNAL SQLSTATE '10002' SET MESSAGE_TEXT = "비밀번호는 8~20자 최소 하나의 문자 및 하나의 숫자를 포함해야 합니다.";
+		elseif (NEW.phone REGEXP '[0-9]{9,12}' ) = 0 then
+			SIGNAL SQLSTATE '10003' SET MESSAGE_TEXT = "전화번호는 9~11자 입니다.";
 		end if;
 	END $$
 DELIMITER ;
