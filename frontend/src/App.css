@@ -56,7 +56,7 @@
 
 .list_grid_qna {
   display: grid;
-  grid-template-columns: 10% 55% 10% 15% 10%;
+  grid-template-columns: 10% 45% 10% 15% 10% 10%;
 }
 
 .list_data {
@@ -155,4 +155,35 @@
   padding: 15px 10px;
   min-height: 440px;
   border-bottom: solid 1px #ababab;
+}
+
+/* WriteQnA 라디오 버튼 커스텀 */
+.select {
+  padding: 0;
+}
+
+.select input[type=radio]{
+  display: none;
+}
+
+.select input[type=radio]+label{
+  display: inline-block;
+  cursor: pointer;
+  height: 28px;
+  width: 90px;
+  border: 1px solid #333;
+  line-height: 28px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.select input[type=radio]+label{
+  background-color: #fff;
+  color: #333;
+}
+
+.select input[type=radio]:checked+label{
+  background-color: #033a7a;
+  color: #fff;
 }

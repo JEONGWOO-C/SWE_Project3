@@ -70,6 +70,7 @@ const QnA = ({ history }) => {
             <div> 제목 </div>
             <div className="acenter"> 작성자 </div>
             <div className="acenter"> 날짜 </div>
+            <div className="acenter"> 공개여부 </div>
             <div className="acenter"> 답변상태 </div>
           </div>
 
