@@ -1,33 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  CardWrapper,
-} from '../components/Card';
-import {
-  Title,
-  SubTitle,
-  InputText
-} from './Sell';
-import styled from 'styled-components';
-import { Navigate } from 'react-router';
+import { CardWrapper } from "../components/Card";
+import { Title, SubTitle, InputText } from "./Sell";
+import styled from "styled-components";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export const Body = styled.div`
   display: flex;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: "center";
+  justify-content: "center";
   width: 100%;
 `;
+
+const modifynotice = async (title, body, postnum) => {
+  const res = await axios.post("http://localhost:4000/ModifyNotice", {
+    title: title,
+    body: body,
+    postnum: postnum,
+  });
+  if (res.data === true) {
+    Swal.fire(
+      "공지사항 수정에 성공하였습니다.",
+      "공지사항 페이지로 이동합니다.",
+      "success"
+    );
+    return true;
+  } else {
+    Swal.fire(
+      "공지사항 등록에 실패하였습니다.",
+      "제목및 내용을 입력해주세요. ",
+      "error"
+    );
+    return false;
+  }
+};
 
 const ModifyNotice = ({ history }) => {
   let navigate = useNavigate();
   const navigateState = useLocation().state;
-  const noticeData = navigateState && navigateState.noticeData;
+  const postnum = navigateState && navigateState.postnum;
+  var [title, setTitle] = useState([]);
+  var [body, setBody] = useState([]);
+  const [noticeData, setNoticeData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getNoticebyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => {
+        setNoticeData(data);
+        setBody(data.postBody);
+        setTitle(data.title);
+      });
+  }, []);
+
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          공지사항 수정
-        </Title>
+        <Title>공지사항 수정</Title>
 
         <SubTitle>
           제목
@@ -35,7 +67,8 @@ const ModifyNotice = ({ history }) => {
             <InputText
               placeholder="게시글 제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
-              value={noticeData?noticeData.title:null}
+              defaultValue={noticeData.length ? noticeData[0].title : ""}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
         </SubTitle>
@@ -52,7 +85,8 @@ const ModifyNotice = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
-              value={noticeData?noticeData.postBody:null}
+              defaultValue={noticeData.length ? noticeData[0].postBody : ""}
+              onChange={(e) => setBody(e.target.value)}
             />
           </div>
         </SubTitle>
@@ -70,7 +104,9 @@ const ModifyNotice = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate(-1)}}
+            onClick={() => {
+              navigate(-1);
+            }}
           >
             취소
           </button>
@@ -86,7 +122,13 @@ const ModifyNotice = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate('/notice')}}
+            onClick={async (e) => {
+              if (title === undefined) title = noticeData[0].title;
+              if (body === undefined) body = noticeData[0].postBody;
+              if (await modifynotice(title, body, postnum)) {
+                navigate("/notice");
+              }
+            }}
           >
             수정
           </button>
@@ -94,6 +136,6 @@ const ModifyNotice = ({ history }) => {
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ModifyNotice;

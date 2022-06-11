@@ -6,18 +6,7 @@ export default (app, connection) => {
   app.use("/UploadQnA", (req, res, next) => {
     const { title, body, password, IsOpen } = req.query;
     const { id } = req.query;
-    console.log(
-      "title : " +
-        title +
-        " body : " +
-        body +
-        " Isopne: " +
-        IsOpen +
-        " pw : " +
-        password
-    );
-    console.log(req);
-    console.log("length : " + password.length);
+
     var postDate = toSqlDatetime(new Date());
     if (
       title == "" ||
