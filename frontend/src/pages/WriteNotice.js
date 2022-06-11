@@ -1,32 +1,49 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  CardWrapper,
-} from '../components/Card';
-import {
-  Title,
-  SubTitle,
-  InputText
-} from './Sell';
-import styled from 'styled-components';
-import { Navigate } from 'react-router';
+import { CardWrapper } from "../components/Card";
+import { Title, SubTitle, InputText } from "./Sell";
+import styled from "styled-components";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export const Body = styled.div`
   display: flex;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: "center";
+  justify-content: "center";
   width: 100%;
 `;
 
+const UploadNotice = async (title, body) => {
+  const res = await axios.post("http://localhost:4000/UploadNotice", {
+    title: title,
+    body: body,
+  });
+  if (res.data === true) {
+    Swal.fire(
+      "공지사항 등록에 성공하였습니다.",
+      "FAQ페이지로 이동합니다.",
+      "success"
+    );
+    return true;
+  } else {
+    Swal.fire(
+      "공지사항 등록에 실패하였습니다.",
+      "제목및 내용을 입력해주세요. ",
+      "error"
+    );
+    return false;
+  }
+};
+
 const WriteNotice = ({ history }) => {
   let navigate = useNavigate();
+  var [title, setTitle] = useState([]);
+  var [body, setBody] = useState([]);
 
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          공지사항 등록
-        </Title>
+        <Title>공지사항 등록</Title>
 
         <SubTitle>
           제목
@@ -34,6 +51,7 @@ const WriteNotice = ({ history }) => {
             <InputText
               placeholder="게시글 제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
         </SubTitle>
@@ -50,6 +68,7 @@ const WriteNotice = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
+              onChange={(e) => setBody(e.target.value)}
             />
           </div>
         </SubTitle>
@@ -67,7 +86,9 @@ const WriteNotice = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate(-1)}}
+            onClick={() => {
+              navigate(-1);
+            }}
           >
             취소
           </button>
@@ -83,7 +104,11 @@ const WriteNotice = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate('/notice')}}
+            onClick={async (e) => {
+              if (await UploadNotice(title, body)) {
+                navigate("/notice");
+              }
+            }}
           >
             등록
           </button>
@@ -91,6 +116,6 @@ const WriteNotice = ({ history }) => {
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default WriteNotice;

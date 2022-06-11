@@ -27,6 +27,9 @@ import adminRegister, { Adminid_check } from "./api/Admin/adminRegister.js";
 import adminLogin from "./api/Admin/adminLogin.js";
 import getFAQbyPostnum from "./api/CustomerCenter/getFAQbyPostnum.js";
 import getNoticebyPostnum from "./api/CustomerCenter/getNoticebyPostnum.js";
+import UploadQnA from "./api/CustomerCenter/UploadQnA.js";
+import UploadFAQ from "./api/CustomerCenter/UploadFAQ.js";
+import UploadNotice from "./api/CustomerCenter/UploadNotice.js";
 
 const connection = init();
 const app = express();
@@ -78,6 +81,9 @@ Adminid_check(app, connection);
 adminLogin(app, connection);
 getFAQbyPostnum(app, connection);
 getNoticebyPostnum(app, connection);
+UploadQnA(app, connection);
+UploadFAQ(app, connection);
+UploadNotice(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
