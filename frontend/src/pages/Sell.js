@@ -15,6 +15,7 @@ import {
 import styled from "styled-components";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { getInfoFromCookie } from "../components/Auth";
 
 const Body = styled.div`
   display: flex;
@@ -71,17 +72,17 @@ const upload = async (img, title, category, price, description) => {
       "\ndescription : " +
       description
   );
-
+  var info = getInfoFromCookie();
   var uploadData = new FormData();
   uploadData.append("title", title);
   uploadData.append("category", category);
   uploadData.append("price", price);
   uploadData.append("description", description);
-  uploadData.append("seller_id", "test");
   uploadData.append("img_file", img);
   const res = await axios.post("http://localhost:4000/sell_write", uploadData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      token : info.token
     },
   });
   console.log("결과");

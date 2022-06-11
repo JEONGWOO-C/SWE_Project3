@@ -19,6 +19,18 @@ export const sign = (id, pw) => {
   return result;
 };
 
+export const id_protect = (id) => {
+  const payload = {
+    id: id
+  };
+  const result = {
+    //sign메소드를 통해 access token 발급!
+    token: jwt.sign(payload, secretKey, options),
+    refreshToken: randToken.uid(256),
+  };
+  return result;
+};
+
 export const verify = (token) => {
   let decoded;
   try {

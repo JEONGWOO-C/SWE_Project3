@@ -72,7 +72,7 @@ CREATE TABLE chats(
 	seller_id varchar(32) not null,		# 판매자 아이디
 	buyer_id varchar(32) not null,		# 구매자 아이디
 	writer varchar(32) not null,		# 작성자 아이디
-	postnum int not null primary key,	# 게시글 번호
+	postnum int not null,	# 게시글 번호
     msg varchar(32) not null,			# 채팅 내용
     chatDate datetime not null			# 채팅 작성 시간
     );

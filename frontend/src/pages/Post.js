@@ -3,10 +3,10 @@ import { CardWrapper, CardBody, CardButton } from "../components/Card";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getTokenFromCookie } from "../components/Auth";
+import { getInfoFromCookie, getTokenFromCookie } from "../components/Auth";
 import { BiUser, BiHeart } from "react-icons/bi";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
 
 const Body = styled.div`
@@ -83,6 +83,7 @@ const Post = ({ history }) => {
   var [postData, setPostData] = useState([]);
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
+  var navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -239,6 +240,9 @@ const Post = ({ history }) => {
                     backgroundColor: "#033a7a",
                     color: "white",
                   }}
+                  onClick={()=>{
+                    navigate("/talk", { state: { postnum: postnum } })}
+                  }
                 >
                   채팅하기
                 </CardButton>
