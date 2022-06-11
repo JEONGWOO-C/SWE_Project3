@@ -21,6 +21,7 @@ import updateAgeGroupOfPost from "./api/Post/updateAgeGroupOfPost.js";
 import searchPost from "./api/Post/searchPost.js";
 import { addChat, showChat, getSeller } from "./api/Chat/chat.js";
 import getFAQ from "./api/CustomerCenter/getFAQ.js";
+import getNotice from "./api/CustomerCenter/getNotice.js";
 
 const connection = init();
 const app = express();
@@ -64,6 +65,7 @@ showChat(app, connection);
 addChat(app, connection);
 getSeller(app, connection);
 getFAQ(app, connection);
+getNotice(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
