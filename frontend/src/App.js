@@ -25,11 +25,13 @@ import Post from './pages/Post';
 import Category from './pages/Category';
 import SalesDetail from './pages/SalesDetail';
 import PurchaseDetail from './pages/PurchaseDetail';
-import Admin from './pages/Admin';
+import MemberManagement from './pages/MemberManagement';
+import AdminManagement from './pages/AdminManagement';
+
 import Search from './pages/Search';
 import AdminLogin from './pages/AdminLogin';
 import AdminRegister from './pages/AdminRegister';
-
+import ConfirmReport from './pages/ConfirmReport';
 
 
 import './App.css';
@@ -69,7 +71,9 @@ class App extends Component {
           <Route path='/category' element={<Category />} />
           <Route path='/salesdetail' element={<SalesDetail />} />
           <Route path='/purchasedetail' element={<PurchaseDetail />} />
-          <Route path='/admin' element={<Admin />} />
+          <Route path='/membermanagement' element={<MemberManagement />} />
+          <Route path='/adminmanagement' element={<AdminManagement />} />
+          <Route path='/confirmreport' element={<ConfirmReport />} />
           <Route path='/search' element={<Search />} />
           <Route path='/adminlogin' element={<AdminLogin />} />
           <Route path='/adminregister' element={<AdminRegister />} />
