@@ -4,14 +4,12 @@ export default async (app, connection) => {
     const { postnum } = req.body;
     const { isFavorite } = req.body;
     const { fav } = req.body;
-    console.log("fav : " + fav);
 
     if (isFavorite) {
       connection.query(
         "DELETE FROM favorite WHERE id = ? AND postnum = ?;",
         [id, postnum],
         (error, data) => {
-          console.log(data);
           if (error) console.log(error);
           else {
             connection.query(
@@ -30,7 +28,6 @@ export default async (app, connection) => {
         "INSERT into favorite(id, postnum) values(?,?);",
         [id, postnum],
         (error, data) => {
-          console.log(data);
           if (error) console.log(error);
           else {
             connection.query(

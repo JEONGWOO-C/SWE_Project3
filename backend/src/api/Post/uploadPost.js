@@ -1,7 +1,8 @@
 import fs from "fs";
 import multer from "multer";
+import auth from "../modules/auth.js";
 
-export const toSqlDatetime = (date) => {
+function toSqlDatetime(date){
   const dateWithOffest = new Date(
     date.getTime() - date.getTimezoneOffset() * 60000
   );
@@ -21,7 +22,7 @@ var storage = multer.diskStorage({
     cb(null, up_path);
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now());
+    cb(null, Date.now()+'.jpg');
   },
 });
 var upload = multer({ storage: storage });
@@ -34,11 +35,13 @@ function FileUpload(req, res, next) {
   }
 }
 
-export default (app, connection) => {
-  app.post("/sell_write", FileUpload, function (req, res, next) {
+export default async (app, connection) => {
+  app.post("/sell_write", auth);
+  app.use("/sell_write", FileUpload, function (req, res, next) {
     var postDate_obj = new Date();
     const postDate = toSqlDatetime(postDate_obj);
-    const { title, price, category, description, seller_id } = req.body;
+    const { id } = req.query;
+    const { title, price, category, description } = req.body;
     var img_file = "";
 
     console.log("file : ", req.file);
@@ -65,7 +68,7 @@ export default (app, connection) => {
               price,
               category,
               description,
-              seller_id,
+              id,
             ];
             console.log("product datas : ", productDatas);
 

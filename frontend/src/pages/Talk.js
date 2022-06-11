@@ -13,6 +13,11 @@ import {
 } from '../components/Card';
 import { BiUser, BiCog } from "react-icons/bi";
 import styled from 'styled-components';
+import { useLocation } from 'react-router';
+import axios from 'axios';
+import { getInfoFromCookie } from '../components/Auth';
+import { Speech } from '../components/speech';
+import { CardButton } from './FAQ';
 
 const Body = styled.div`
   display: flex;
@@ -20,16 +25,6 @@ const Body = styled.div`
   justify-content: 'center';
   width: 100%;
 `;
-<<<<<<< Updated upstream
-
-const Talk = ({ history }) => {
-  return(
-  
-    <Body style={{}}>
-      <CardWrapper>
-        OO톡
-      </CardWrapper>
-=======
 
 const Talk = ({ history }) => {
   const navigateState = useLocation().state;
@@ -124,8 +119,6 @@ const Talk = ({ history }) => {
           </div>
         </div>
       </CardWrapper>
-
->>>>>>> Stashed changes
     </Body>
   )
 }

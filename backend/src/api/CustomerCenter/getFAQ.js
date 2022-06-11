@@ -1,11 +1,8 @@
-import auth from "../modules/auth.js";
 export default async (app, connection) => {
-  app.get("/userInfo", auth);
-  app.use("/userInfo", async (req, res, next) => {
-    const { id } = req.query;
+  app.use("/getFAQ", async (req, res, next) => {
     await connection.query(
-      "SELECT * FROM users WHERE id = ?;",
-      [id],
+      "SELECT postnum, title, postDate FROM FAQ;",
+      [],
       (error, data) => {
         if (error) console.log(error);
         const result = data;

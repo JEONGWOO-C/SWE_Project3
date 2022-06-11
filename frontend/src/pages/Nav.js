@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { useNavigate, withRouter } from "react-router";
 import "../dropdown.css";
 import { getInfoFromCookie, logout } from "../components/Auth";
+import { searchPost } from "../components/searchPost";
 import Swal from "sweetalert2";
 
 const Body = styled.div`
@@ -59,6 +60,14 @@ const Nav = ({ history }) => {
   const info = getInfoFromCookie();
   const navigate = useNavigate();
   const [page, setPage] = useState(window.location.pathname);
+  const [searchWord, setSearchWord] = useState("");
+  const onKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      const result = await searchPost(searchWord);
+      console.log(result);
+      navigate("/search", {state:{search:searchWord, result: result}})
+    }
+  };
 
   //카테고리 드롭다운
   const dropdownRef = useRef(null);
@@ -123,7 +132,8 @@ const Nav = ({ history }) => {
     }
     return array;
   }
-
+  // admin값이 true면 admin 네비게이션
+  let admin = false;
   return (
     <Body>
       <CardWrapper
@@ -138,7 +148,7 @@ const Nav = ({ history }) => {
                 paddingTop: "4px",
                 paddingRight: "20px",
                 fontSize: "36px",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={() => {
                 navigate("/");
@@ -152,7 +162,12 @@ const Nav = ({ history }) => {
                 width: "400px",
               }}
             >
-              <CardInput placeholder="검색어를 입력하세요" type="text" />
+              <CardInput
+                placeholder="검색어를 입력하세요"
+                type="text"
+                onChange={(e) => setSearchWord(e.target.value)}
+                onKeyPress={onKeyPress}
+              />
             </CardFieldset>
             {info ? (
               <TitleWrapper>
@@ -166,14 +181,16 @@ const Nav = ({ history }) => {
                 >
                   로그아웃
                 </CardBody>
-                <CardBody
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    navigate("/mypage");
-                  }}
-                >
-                  마이페이지
-                </CardBody>
+                {admin ? null : (
+                  <CardBody
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      navigate("/mypage");
+                    }}
+                  >
+                    마이페이지
+                  </CardBody>
+                )}
               </TitleWrapper>
             ) : (
               <TitleWrapper>
@@ -214,24 +231,36 @@ const Nav = ({ history }) => {
               width: "700px",
             }}
           >
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                info ? (
-                  <div>{navigate("/myshop")}</div>
-                ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
-                );
-              }}
-            >
-              내상점
-            </CardBody>
+            {admin ? (
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  <div>{navigate("/admin")}</div>;
+                }}
+              >
+                회원 관리
+              </CardBody>
+            ) : (
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? (
+                    <div>{navigate("/myshop")}</div>
+                  ) : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
+                }}
+              >
+                내상점
+              </CardBody>
+            )}
+
             <CardBody
               style={{ cursor: "pointer" }}
               onClick={() => {

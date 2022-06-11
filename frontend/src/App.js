@@ -23,6 +23,14 @@ import Sell from './pages/Sell';
 import MyPage from './pages/MyPage';
 import Post from './pages/Post';
 import Category from './pages/Category';
+import SalesDetail from './pages/SalesDetail';
+import PurchaseDetail from './pages/PurchaseDetail';
+import Admin from './pages/Admin';
+import Search from './pages/Search';
+import AdminLogin from './pages/AdminLogin';
+import AdminRegister from './pages/AdminRegister';
+
+
 
 import './App.css';
 
@@ -35,12 +43,12 @@ const Body = styled.div`
 class App extends Component {
   render() {
     return (
-      <Body style={{marginBottom:'500px'}}>
+      <Body style={{ marginBottom: '500px' }}>
         <Nav />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login/>} />
+          <Route path='/login' element={<Login />} />
           <Route path='/myshop' element={<MyShop />} />
           <Route path='/wish' element={<Wish />} />
           <Route path='/viewed' element={<Viewed />} />
@@ -59,6 +67,13 @@ class App extends Component {
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/post' element={<Post />} />
           <Route path='/category' element={<Category />} />
+          <Route path='/salesdetail' element={<SalesDetail />} />
+          <Route path='/purchasedetail' element={<PurchaseDetail />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/search' element={<Search />} />
+          <Route path='/adminlogin' element={<AdminLogin />} />
+          <Route path='/adminregister' element={<AdminRegister />} />
+
 
         </Routes>
       </Body>

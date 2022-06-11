@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -11,13 +11,11 @@ import {
   CardSelect,
   CardSelectOption,
   CardLink,
-} from '../components/Card';
-import {
-  Body,
-  Title
-} from './CustCenter';
-import '../App.css'
-import styled from 'styled-components';
+} from "../components/Card";
+import { Body, Title } from "./CustCenter";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
 
 export const CardButton = styled.button`
   display: block;
@@ -42,43 +40,51 @@ export const CardButton = styled.button`
   }
 `;
 
+function printList(list, navigate) {
+  
+  let array = [];
+  for (let i = 0; i < list.length; i++) {
+    array.push(
+      <div className="list_grid list_data" 
+        style={{cursor: 'pointer', marginTop:'4px'}}
+        onClick={()=>{navigate("/viewFAQ/"+list[i].postnum, {state:{postnum:list[i].postnum}})}}>
+        <div className="acenter"> {list[i].postnum} </div>
+        <div className="text-link"> {list[i].title} </div>
+        <div className="acenter"> {list[i].postDate.split('T')[0]} </div>
+      </div>
+    )
+  }
+  return array;
+}
+
 const FAQ = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
-  const listNum = [1, 2];
-  const view_url = '/viewFAQ/' + listNum[0];
+  var [FAQlist, setFAQlist] = useState([]);
+  console.log(FAQlist);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFAQ", {})
+      .then(({ data }) => setFAQlist(data));
+  }, []);
 
   let navigate = useNavigate();
 
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          FAQ
-        </Title>
+        <Title>FAQ</Title>
 
-        <div className='List'>
-          <div className='list_grid list_tit'>
-            <div className='acenter'> 번호 </div>
+        <div className="List">
+          <div className="list_grid list_tit">
+            <div className="acenter"> 번호 </div>
             <div> 제목 </div>
-            <div className='acenter'> 날짜 </div>
+            <div className="acenter"> 날짜 </div>
           </div>
-
-          <div className='list_grid list_data'>
-            <div className='acenter'> { listNum[0] } </div>
-            <div><Link to={ view_url } className='text-link'> 구매는 어떻게 하면 되나요? </Link></div>
-            <div className='acenter'> 2022-06-10 </div>
-          </div>
-
-          <div className='list_grid list_data'>
-            <div className='acenter'> { listNum[1] } </div>
-            <div><Link to={ view_url } className='text-link'> 판매 상태 변경은 무엇인가요? </Link></div>
-            <div className='acenter'> 2022-06-10 </div>
-          </div>
+          {printList(FAQlist, navigate)}
         </div>
 
-        <CardButton onClick={()=>navigate('/writeFAQ')}>
-          FAQ 등록
-        </CardButton>
+        <CardButton onClick={() => navigate("/writeFAQ")}>FAQ 등록</CardButton>
       </CardWrapper>
     </Body>
   );

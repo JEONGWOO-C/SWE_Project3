@@ -17,6 +17,13 @@ import getFavorite from "./api/User/getFavorite.js";
 import setFavorite from "./api/User/setFavorite.js";
 import updateView from "./api/Post/updateView.js";
 import updateRecentPosts from "./api/User/updateRecentPosts.js";
+import updateAgeGroupOfPost from "./api/Post/updateAgeGroupOfPost.js";
+import searchPost from "./api/Post/searchPost.js";
+import { addChat, showChat, getSeller } from "./api/Chat/chat.js";
+import getFAQ from "./api/CustomerCenter/getFAQ.js";
+import getNotice from "./api/CustomerCenter/getNotice.js";
+import getQnA from "./api/CustomerCenter/getQnA.js";
+import adminRegister, { Adminid_check } from "./api/Admin/adminRegister.js";
 
 const connection = init();
 const app = express();
@@ -54,6 +61,16 @@ getFavorite(app, connection);
 setFavorite(app, connection);
 updateView(app, connection);
 updateRecentPosts(app, connection);
+updateAgeGroupOfPost(app, connection);
+searchPost(app, connection);
+showChat(app, connection);
+addChat(app, connection);
+getSeller(app, connection);
+getFAQ(app, connection);
+getNotice(app, connection);
+getQnA(app, connection);
+adminRegister(app, connection);
+Adminid_check(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

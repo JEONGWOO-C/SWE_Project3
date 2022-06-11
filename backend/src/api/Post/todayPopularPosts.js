@@ -27,7 +27,6 @@ export default async (app, connection) => {
             if (result.length == 5) break;
           }
         }
-        console.log(result);
         return res.send(result);
       }
     );
