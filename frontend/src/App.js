@@ -27,6 +27,9 @@ import SalesDetail from './pages/SalesDetail';
 import PurchaseDetail from './pages/PurchaseDetail';
 import Admin from './pages/Admin';
 import Search from './pages/Search';
+import AdminLogin from './pages/AdminLogin';
+import AdminRegister from './pages/AdminRegister';
+
 
 
 import './App.css';
@@ -68,6 +71,8 @@ class App extends Component {
           <Route path='/purchasedetail' element={<PurchaseDetail />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/search' element={<Search />} />
+          <Route path='/adminlogin' element={<AdminLogin />} />
+          <Route path='/adminregister' element={<AdminRegister />} />
 
 
         </Routes>

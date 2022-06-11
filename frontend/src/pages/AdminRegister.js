@@ -68,7 +68,7 @@ const Register = ({}) => {
     <div>
       <CardWrapper>
         <CardHeader>
-          <CardHeading>회원가입</CardHeading>
+          <CardHeading>관리자 회원가입</CardHeading>
         </CardHeader>
 
         <CardBody>
@@ -129,17 +129,8 @@ const Register = ({}) => {
               onChange={(e) => setName(e.target.value)}
             />
           </CardFieldset>
-
-          <CardFieldset>
-            <CardTitle>나이</CardTitle>
-            <CardInput
-              placeholder="숫자로만 입력 ex) 23"
-              type="text"
-              onChange={(e) => setAge(e.target.value)}
-            />
-          </CardFieldset>
           <div style={{padding: '32px', textAlign: 'center'}}>
-          이미 계정이 있습니다. <a onClick={()=>(navigate('/login'))} style={{fontWeight: 'bold', fontSize: '18px', cursor: 'pointer', textDecoration: 'underline'}}>로그인 페이지</a>로 이동.
+          관리자 회원가입 페이지 입니다. 관리자가 아니라면 <a onClick={()=>(navigate('/register'))} style={{fontWeight: 'bold', fontSize: '18px', cursor: 'pointer', textDecoration: 'underline'}}>사용자 회원가입 페이지</a>로 이동하시길 바랍니다.
           </div>
           <CardFieldset>
             <CardButton

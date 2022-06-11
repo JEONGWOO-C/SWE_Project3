@@ -44,7 +44,7 @@ const Login = ({}) => {
     <div>
       <CardWrapper>
         <CardHeader>
-          <CardHeading>사용자 로그인</CardHeading>
+          <CardHeading>관리자 로그인</CardHeading>
         </CardHeader>
 
         <CardBody>
@@ -78,11 +78,11 @@ const Login = ({}) => {
           </CardFieldset>
 
           <CardFieldset>
-            <CardLink to="/register">회원가입</CardLink>
+            <CardLink to="/adminregister">관리자 회원가입</CardLink>
           </CardFieldset>
 
           <CardFieldset>
-            <CardLink to="/adminlogin">관리자 이신가요?</CardLink>
+            <CardLink to="/login">관리자가 아닙니다.</CardLink>
           </CardFieldset>
         </CardBody>
       </CardWrapper>
