@@ -105,6 +105,15 @@ CREATE TABLE recentPosts(
     viewDate datetime not null
 );
 
+#고객 센터 FAQ table
+DROP TABLE IF EXISTS FAQ;
+CREATE TABLE FAQ(
+	postnum int not null primary key auto_increment,
+    title varchar(32) not null,
+    postDate date not null,		-- 게시글 작성시간
+    postBody varchar(512)
+);
+
 
 -- Triger -- 
 
