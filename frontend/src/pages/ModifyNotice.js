@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CardWrapper } from "../components/Card";
 import { Title, SubTitle, InputText } from "./Sell";
 import styled from "styled-components";
@@ -13,22 +13,22 @@ export const Body = styled.div`
   width: 100%;
 `;
 
-const UploadFAQ = async (title, body) => {
-  const res = await axios.post("http://localhost:4000/UploadFAQ", {
+const modifynotice = async (title, body, postnum) => {
+  const res = await axios.post("http://localhost:4000/ModifyNotice", {
     title: title,
     body: body,
+    postnum: postnum,
   });
-  console.log(res);
   if (res.data === true) {
     Swal.fire(
-      "FAQ 등록에 성공하였습니다.",
-      "FAQ페이지로 이동합니다.",
+      "공지사항 수정에 성공하였습니다.",
+      "공지사항 페이지로 이동합니다.",
       "success"
     );
     return true;
   } else {
     Swal.fire(
-      "FAQ 등록에 실패하였습니다.",
+      "공지사항 등록에 실패하였습니다.",
       "제목및 내용을 입력해주세요. ",
       "error"
     );
@@ -36,15 +36,30 @@ const UploadFAQ = async (title, body) => {
   }
 };
 
-const WriteFAQ = ({ history }) => {
+const ModifyNotice = ({ history }) => {
   let navigate = useNavigate();
+  const navigateState = useLocation().state;
+  const postnum = navigateState && navigateState.postnum;
   var [title, setTitle] = useState([]);
   var [body, setBody] = useState([]);
+  const [noticeData, setNoticeData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getNoticebyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => {
+        setNoticeData(data);
+        setTitle(data.title);
+        setBody(data.postBody);
+      });
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
-        <Title>FAQ 등록</Title>
+        <Title>공지사항 수정</Title>
 
         <SubTitle>
           제목
@@ -52,6 +67,7 @@ const WriteFAQ = ({ history }) => {
             <InputText
               placeholder="게시글 제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
+              defaultValue={noticeData.length ? noticeData[0].title : ""}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -69,6 +85,7 @@ const WriteFAQ = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
+              defaultValue={noticeData.length ? noticeData[0].postBody : ""}
               onChange={(e) => setBody(e.target.value)}
             />
           </div>
@@ -106,12 +123,14 @@ const WriteFAQ = ({ history }) => {
               boxShadow: 0,
             }}
             onClick={async (e) => {
-              if ((await UploadFAQ(title, body)) === true) {
-                navigate("/faq");
+              if (title === undefined) title = noticeData[0].title;
+              if (body === undefined) body = noticeData[0].postBody;
+              if (await modifynotice(title, body, postnum)) {
+                navigate("/notice");
               }
             }}
           >
-            등록
+            수정
           </button>
         </div>
       </CardWrapper>
@@ -119,4 +138,4 @@ const WriteFAQ = ({ history }) => {
   );
 };
 
-export default WriteFAQ;
+export default ModifyNotice;

@@ -19,7 +19,8 @@ CREATE TABLE admins(
     phone varchar(11) not null,
     email varchar(32),
     id varchar(32) not null primary key,
-    pw varchar(16) not null
+    pw varchar(16) not null,
+    isApproved boolean default false
 );
     
 #찜 table
@@ -78,12 +79,19 @@ CREATE TABLE comments(
 # chats 
 DROP TABLE if exists chats;
 CREATE TABLE chats(
+	writer varchar(32) not null,		# 작성자 아이디
+    msg varchar(32) not null,			# 채팅 내용
+    chatDate datetime not null,			# 채팅 작성 시간
+    roomNumber int not null				# 
+    );
+    
+# chatsRoom 
+DROP TABLE if exists chatsRoom;
+CREATE TABLE chatRoom(
 	seller_id varchar(32) not null,		# 판매자 아이디
 	buyer_id varchar(32) not null,		# 구매자 아이디
-	writer varchar(32) not null,		# 작성자 아이디
-	postnum int not null,	# 게시글 번호
-    msg varchar(32) not null,			# 채팅 내용
-    chatDate datetime not null			# 채팅 작성 시간
+	postnum int not null,				# 게시글 번호
+    roomNumber int default 1 primary key auto_increment	# 계시글번호 
     );
 
 # reports Table
@@ -139,7 +147,8 @@ CREATE TABLE QnA(
     title varchar(32) not null,
     postDate date not null,		-- 게시글 작성시간
     postBody varchar(512),
-    password varchar(8) default ''
+    isAnswered boolean default false,
+    pw varchar(4) 
 );
 
 -- Triger -- 

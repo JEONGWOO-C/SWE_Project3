@@ -7,6 +7,11 @@ VALUES
 ('이민석', '01033333333', 'tester3@market.com', 23, 'test3', 'test3333', ''),
 ('이세연', '01044444444', 'tester4@market.com', 12, 'test4', 'test4444', '');
 
+INSERT admins(adminname, phone, id, pw, isApproved)
+VALUES
+("관리자1", "01012345678", 'admin1', 'admin111', true),
+("관리자2", "01012345678", 'admin2', 'admin222', false);
+
 INSERT posts(title, postDate, views, fav)
 VALUES
 ('아이폰12미니', '2022-06-09 16:00:00', 10,1),
@@ -92,18 +97,22 @@ VALUES
 ('test2', 4, '2022-06-09 15:00:06'),
 ('test2', 1, '2022-06-09 18:00:06');
 
-INSERT chats(seller_id, buyer_id, writer, postnum, msg, chatDate)
+INSERT chats(writer, msg, chatDate, roomNumber)
 VALUES
-('test2','test1','test1', 11, '2341234', '2022-06-09 16:00:06'),
-('test2','test1','test2', 11, 'test', '2022-06-09 16:00:08'),
-('test2','test1','test1', 11, 'easwfager', '2022-06-09 16:00:10'),
-('test2','test1','test2', 11, 'test', '2022-06-09 16:01:06');
+('test1', '2341234', '2022-06-09 16:00:06', 1),
+('test2', 'test', '2022-06-09 16:00:08', 1),
+('test1', 'easwfager', '2022-06-09 16:00:10', 1),
+('test2', 'test', '2022-06-09 16:01:06', 1);
+
+INSERT chatRoom(seller_id, buyer_id, postnum, roomNumber)
+VALUES
+('test2','test1', 11, 1);
 
 INSERT FAQ(title, postDate, postBody)
 VALUES
 ("구매는 어떻게 하면 되나요?", '2022-06-11', "알아서 하세요"),
 ("판매 상태 변경은 무엇인가요?", '2022-06-11', "나도 몰라요"),
-("사기를 당했을땐 어덯게 하나요?", '2022-06-11', "ㅋㅋ 바보멍청이");
+("사기를 당했을땐 어떻게 하나요?", '2022-06-11', "ㅋㅋ 바보멍청이");
 
 INSERT NOTICE(title, postDate, postBody)
 VALUES
@@ -114,8 +123,3 @@ INSERT QnA(writerID, title, postDate, postBody)
 VALUES
 ("test2", "OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
 ("test2", "현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
-
-INSERT NOTICE(title, postDate, postBody)
-VALUES
-("OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
-("현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");

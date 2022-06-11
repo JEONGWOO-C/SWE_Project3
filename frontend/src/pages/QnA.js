@@ -41,6 +41,23 @@ export const CardButton = styled.button`
     transform: translate(0, -5px);
   }
 `;
+function printList(list, navigate) {
+  let array = [];
+  for (let i = 0; i < list.length; i++) {
+    array.push(
+      <div className="list_grid_qna list_data"
+        style={{ cursor: 'pointer', marginTop: '4px' }}
+        onClick={() => { navigate("/viewQnA/" + list[i].postnum, { state: { postnum: list[i].postnum } }) }}>
+        <div className="acenter"> {list[i].postnum} </div>
+        <div> {list[i].title} </div>
+        <div className="acenter"> {list[i].username} </div>
+        <div className="acenter"> {list[i].postDate.split('T')[0]} </div>
+        <div className="acenter"> {list[i].isAnswered ? '답변완료' : '대기중'}</div>
+      </div>
+    )
+  }
+  return array;
+}
 
 const QnA = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
@@ -49,15 +66,20 @@ const QnA = ({ history }) => {
 
   let navigate = useNavigate();
   const info = getInfoFromCookie();
-  console.log(info);
+
   var [QnAlist, setQnAlist] = useState([]);
   console.log(QnAlist);
-
+  console.log(info);
   useEffect(() => {
     axios
       .get("http://localhost:4000/getQnA", { headers: { token: info.token } })
       .then(({ data }) => setQnAlist(data));
   }, []);
+
+  let admin = false;
+  if (info)
+    if (info.token)
+      admin = (info.token.type == 'admin')
 
   return (
     <Body>
@@ -74,36 +96,18 @@ const QnA = ({ history }) => {
             <div className="acenter"> 답변상태 </div>
           </div>
 
-          <div className="list_grid_qna list_data">
-            <div className="acenter"> {listNum} </div>
-            <div>
-              <Link to={view_url} className="text-link">
-                {" "}
-                도와주세요{" "}
-              </Link>
-            </div>
-            <div className="acenter"> 이세연 </div>
-            <div className="acenter"> 2022-06-10 </div>
-            {/* 답변되면 완료로 */}
-            <div className="acenter"> 대기중 </div>
-          </div>
+          {printList(QnAlist, navigate)}
         </div>
 
+        {admin? null:
         <CardButton
           style={{ cursor: "pointer" }}
           onClick={() => {
-            info ? (
-              <div>{navigate("/writeQnA")}</div>
-            ) : (
-              <div>
-                {Swal.fire("로그인이 필요합니다.", "로그인 창으로 이동합니다.")}
-                {navigate("/login")}
-              </div>
-            );
+            { navigate("/writeQnA") }
           }}
         >
           문의 등록
-        </CardButton>
+        </CardButton>}
       </CardWrapper>
     </Body>
   );

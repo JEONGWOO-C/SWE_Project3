@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CardWrapper } from "../components/Card";
 import { Title, SubTitle, InputText } from "./Sell";
 import styled from "styled-components";
@@ -13,16 +13,16 @@ export const Body = styled.div`
   width: 100%;
 `;
 
-const UploadFAQ = async (title, body) => {
-  const res = await axios.post("http://localhost:4000/UploadFAQ", {
+const modifyfaq = async (title, body, postnum) => {
+  const res = await axios.post("http://localhost:4000/ModifyFAQ", {
     title: title,
     body: body,
+    postnum: postnum,
   });
-  console.log(res);
   if (res.data === true) {
     Swal.fire(
-      "FAQ 등록에 성공하였습니다.",
-      "FAQ페이지로 이동합니다.",
+      "FAQ 수정에 성공하였습니다.",
+      "FAQ 페이지로 이동합니다.",
       "success"
     );
     return true;
@@ -36,15 +36,32 @@ const UploadFAQ = async (title, body) => {
   }
 };
 
-const WriteFAQ = ({ history }) => {
+const ModifyFAQ = ({ history }) => {
   let navigate = useNavigate();
+  const navigateState = useLocation().state;
+  const postnum = navigateState && navigateState.postnum;
   var [title, setTitle] = useState([]);
   var [body, setBody] = useState([]);
+  const [FAQdata, setFAQdata] = useState([]);
+  console.log(title);
+  console.log(body);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFAQbyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => {
+        setFAQdata(data);
+        setTitle(data.title);
+        setBody(data.postBody);
+      });
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
-        <Title>FAQ 등록</Title>
+        <Title>FAQ 수정</Title>
 
         <SubTitle>
           제목
@@ -52,6 +69,7 @@ const WriteFAQ = ({ history }) => {
             <InputText
               placeholder="게시글 제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
+              defaultValue={FAQdata.length ? FAQdata[0].title : ""}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -69,6 +87,7 @@ const WriteFAQ = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
+              defaultValue={FAQdata.length ? FAQdata[0].postBody : ""}
               onChange={(e) => setBody(e.target.value)}
             />
           </div>
@@ -106,12 +125,14 @@ const WriteFAQ = ({ history }) => {
               boxShadow: 0,
             }}
             onClick={async (e) => {
-              if ((await UploadFAQ(title, body)) === true) {
+              if (title === undefined) title = FAQdata[0].title;
+              if (body === undefined) body = FAQdata[0].postBody;
+              if (await modifyfaq(title, body, postnum)) {
                 navigate("/faq");
               }
             }}
           >
-            등록
+            수정
           </button>
         </div>
       </CardWrapper>
@@ -119,4 +140,4 @@ const WriteFAQ = ({ history }) => {
   );
 };
 
-export default WriteFAQ;
+export default ModifyFAQ;

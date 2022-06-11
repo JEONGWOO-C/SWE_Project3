@@ -4,7 +4,7 @@ export default async (app, connection) => {
   app.use("/wishlist", async (req, res, next) => {
     const { id } = req.query;
     await connection.query(
-      "SELECT PO.postnum, PO.title, PR.isSelling, PO.views, PO.fav, PO.postDate, PR.price, PH.photo FROM favorite F, posts PO, product PR, photos PH WHERE id = 'test2' AND F.postnum = PO.postnum AND F.postnum = PR.postnum AND F.postnum = PH.postnum ORDER BY PO.postDate desc;",
+      "SELECT PO.postnum, PO.title, PR.isSelling, PO.views, PO.fav, PO.postDate, PR.price, PH.photo FROM favorite F, posts PO, product PR, photos PH WHERE id = ? AND F.postnum = PO.postnum AND F.postnum = PR.postnum AND F.postnum = PH.postnum ORDER BY PO.postDate desc;",
       [id],
       (error, data) => {
         if (error) console.log(error);

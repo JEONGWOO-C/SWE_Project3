@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getInfoFromCookie, getTokenFromCookie } from "../components/Auth";
 import { BiUser, BiHeart } from "react-icons/bi";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -240,7 +241,7 @@ const Post = ({ history }) => {
               </div>
               <div style={{ margin: "16px", width: "400px" }}>
                 <div style={{ fontWeight: "bold", fontSize: "36px" }}>
-                  {postData.name}
+                  {postData.username}
                 </div>
               </div>
               <div
@@ -289,8 +290,9 @@ const Post = ({ history }) => {
                   paddingBottom: "8px",
                 }}
               >
-                <BiHeart
-                  style={{ width: "60px", height: "60px", paddingRight: "16px" }}
+                {isFavorite?
+                <BsHeartFill
+                  style={{ width: "60px", height: "60px", paddingRight: "16px", cursor: 'pointer', color:'red' }}
                   onClick={async (e) => {
                     isFavorite = setFav(
                       userInfo.id,
@@ -299,7 +301,17 @@ const Post = ({ history }) => {
                       postData.fav
                     );
                   }}
-                />
+                />:<BsHeart
+                style={{ width: "60px", height: "60px", paddingRight: "16px", cursor: 'pointer', color:'red' }}
+                onClick={async (e) => {
+                  isFavorite = setFav(
+                    userInfo.id,
+                    postnum,
+                    isFavorite,
+                    postData.fav
+                  );
+                }}
+              />}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   <CardButton
                     style={{

@@ -16,6 +16,8 @@ import { Body, Title } from "./CustCenter";
 import "../App.css";
 import styled from "styled-components";
 import axios from "axios";
+import { getInfoFromCookie } from "../components/Auth";
+
 
 export const CardButton = styled.button`
   display: block;
@@ -41,7 +43,6 @@ export const CardButton = styled.button`
 `;
 
 function printList(list, navigate) {
-  
   let array = [];
   for (let i = 0; i < list.length; i++) {
     array.push(
@@ -56,6 +57,13 @@ function printList(list, navigate) {
   }
   return array;
 }
+
+const info = getInfoFromCookie();
+
+let admin = false;
+  if(info)
+    if(info.token)
+      admin = (info.token.type=='admin')
 
 const FAQ = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
@@ -83,8 +91,8 @@ const FAQ = ({ history }) => {
           </div>
           {printList(FAQlist, navigate)}
         </div>
-
-        <CardButton onClick={() => navigate("/writeFAQ")}>FAQ 등록</CardButton>
+        {admin? <CardButton onClick={() => navigate("/writeFAQ")}>FAQ 등록</CardButton> : null}
+        
       </CardWrapper>
     </Body>
   );

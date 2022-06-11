@@ -11,19 +11,32 @@ import {
   CardLink,
 } from "../components/Card";
 import Swal from "sweetalert2";
-import { handleLogin } from "../components/Auth";
+import { handleAdminLogin, logout } from "../components/Auth";
 
-const login = async (id, pw) => {
-  const result = await handleLogin(id, pw);
-  console.log(result);
+const adminlogin = async (id, pw) => {
+  const { result, isApproved } = await handleAdminLogin(id, pw);
+  console.log(isApproved);
   if (result === true) {
-    Swal.fire("로그인이 성공하였습니다.", "환영합니다.", "success").then(
-      (result) => {
+    if (isApproved) {
+      Swal.fire("로그인이 성공하였습니다.", "환영합니다.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+    } else {
+      logout();
+      Swal.fire(
+        "로그인이 실패하였습니다.",
+        "관리자 승인 대기중입니다.",
+        "error"
+      ).then((result) => {
         if (result.isConfirmed) {
           window.location.reload();
         }
-      }
-    );
+      });
+    }
   } else {
     Swal.fire(
       "아이디 또는 비밀번호가 틀립니다.",
@@ -35,7 +48,7 @@ const login = async (id, pw) => {
   return result;
 };
 
-const Login = ({}) => {
+const AdminLogin = ({}) => {
   const [id, setID] = useState("");
   const [pw, setPassword] = useState("");
   let navigate = useNavigate();
@@ -68,7 +81,7 @@ const Login = ({}) => {
             <CardButton
               type="button"
               onClick={async (e) => {
-                if (await login(id, pw)) {
+                if (await adminlogin(id, pw)) {
                   navigate("/");
                 }
               }}
@@ -90,4 +103,4 @@ const Login = ({}) => {
   );
 };
 
-export default Login;
+export default AdminLogin;

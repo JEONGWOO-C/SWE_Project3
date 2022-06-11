@@ -1,45 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  CardWrapper,
-} from '../components/Card';
-import {
-  Title,
-  SubTitle,
-  InputText
-} from './Sell';
-import styled from 'styled-components';
+import { CardWrapper } from "../components/Card";
+import { Title, SubTitle, InputText } from "./Sell";
+import styled from "styled-components";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { getTokenFromCookie } from "../components/Auth";
 
 export const Body = styled.div`
   display: flex;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: "center";
+  justify-content: "center";
   width: 100%;
 `;
 
+const UploadQnA = async (title, body, password, IsOpen) => {
+  const token = getTokenFromCookie();
+  const res = await axios.get("http://localhost:4000/UploadQnA", {
+    headers: { token: token },
+    params: { title: title, body: body, password: password, IsOpen: IsOpen },
+  });
+  if (res.data === true) {
+    Swal.fire(
+      "Q&A 등록에 성공하였습니다.",
+      "Q&A페이지로 이동합니다.",
+      "success"
+    );
+    return true;
+  } else {
+    Swal.fire(
+      "Q&A 등록에 실패하였습니다.",
+      "제목및 내용, 패스워드를 입력해주세요. ",
+      "error"
+    );
+    return false;
+  }
+};
+
 const WriteQnA = ({ history }) => {
   let navigate = useNavigate();
-  const [selectedValue,setSelectedValue] = useState(true);
-
-  // function getSelectValue(){
-  //   var secret = document.getElementsByName('secret');
-  //   console.log('s'+secret);
-  //   console.log(secret);
-  //     if (secret[0].checked) {
-  //       setSelectedValue(true);
-  //     }
-  //     else {
-  //       setSelectedValue(false);
-  //     }
-    
-  // }
+  const [IsOpen, setIsOpen] = useState(true);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          문의사항 등록
-        </Title>
+        <Title>문의사항 등록</Title>
 
         <SubTitle>
           제목
@@ -47,6 +55,7 @@ const WriteQnA = ({ history }) => {
             <InputText
               placeholder="제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
         </SubTitle>
@@ -63,51 +72,92 @@ const WriteQnA = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
+              onChange={(e) => setBody(e.target.value)}
             />
           </div>
         </SubTitle>
 
         <SubTitle>
           공개여부
-          <div style={{ marginLeft: '200px', marginTop: '-28px' }}>
-            <div className='select'>
-              <input
-                type='radio'
-                id='open'
-                value='open'
-                name='secret'
-                checked
-              />
-              <label for='open' 
-                onClick={()=>{setSelectedValue(true)}}
-              >공개</label>
-              <input
-                type='radio'
-                id='notopen'
-                value='notopen'
-                name='secret'
-              />
-              <label for='notopen'
-                onClick={()=>{setSelectedValue(false)}}
-              >비공개</label>
-            </div>
+          <div style={{ marginLeft: "200px", marginTop: "-28px" }}>
+            {IsOpen ? (
+              <div style={{ display: "flex", fontWeight: "500" }}>
+                <div
+                  style={{
+                    height: "28px",
+                    width: "80px",
+                    textAlign: "center",
+                    background: "#033a7a",
+                    color: "#fff",
+                  }}
+                  onClick={(e) => {
+                    setIsOpen(true);
+                  }}
+                >
+                  공개
+                </div>
+                <div
+                  style={{
+                    height: "28px",
+                    width: "80px",
+                    textAlign: "center",
+                    background: "#ddd",
+                  }}
+                  onClick={(e) => {
+                    setIsOpen(false);
+                  }}
+                >
+                  비공개
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: "flex" }}>
+                <div
+                  style={{
+                    height: "28px",
+                    width: "80px",
+                    textAlign: "center",
+                    background: "#ddd",
+                  }}
+                  onClick={(e) => {
+                    setIsOpen(true);
+                  }}
+                >
+                  공개
+                </div>
+                <div
+                  style={{
+                    height: "28px",
+                    width: "80px",
+                    textAlign: "center",
+                    background: "#033a7a",
+                    color: "#fff",
+                  }}
+                  onClick={(e) => {
+                    setIsOpen(false);
+                  }}
+                >
+                  비공개
+                </div>
+              </div>
+            )}
           </div>
         </SubTitle>
 
-        { selectedValue ? (
+        {IsOpen ? (
           <div />
-        )
-        :
+        ) : (
           <SubTitle>
             비밀번호
             <div style={{ marginTop: "-28px" }}>
               <InputText
                 placeholder="비밀번호 4자를 입력해주세요."
                 style={{ height: "25px", width: "20%" }}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-          </SubTitle>}
-
+          </SubTitle>
+        )}
 
         <hr />
         <div style={{ textAlign: "center" }}>
@@ -122,7 +172,9 @@ const WriteQnA = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={() => { navigate(-1) }}
+            onClick={() => {
+              navigate(-1);
+            }}
           >
             취소
           </button>
@@ -138,7 +190,11 @@ const WriteQnA = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={() => { navigate('/custcenter') }}
+            onClick={async (e) => {
+              if (await UploadQnA(title, body, password, IsOpen)) {
+                navigate("/QnA");
+              }
+            }}
           >
             등록
           </button>
@@ -146,6 +202,6 @@ const WriteQnA = ({ history }) => {
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default WriteQnA;

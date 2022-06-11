@@ -1,19 +1,10 @@
-import React from 'react';
-import { useNavigate, useLocation} from "react-router-dom";
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink,
-} from '../components/Card';
-import '../App.css';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { CardWrapper } from "../components/Card";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
+import { getInfoFromCookie } from "../components/Auth";
 
 export const Body = styled.div`
   display: flex;
@@ -44,31 +35,56 @@ export const CardButton = styled.button`
   }
 `;
 
+const info = getInfoFromCookie();
+
+let admin = false;
+if (info) if (info.token) admin = info.token.type == "admin";
+
 const ViewFAQ = ({ history }) => {
   let navigate = useNavigate();
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
+  const [FAQdata, setFAQdata] = useState([]);
+  console.log(FAQdata);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFAQbyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => setFAQdata(data));
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
-      {postnum}
-        <div className='View'>
-          <div className='top_title'>
-            <div id='title_txt'>구매는 어떻게 하면 되나요?</div>
-            <div className='date_div'>2022-06-10</div>
-          </div>
+        {FAQdata[0] ? (
+          <div className="View">
+            <div className="top_title">
+              <div id="title_txt">{FAQdata[0].title}</div>
+              <div className="date_div">
+                {FAQdata[0].postDate.split("T")[0]}
+              </div>
+            </div>
 
-          <div>
-            <div className='content'>알아서 하세요</div>
+            <div>
+              <div className="content">{FAQdata[0].postBody}</div>
+            </div>
           </div>
-        </div>
-        <CardButton onClick={()=>navigate('/writeFAQ')}>
-          수정하기
-        </CardButton>
+        ) : null}
+        {admin ? (
+          <CardButton
+            onClick={() =>
+              navigate("/modifyFAQ", { state: { postnum: postnum } })
+            }
+          >
+            수정하기
+          </CardButton>
+        ) : null}
+        <CardButton onClick={() => navigate(-1)}>목록</CardButton>
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ViewFAQ;
