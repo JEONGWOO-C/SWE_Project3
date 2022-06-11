@@ -26,6 +26,7 @@ import getQnA from "./api/CustomerCenter/getQnA.js";
 import adminRegister, { Adminid_check } from "./api/Admin/adminRegister.js";
 import adminLogin from "./api/Admin/adminLogin.js";
 import getFAQbyPostnum from "./api/CustomerCenter/getFAQbyPostnum.js";
+import getNoticebyPostnum from "./api/CustomerCenter/getNoticebyPostnum.js";
 
 const connection = init();
 const app = express();
@@ -75,6 +76,7 @@ adminRegister(app, connection);
 Adminid_check(app, connection);
 adminLogin(app, connection);
 getFAQbyPostnum(app, connection);
+getNoticebyPostnum(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
