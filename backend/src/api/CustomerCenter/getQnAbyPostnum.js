@@ -1,7 +1,6 @@
 export default async (app, connection) => {
   app.use("/getQnAbyPostnum", async (req, res, next) => {
     const { postnum } = req.query;
-    console.log("postnum : " + postnum);
     await connection.query(
       "SELECT * FROM QnA WHERE postnum = ?;",
       [postnum],
