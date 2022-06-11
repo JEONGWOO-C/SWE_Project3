@@ -176,9 +176,6 @@
   text-align: center;
   font-weight: bold;
   font-size: 13px;
-}
-
-.select input[type=radio]+label{
   background-color: #fff;
   color: #333;
 }

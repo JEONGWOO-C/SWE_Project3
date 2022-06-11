@@ -19,6 +19,20 @@ export const Body = styled.div`
 
 const WriteQnA = ({ history }) => {
   let navigate = useNavigate();
+  const [selectedValue,setSelectedValue] = useState(true);
+
+  // function getSelectValue(){
+  //   var secret = document.getElementsByName('secret');
+  //   console.log('s'+secret);
+  //   console.log(secret);
+  //     if (secret[0].checked) {
+  //       setSelectedValue(true);
+  //     }
+  //     else {
+  //       setSelectedValue(false);
+  //     }
+    
+  // }
 
   return (
     <Body>
@@ -64,28 +78,36 @@ const WriteQnA = ({ history }) => {
                 name='secret'
                 checked
               />
-              <label for='open'>공개</label>
+              <label for='open' 
+                onClick={()=>{setSelectedValue(true)}}
+              >공개</label>
               <input
                 type='radio'
                 id='notopen'
                 value='notopen'
                 name='secret'
               />
-              <label for='notopen'>비공개</label>
+              <label for='notopen'
+                onClick={()=>{setSelectedValue(false)}}
+              >비공개</label>
             </div>
           </div>
         </SubTitle>
-        
-        {/* 비공개 클릭 시 */}
-        <SubTitle>
-          비밀번호
-          <div style={{ marginTop: "-28px" }}>
-            <InputText
-              placeholder="비밀번호 4자를 입력해주세요."
-              style={{ height: "25px", width: "20%" }}
-            />
-          </div>
-        </SubTitle>
+
+        { selectedValue ? (
+          <div />
+        )
+        :
+          <SubTitle>
+            비밀번호
+            <div style={{ marginTop: "-28px" }}>
+              <InputText
+                placeholder="비밀번호 4자를 입력해주세요."
+                style={{ height: "25px", width: "20%" }}
+              />
+            </div>
+          </SubTitle>}
+
 
         <hr />
         <div style={{ textAlign: "center" }}>
