@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
     cb(null, up_path);
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now());
+    cb(null, Date.now()+'.jpg');
   },
 });
 var upload = multer({ storage: storage });
@@ -40,10 +40,9 @@ export default async (app, connection) => {
   app.use("/sell_write", FileUpload, function (req, res, next) {
     var postDate_obj = new Date();
     const postDate = toSqlDatetime(postDate_obj);
-    const { seller_id } = req.query;
+    const { id } = req.query;
     const { title, price, category, description } = req.body;
     var img_file = "";
-    console.log(seller_id);
 
     console.log("file : ", req.file);
     console.log("body : ", req.body);
@@ -69,7 +68,7 @@ export default async (app, connection) => {
               price,
               category,
               description,
-              seller_id,
+              id,
             ];
             console.log("product datas : ", productDatas);
 
