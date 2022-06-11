@@ -37,6 +37,19 @@ const id_check = async (id) => {
 };
 
 const register = async (id, pw, phoneNum, email, name, age) => {
+  if (id === "") {
+    Swal.fire("회원가입에 실패했습니다.", "ID를 입력해주세요.", "error");
+    return false;
+  } else if (pw === "") {
+    Swal.fire("회원가입에 실패했습니다.", "패스워드를 입력해주세요.", "error");
+    return false;
+  } else if (name === "") {
+    Swal.fire("회원가입에 실패했습니다.", "닉네임을 입력해주세요.", "error");
+    return false;
+  } else if (age === "") {
+    Swal.fire("회원가입에 실패했습니다.", "나이를 입력해주세요.", "error");
+    return false;
+  }
   const res = await axios.post("http://localhost:4000/register", {
     id: id,
     pw: pw,
@@ -138,8 +151,20 @@ const Register = ({}) => {
               onChange={(e) => setAge(e.target.value)}
             />
           </CardFieldset>
-          <div style={{padding: '32px', textAlign: 'center'}}>
-          이미 계정이 있습니다. <a onClick={()=>(navigate('/login'))} style={{fontWeight: 'bold', fontSize: '18px', cursor: 'pointer', textDecoration: 'underline'}}>로그인 페이지</a>로 이동.
+          <div style={{ padding: "32px", textAlign: "center" }}>
+            이미 계정이 있습니다.{" "}
+            <a
+              onClick={() => navigate("/login")}
+              style={{
+                fontWeight: "bold",
+                fontSize: "18px",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              로그인 페이지
+            </a>
+            로 이동.
           </div>
           <CardFieldset>
             <CardButton

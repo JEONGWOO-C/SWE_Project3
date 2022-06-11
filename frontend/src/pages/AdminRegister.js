@@ -8,16 +8,13 @@ import {
   CardFieldset,
   CardInput,
   CardButton,
-  CardLink,
   CardTitle,
-  CardSelect,
-  CardSelectOption,
 } from "../components/Card";
 import Swal from "sweetalert2";
-import { CheckID } from "../components/Auth";
+import { CheckAdminID } from "../components/Auth";
 import axios from "axios";
-const id_check = async (id) => {
-  const result = await CheckID(id);
+const adminid_check = async (id) => {
+  const result = await CheckAdminID(id);
   console.log(result);
   if (result === true) {
     Swal.fire(
@@ -36,14 +33,23 @@ const id_check = async (id) => {
   return result;
 };
 
-const register = async (id, pw, phoneNum, email, name, age) => {
-  const res = await axios.post("http://localhost:4000/register", {
+const adminregister = async (id, pw, phoneNum, email, name) => {
+  if (id === "") {
+    Swal.fire("회원가입에 실패했습니다.", "ID를 입력해주세요.", "error");
+    return false;
+  } else if (pw === "") {
+    Swal.fire("회원가입에 실패했습니다.", "패스워드를 입력해주세요.", "error");
+    return false;
+  } else if (name === "") {
+    Swal.fire("회원가입에 실패했습니다.", "닉네임을 입력해주세요.", "error");
+    return false;
+  }
+  const res = await axios.post("http://localhost:4000/adminRegister", {
     id: id,
     pw: pw,
     phone: phoneNum,
     email: email,
     name: name,
-    age: age,
   });
   const { result, msg } = res.data;
   if (result === true) {
@@ -55,20 +61,19 @@ const register = async (id, pw, phoneNum, email, name, age) => {
   return result;
 };
 
-const Register = ({}) => {
+const AdminRegister = ({}) => {
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
   let navigate = useNavigate();
 
   return (
     <div>
       <CardWrapper>
         <CardHeader>
-          <CardHeading>관리자 회원가입</CardHeading>
+          <CardHeading>회원가입</CardHeading>
         </CardHeader>
 
         <CardBody>
@@ -85,7 +90,7 @@ const Register = ({}) => {
                 type="button"
                 onClick={async (e) => {
                   console.log("id: ", id);
-                  if (await id_check(id)) {
+                  if (await adminid_check(id)) {
                   }
                 }}
               >
@@ -129,15 +134,28 @@ const Register = ({}) => {
               onChange={(e) => setName(e.target.value)}
             />
           </CardFieldset>
-          <div style={{padding: '32px', textAlign: 'center'}}>
-          관리자 회원가입 페이지 입니다. 관리자가 아니라면 <a onClick={()=>(navigate('/register'))} style={{fontWeight: 'bold', fontSize: '18px', cursor: 'pointer', textDecoration: 'underline'}}>사용자 회원가입 페이지</a>로 이동하시길 바랍니다.
+
+          <div style={{ padding: "32px", textAlign: "center" }}>
+            이미 계정이 있습니다.{" "}
+            <a
+              onClick={() => navigate("/login")}
+              style={{
+                fontWeight: "bold",
+                fontSize: "18px",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              로그인 페이지
+            </a>
+            로 이동.
           </div>
           <CardFieldset>
             <CardButton
               type="button"
               onClick={async (e) => {
-                if (await register(id, pw, phoneNum, email, name, age))
-                  navigate("/login");
+                if (await adminregister(id, pw, phoneNum, email, name))
+                  navigate("/");
               }}
             >
               회원가입
@@ -149,4 +167,4 @@ const Register = ({}) => {
   );
 };
 
-export default Register;
+export default AdminRegister;
