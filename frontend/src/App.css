@@ -129,3 +129,30 @@
   font-size: large;
   font-weight: bold;
 }
+
+.chat_list {
+  margin: 50px 50px;
+  padding: 20px 10px;
+  width: 22%;
+  float: left;
+  height: 600px;
+  border: solid 1px #ababab;
+  border-radius: 3px;
+}
+
+.chat_detail {
+  margin: 50px 50px;
+  padding: 20px 10px;
+  width: 60%;
+  height: 600px;
+  float: left;
+  margin-left: 5px;
+  border: solid 1px #ababab;
+  border-radius: 3px;
+}
+
+.chat_comment {
+  padding: 15px 10px;
+  min-height: 440px;
+  border-bottom: solid 1px #ababab;
+}
