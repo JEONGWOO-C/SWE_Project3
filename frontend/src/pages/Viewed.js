@@ -28,7 +28,6 @@ const Viewed = ({ history }) => {
   const info = getInfoFromCookie();
   var [recentView, setRecentView] = useState([]);
   useEffect(() => {
-    console.log(getInfoFromCookie());
     axios
       .get("http://localhost:4000/userRecentViewedPosts", {
         headers: { token: info.token },

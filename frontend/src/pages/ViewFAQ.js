@@ -1,19 +1,9 @@
-import React from 'react';
-import { useNavigate, useLocation} from "react-router-dom";
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink,
-} from '../components/Card';
-import '../App.css';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { CardWrapper } from "../components/Card";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
 
 export const Body = styled.div`
   display: flex;
@@ -48,27 +38,34 @@ const ViewFAQ = ({ history }) => {
   let navigate = useNavigate();
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
+  const [FAQdata, setFAQdata] = useState([]);
+  console.log(FAQdata);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getFAQbyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => setFAQdata(data));
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
-      {postnum}
-        <div className='View'>
-          <div className='top_title'>
-            <div id='title_txt'>구매는 어떻게 하면 되나요?</div>
-            <div className='date_div'>2022-06-10</div>
+        <div className="View">
+          <div className="top_title">
+            <div id="title_txt">구매는 어떻게 하면 되나요?</div>
+            <div className="date_div">2022-06-10</div>
           </div>
 
           <div>
-            <div className='content'>알아서 하세요</div>
+            <div className="content">알아서 하세요</div>
           </div>
         </div>
-        <CardButton onClick={()=>navigate('/writeFAQ')}>
-          수정하기
-        </CardButton>
+        <CardButton onClick={() => navigate("/writeFAQ")}>수정하기</CardButton>
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ViewFAQ;

@@ -1,7 +1,6 @@
 import auth from "../modules/auth.js";
 export default async (app, connection) => {
   app.get("/getQnA", auth);
-
   app.use("/getQnA", async (req, res, next) => {
     const { id } = req.query;
     console.log(id);
