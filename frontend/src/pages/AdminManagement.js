@@ -72,8 +72,9 @@ const AdminManagement = ({ history }) => {
           <Td>{user_list[i].name}</Td>
           <Td>{user_list[i].phone}</Td>
           <Td>{user_list[i].email}</Td>
-          <Td>
+          <Td style={{width: '200px', display: 'flex'}}>
               <CardButton onClick={(e)=>{Tab(i)}}>승인</CardButton>
+              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i)}}>거절</CardButton>
           </Td>
         </Tr>)
     }
