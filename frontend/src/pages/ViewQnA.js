@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -44,10 +44,14 @@ export const CardButton = styled.button`
 
 const ViewQnA = ({ history }) => {
   let navigate = useNavigate();
+  const navigateState = useLocation().state;
+  const postnum = navigateState && navigateState.postnum;
 
   return (
     <Body>
       <CardWrapper>
+      {postnum}
+
         <div className='View'>
           <div className='top_title'>
             <div id='title_txt'>도와주세요</div>
