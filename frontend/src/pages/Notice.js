@@ -40,10 +40,25 @@ export const CardButton = styled.button`
   }
 `;
 
+function printList(list, navigate) {
+  let array = [];
+  for (let i = 0; i < list.length; i++) {
+    array.push(
+      <div className="list_grid list_data" 
+        style={{cursor: 'pointer', marginTop:'4px'}}
+        onClick={()=>{navigate("/viewnotice/"+list[i].postnum, {state:{postnum:list[i].postnum}})}}>
+        <div className="acenter"> {list[i].postnum} </div>
+        <div className="text-link"> {list[i].title} </div>
+        <div className="acenter"> {list[i].postDate.split('T')[0]} </div>
+      </div>
+    )
+  }
+  return array;
+}
+
 const Notice = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
-  const listNum = 1;
-  const view_url = "/viewNotice/" + listNum;
+
   var [noticeList, setNoticeList] = useState([]);
   console.log(noticeList);
 
@@ -66,17 +81,8 @@ const Notice = ({ history }) => {
             <div> 제목 </div>
             <div className="acenter"> 날짜 </div>
           </div>
+          {printList(noticeList, navigate)}
 
-          <div className="list_grid list_data">
-            <div className="acenter"> {listNum} </div>
-            <div>
-              <Link to={view_url} className="text-link">
-                {" "}
-                홈페이지 오픈했어요!{" "}
-              </Link>
-            </div>
-            <div className="acenter"> 2022-06-10 </div>
-          </div>
         </div>
 
         {/* 관리자한테만 버튼 보이고 작동하도록 */}

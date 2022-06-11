@@ -109,3 +109,8 @@ INSERT QnA(writerID, title, postDate, postBody)
 VALUES
 ("test2", "OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
 ("test2", "현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
+
+INSERT NOTICE(title, postDate, postBody)
+VALUES
+("OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
+("현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
