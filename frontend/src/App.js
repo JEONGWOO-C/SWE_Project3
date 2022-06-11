@@ -26,6 +26,8 @@ import Category from './pages/Category';
 import SalesDetail from './pages/SalesDetail';
 import PurchaseDetail from './pages/PurchaseDetail';
 import Admin from './pages/Admin';
+import Search from './pages/Search';
+
 
 import './App.css';
 
@@ -65,6 +67,8 @@ class App extends Component {
           <Route path='/salesdetail' element={<SalesDetail />} />
           <Route path='/purchasedetail' element={<PurchaseDetail />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path='/search' element={<Search />} />
+
 
         </Routes>
       </Body>
