@@ -212,7 +212,7 @@ const Nav = ({ history }) => {
         </CardHeader>
         {admin ?
           <div>
-            <TitleWrapper>
+            <TitleWrapper style={{paddingBottom:'20px'}}>
               <CardBody
                 style={{ cursor: "pointer" }}
                 onClick={() => {

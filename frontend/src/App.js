@@ -27,12 +27,12 @@ import SalesDetail from './pages/SalesDetail';
 import PurchaseDetail from './pages/PurchaseDetail';
 import MemberManagement from './pages/MemberManagement';
 import AdminManagement from './pages/AdminManagement';
-
 import Search from './pages/Search';
 import AdminLogin from './pages/AdminLogin';
 import AdminRegister from './pages/AdminRegister';
 import ConfirmReport from './pages/ConfirmReport';
-
+import ModifyFAQ from './pages/ModifyFAQ';
+import ModifyNotice from './pages/ModifyNotice';
 
 import './App.css';
 
@@ -77,6 +77,8 @@ class App extends Component {
           <Route path='/search' element={<Search />} />
           <Route path='/adminlogin' element={<AdminLogin />} />
           <Route path='/adminregister' element={<AdminRegister />} />
+          <Route path='/modifyFAQ' element={<ModifyFAQ />} />
+          <Route path='/modifyNotice' element={<ModifyNotice />} />
 
 
         </Routes>
