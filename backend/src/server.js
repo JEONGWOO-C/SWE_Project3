@@ -22,6 +22,7 @@ import searchPost from "./api/Post/searchPost.js";
 import { addChat, showChat, getSeller } from "./api/Chat/chat.js";
 import getFAQ from "./api/CustomerCenter/getFAQ.js";
 import getNotice from "./api/CustomerCenter/getNotice.js";
+import getQnA from "./api/CustomerCenter/getQnA.js";
 
 const connection = init();
 const app = express();
@@ -66,6 +67,7 @@ addChat(app, connection);
 getSeller(app, connection);
 getFAQ(app, connection);
 getNotice(app, connection);
+getQnA(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
