@@ -134,9 +134,9 @@ const Nav = ({ history }) => {
   }
   // admin값이 true면 admin 네비게이션
   let admin = false;
-  if(info)
-    if(info.token)
-      admin = (info.token.type=='admin')
+  if (info)
+    if (info.token)
+      admin = (info.token.type == 'admin')
   return (
     <Body>
       <CardWrapper
@@ -174,7 +174,12 @@ const Nav = ({ history }) => {
             </CardFieldset>
             {info ? (
               <TitleWrapper>
+                {admin ? 
+                <CardBody>관리자님 환영합니다!</CardBody> 
+                : 
                 <CardBody>{info.name} 님 환영합니다!</CardBody>
+                }
+
                 <CardBody
                   style={{ cursor: "pointer" }}
                   onClick={() => {
@@ -212,7 +217,7 @@ const Nav = ({ history }) => {
         </CardHeader>
         {admin ?
           <div>
-            <TitleWrapper style={{paddingBottom:'20px'}}>
+            <TitleWrapper style={{ paddingBottom: '20px' }}>
               <CardBody
                 style={{ cursor: "pointer" }}
                 onClick={() => {
@@ -239,10 +244,10 @@ const Nav = ({ history }) => {
               >
                 신고 게시물
               </CardBody>
-              
+
               <CardBody
                 style={{ cursor: "pointer" }}
-                onClick={() => {navigate("/custcenter")}}
+                onClick={() => { navigate("/custcenter") }}
               >
                 고객센터
               </CardBody>
