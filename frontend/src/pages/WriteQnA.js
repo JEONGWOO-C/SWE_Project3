@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   CardWrapper,
@@ -9,7 +9,6 @@ import {
   InputText
 } from './Sell';
 import styled from 'styled-components';
-import { Navigate } from 'react-router';
 
 export const Body = styled.div`
   display: flex;
@@ -27,36 +26,6 @@ const WriteQnA = ({ history }) => {
         <Title>
           문의사항 등록
         </Title>
-
-        <SubTitle>
-          이름
-          <div style={{ marginTop: "-28px" }}>
-            <InputText
-              placeholder="이름을 입력해주세요."
-              style={{ height: "25px", width: "20%" }}
-            />
-          </div>
-        </SubTitle>
-
-        <SubTitle>
-          아이디
-          <div style={{ marginTop: "-28px" }}>
-            <InputText
-              placeholder="아이디를 입력해주세요."
-              style={{ height: "25px", width: "20%" }}
-            />
-          </div>
-        </SubTitle>
-
-        <SubTitle>
-          연락처
-          <div style={{ marginTop: "-28px" }}>
-            <InputText
-              placeholder="연락처를 입력해주세요."
-              style={{ height: "25px", width: "20%" }}
-            />
-          </div>
-        </SubTitle>
 
         <SubTitle>
           제목
@@ -84,6 +53,29 @@ const WriteQnA = ({ history }) => {
           </div>
         </SubTitle>
 
+        <SubTitle>
+          공개여부
+          <div style={{ marginLeft: '200px', marginTop: '-28px' }}>
+            <div className='select'>
+              <input
+                type='radio'
+                id='open'
+                value='open'
+                name='secret'
+                checked
+              />
+              <label for='open'>공개</label>
+              <input
+                type='radio'
+                id='notopen'
+                value='notopen'
+                name='secret'
+              />
+              <label for='notopen'>비공개</label>
+            </div>
+          </div>
+        </SubTitle>
+
         <hr />
         <div style={{ textAlign: "center" }}>
           <button
@@ -97,7 +89,7 @@ const WriteQnA = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate(-1)}}
+            onClick={() => { navigate(-1) }}
           >
             취소
           </button>
@@ -113,7 +105,7 @@ const WriteQnA = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate('/custcenter')}}
+            onClick={() => { navigate('/custcenter') }}
           >
             등록
           </button>
