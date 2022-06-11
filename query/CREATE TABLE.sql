@@ -126,10 +126,11 @@ CREATE TABLE NOTICE(
 DROP TABLE IF EXISTS QnA;
 CREATE TABLE QnA(
 	postnum int not null primary key auto_increment,
+    writerID varchar(32) not null,
     title varchar(32) not null,
     postDate date not null,		-- 게시글 작성시간
     postBody varchar(512),
-    password varchar(8) not null
+    password varchar(8) default ''
 );
 
 -- Triger -- 
