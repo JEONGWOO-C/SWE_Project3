@@ -41,8 +41,10 @@
 }
 
 .menu-trigger {
+  margin-top: -5px;
+  /* margin-left: -10px; */
   background: #ffffff;
-  border-radius: 90px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
