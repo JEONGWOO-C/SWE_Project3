@@ -41,6 +41,23 @@ export const handleLogin = async (id, pw) => {
   }
 };
 
+export const handleAdminLogin = async (id, pw) => {
+  const res = await axios.post("http://localhost:4000/adminLogin", {
+    id: id,
+    pw: pw,
+  });
+  console.log(res.data);
+  if (res.data) {
+    console.log("로그인 성공!");
+    setTokenToCookie(res.data.token); // cookie에 refresh_token 저장
+    setInfoToCookie(res.data); // cookie에 refresh_token 저장
+    return { result: true, isApproved: res.data.isApproved };
+  } else {
+    console.log("로그인 실패");
+    return { result: false, isApproved: false };
+  }
+};
+
 export const CheckID = async (id) => {
   console.log("CheckID: ", id);
   const res = await axios.post("http://localhost:4000/idCheck", {

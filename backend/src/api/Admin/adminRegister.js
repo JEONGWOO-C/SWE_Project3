@@ -31,7 +31,7 @@ export default (app, connection) => {
         } else {
           res.send({
             result: true,
-            msg: "관리자 회원가입 승인 대기중입니다.<br>승인 완료 후 사용 가능합니다.",
+            msg: "로그인을 진행해 주세요.",
           });
         }
       }
