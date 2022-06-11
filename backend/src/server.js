@@ -30,6 +30,7 @@ import getNoticebyPostnum from "./api/CustomerCenter/getNoticebyPostnum.js";
 import UploadQnA from "./api/CustomerCenter/UploadQnA.js";
 import UploadFAQ from "./api/CustomerCenter/UploadFAQ.js";
 import UploadNotice from "./api/CustomerCenter/UploadNotice.js";
+import ModifyNotice from "./api/CustomerCenter/ModifyNotice.js";
 
 const connection = init();
 const app = express();
@@ -84,6 +85,7 @@ getNoticebyPostnum(app, connection);
 UploadQnA(app, connection);
 UploadFAQ(app, connection);
 UploadNotice(app, connection);
+ModifyNotice(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

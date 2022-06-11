@@ -30,29 +30,38 @@ const ViewNotice = ({ history }) => {
   const info = getInfoFromCookie();
 
   let admin = false;
-  if (info)
-    if (info.token)
-      admin = (info.token.type == 'admin')
+  if (info) if (info.token) admin = info.token.type == "admin";
 
   return (
     <Body>
       <CardWrapper>
-        {noticeData[0] ?
+        {noticeData[0] ? (
           <div className="View">
             <div className="top_title">
               <div id="title_txt">{noticeData[0].title}</div>
-              <div className="date_div">{noticeData[0].postDate.split('T')[0]}</div>
+              <div className="date_div">
+                {noticeData[0].postDate.split("T")[0]}
+              </div>
             </div>
 
             <div>
               <div className="content">{noticeData[0].postBody}</div>
             </div>
           </div>
-          : null}
-        {admin ? <CardButton onClick={() => navigate("/modifyNotice",{state:{noticeData:noticeData[0]}})}>수정하기</CardButton> : null}
+        ) : null}
+        {admin ? (
+          <CardButton
+            onClick={() =>
+              navigate("/modifyNotice", {
+                state: { postnum: postnum },
+              })
+            }
+          >
+            수정하기
+          </CardButton>
+        ) : null}
 
         <CardButton onClick={() => navigate(-1)}>목록</CardButton>
-
       </CardWrapper>
     </Body>
   );

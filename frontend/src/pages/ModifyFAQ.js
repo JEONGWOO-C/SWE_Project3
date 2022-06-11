@@ -1,20 +1,14 @@
-import React from 'react';
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  CardWrapper,
-} from '../components/Card';
-import {
-  Title,
-  SubTitle,
-  InputText
-} from './Sell';
-import styled from 'styled-components';
-import { Navigate } from 'react-router';
+import { CardWrapper } from "../components/Card";
+import { Title, SubTitle, InputText } from "./Sell";
+import styled from "styled-components";
+import { Navigate } from "react-router";
 
 export const Body = styled.div`
   display: flex;
-  align-items: 'center';
-  justify-content: 'center';
+  align-items: "center";
+  justify-content: "center";
   width: 100%;
 `;
 
@@ -26,9 +20,7 @@ const ModifyFAQ = ({ history }) => {
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          FAQ 수정
-        </Title>
+        <Title>FAQ 수정</Title>
 
         <SubTitle>
           제목
@@ -36,7 +28,7 @@ const ModifyFAQ = ({ history }) => {
             <InputText
               placeholder="게시글 제목을 입력해주세요."
               style={{ height: "25px", width: "52%" }}
-              value={FAQdata?FAQdata.title:null}
+              value={FAQdata ? FAQdata.title : null}
             />
           </div>
         </SubTitle>
@@ -53,7 +45,7 @@ const ModifyFAQ = ({ history }) => {
                 paddingLeft: "10px",
                 paddingTop: "10px",
               }}
-              value={FAQdata?FAQdata.postBody:null}
+              value={FAQdata ? FAQdata.postBody : null}
             />
           </div>
         </SubTitle>
@@ -71,7 +63,9 @@ const ModifyFAQ = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate(-1)}}
+            onClick={() => {
+              navigate(-1);
+            }}
           >
             취소
           </button>
@@ -87,7 +81,9 @@ const ModifyFAQ = ({ history }) => {
               borderRadius: "5px",
               boxShadow: 0,
             }}
-            onClick={()=>{navigate('/faq')}}
+            onClick={() => {
+              navigate("/faq");
+            }}
           >
             수정
           </button>
@@ -95,6 +91,6 @@ const ModifyFAQ = ({ history }) => {
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ModifyFAQ;
