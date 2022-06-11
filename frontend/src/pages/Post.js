@@ -241,7 +241,7 @@ const Post = ({ history }) => {
               </div>
               <div style={{ margin: "16px", width: "400px" }}>
                 <div style={{ fontWeight: "bold", fontSize: "36px" }}>
-                  {postData.name}
+                  {postData.username}
                 </div>
               </div>
               <div
