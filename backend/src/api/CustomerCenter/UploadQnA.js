@@ -3,20 +3,37 @@ import { toSqlDatetime } from "../modules/util.js";
 
 export default (app, connection) => {
   app.get("/UploadQnA", auth);
-  app.post("/UploadQnA", (req, res, next) => {
-    const { title, postBody, isAnswered, password } = req.body;
+  app.use("/UploadQnA", (req, res, next) => {
+    const { title, body, password, IsOpen } = req.query;
     const { id } = req.query;
+    console.log(
+      "title : " +
+        title +
+        " body : " +
+        body +
+        " Isopne: " +
+        IsOpen +
+        " pw : " +
+        password
+    );
+    console.log(req);
+    console.log("length : " + password.length);
     var postDate = toSqlDatetime(new Date());
-    console.log(postDate);
+    if (
+      title == "" ||
+      body == "" ||
+      (IsOpen == "false" && (password == "" || password.length != 4))
+    ) {
+      res.send(false);
+      return;
+    }
+
     connection.query(
-      "INSERT into QnA(writerID, title, postDate, postBody, isAnswered, password) values(?,?,?,?,?,?)",
-      [id, title, postBody, isAnswered, password],
+      "INSERT into QnA(writerID, title, postDate, postBody, pw) values(?,?,?,?,?)",
+      [id, title, postDate, body, password],
       (error, data) => {
-        if (error) return false;
-        else {
-          console.log(data);
-          return true;
-        }
+        if (error) res.send(false);
+        else res.send(true);
       }
     );
   });
