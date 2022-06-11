@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -11,13 +11,11 @@ import {
   CardSelect,
   CardSelectOption,
   CardLink,
-} from '../components/Card';
-import {
-  Body,
-  Title
-} from './CustCenter';
-import '../App.css'
-import styled from 'styled-components';
+} from "../components/Card";
+import { Body, Title } from "./CustCenter";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
 
 export const CardButton = styled.button`
   display: block;
@@ -45,33 +43,44 @@ export const CardButton = styled.button`
 const Notice = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
   const listNum = 1;
-  const view_url = '/viewNotice/' + listNum;
+  const view_url = "/viewNotice/" + listNum;
+  var [noticeData, setNoticeData] = useState([]);
+  console.log(noticeData);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getNotice", {})
+      .then(({ data }) => setNoticeData(data));
+  }, []);
 
   let navigate = useNavigate();
 
   return (
     <Body>
       <CardWrapper>
-        <Title>
-          공지사항
-        </Title>
+        <Title>공지사항</Title>
 
-        <div className='List'>
-          <div className='list_grid list_tit'>
-            <div className='acenter'> 번호 </div>
+        <div className="List">
+          <div className="list_grid list_tit">
+            <div className="acenter"> 번호 </div>
             <div> 제목 </div>
-            <div className='acenter'> 날짜 </div>
+            <div className="acenter"> 날짜 </div>
           </div>
 
-          <div className='list_grid list_data'>
-            <div className='acenter'> { listNum } </div>
-            <div><Link to={ view_url } className='text-link'> 홈페이지 오픈했어요! </Link></div>
-            <div className='acenter'> 2022-06-10 </div>
+          <div className="list_grid list_data">
+            <div className="acenter"> {listNum} </div>
+            <div>
+              <Link to={view_url} className="text-link">
+                {" "}
+                홈페이지 오픈했어요!{" "}
+              </Link>
+            </div>
+            <div className="acenter"> 2022-06-10 </div>
           </div>
         </div>
 
         {/* 관리자한테만 버튼 보이고 작동하도록 */}
-        <CardButton onClick={()=>navigate('/writeNotice')}>
+        <CardButton onClick={() => navigate("/writeNotice")}>
           공지 등록
         </CardButton>
       </CardWrapper>
