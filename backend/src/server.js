@@ -69,6 +69,7 @@ searchPost(app, connection);
 showChat(app, connection);
 addChat(app, connection);
 getSeller(app, connection);
+getBuyer(app, connection);
 getFAQ(app, connection);
 getNotice(app, connection);
 getQnA(app, connection);

@@ -29,23 +29,45 @@ const Body = styled.div`
 const Talk = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
+  const roomNum = navigateState && navigateState.roomNumber;
   const info = getInfoFromCookie();
 
-  var [chatContent, setChatContent] = useState([]);
-  useEffect(() => {
+  var [msg,setMsg] = useState([]);
+  var [chatContent,setChatContent] = useState([]);
+  useEffect(()=>{
     axios
-      .get("http://localhost:4000/showChat", {
-        headers: { token: info.token },
-        params: { postnum: postnum }
-      }).then(({ data }) => { console.log(data); console.log(data.length); setChatContent(data); })
-    setChatContent()
-  }, [])
+      .post("http://localhost:4000/showChat",{postnum:postnum},{
+        headers:{token: info.token},
+      }).then(({data}) =>{setChatContent(data);})
+  },[])
+
+  var [seller_id,setSellerID] = useState([]);
+  useEffect(()=>{
+    axios
+      .post("http://localhost:4000/getSeller",{
+        postnum:postnum})
+      .then(({data}) =>{
+        setSellerID(data.token);})
+  },[])
+
+  var [buyer_id,setBuyerID] = useState([]);
+  useEffect(()=>{
+    axios
+      .post("http://localhost:4000/getBuyer",{
+        roomNumber:roomNum})
+      .then(({data}) =>{
+        console.log(data)
+        if(data.result)
+          setBuyerID(data.token);
+        else
+          setBuyerID(info.token);
+      })
+  },[])
 
   return (
 
     <Body style={{}}>
       <CardWrapper>
-        {chatContent && chatContent.map((item) => (<Speech item={item} />))}
 
         <div>
           <div className='chat_list'>
@@ -97,20 +119,29 @@ const Talk = ({ history }) => {
             </div>
 
             <div className='chat_comment'>
-              여기는 채팅 내용 보여주는 컨테이너
+              {chatContent && chatContent.map((item) => (<Speech item={item} />))}  
             </div>
 
             <div style={{display: "flex" }}>
               <CardInput
                 placeholder="상대방에게 보내고 싶은 내용을 입력하세요."
                 type="text"
-                onChange={(e) => { }}
+                onChange={(e) => setMsg(e.target.value)}
                 style={{width: '100%', paddingLeft: '10px'}}
               ></CardInput>
               <CardButton
                 style={{marginLeft: '20px', marginTop: '10px', width: "100px" }}
                 type="button"
                 onClick={async (e) => {
+                  axios.post("http://localhost:4000/addChat",{msg:msg,postnum:postnum},{
+                    headers:{token:info.token, token2:seller_id, token3:buyer_id},
+                  })
+                    .then(()=>{
+                      axios
+                        .post("http://localhost:4000/showChat",{postnum:postnum},{
+                          headers:{token: info.token},
+                        }).then(({data}) =>{setChatContent(data);})
+                    })
                 }}
               >
                 전송
