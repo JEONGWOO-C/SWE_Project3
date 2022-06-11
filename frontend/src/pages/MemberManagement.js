@@ -49,7 +49,7 @@ function Table(user_list) {
       </tr>)
   }
 }
-const PurchaseDetail = ({ history }) => {
+const MemberManagement = ({ history }) => {
   return (
 
     <Body style={{}}>
@@ -61,4 +61,4 @@ const PurchaseDetail = ({ history }) => {
   )
 }
 
-export default PurchaseDetail;
+export default MemberManagement;
