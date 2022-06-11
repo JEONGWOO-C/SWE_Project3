@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink,
-} from '../components/Card';
-import '../App.css';
-import styled from 'styled-components';
+import { CardWrapper } from "../components/Card";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
 
 export const Body = styled.div`
   display: flex;
@@ -46,43 +36,49 @@ const ViewQnA = ({ history }) => {
   let navigate = useNavigate();
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
+  const [QnAdata, setQnAdata] = useState([]);
+  console.log(QnAdata);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getNoticebyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => setQnAdata(data));
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
-      {postnum}
-
-        <div className='View'>
-          <div className='top_title'>
-            <div id='title_txt'>도와주세요</div>
-            <div className='date_div'>작성자:  / 2022-06-10</div>
+        <div className="View">
+          <div className="top_title">
+            <div id="title_txt">도와주세요</div>
+            <div className="date_div">작성자: / 2022-06-10</div>
           </div>
 
           <div>
-            <div className='content'>이거 이렇게 해줘어</div>
+            <div className="content">이거 이렇게 해줘어</div>
           </div>
         </div>
 
-        <div className='comment'>
-          <hr/>
-          답변하기<p />
+        <div className="comment">
+          <hr />
+          답변하기
+          <p />
           <textarea
             className="review-input"
             placeholder="답변을 입력해주세요."
           ></textarea>
-          <CardButton>
-            등록하기
-          </CardButton>
+          <CardButton>등록하기</CardButton>
         </div>
 
-        <div className='admin'>
+        <div className="admin">
           {/* 아이디, 답변내용 */}
           <div>➡ 관리자 : 네~ 알겠습니다</div>
         </div>
-        
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ViewQnA;
