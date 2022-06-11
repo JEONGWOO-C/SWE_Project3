@@ -19,7 +19,7 @@ import updateView from "./api/Post/updateView.js";
 import updateRecentPosts from "./api/User/updateRecentPosts.js";
 import updateAgeGroupOfPost from "./api/Post/updateAgeGroupOfPost.js";
 import searchPost from "./api/Post/searchPost.js";
-import { addChat, showChat, getSeller } from "./api/Chat/chat.js";
+import { addChat, showChat, getSeller, getBuyer } from "./api/Chat/chat.js";
 import getFAQ from "./api/CustomerCenter/getFAQ.js";
 import getNotice from "./api/CustomerCenter/getNotice.js";
 import getQnA from "./api/CustomerCenter/getQnA.js";
