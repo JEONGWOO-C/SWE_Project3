@@ -104,10 +104,6 @@ VALUES
 ('test1', 'easwfager', '2022-06-09 16:00:10', 1),
 ('test2', 'test', '2022-06-09 16:01:06', 1);
 
-INSERT chatRoom(seller_id, buyer_id, postnum, roomNumber)
-VALUES
-('test2','test1', 11, 1);
-
 INSERT FAQ(title, postDate, postBody)
 VALUES
 ("구매는 어떻게 하면 되나요?", '2022-06-11', "알아서 하세요"),
@@ -119,7 +115,9 @@ VALUES
 ("OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
 ("현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
 
-INSERT QnA(writerID, title, postDate, postBody)
+INSERT QnA(writerID, title, postDate, postBody, pw)
 VALUES
-("test2", "OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
-("test2", "현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
+("test2", "OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)", ''),
+("test2", "현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈", ''),
+("test1", "ㅁㅁ마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)", '1234'),
+("test3", "앞으로도 기능 추가 구현예정입니다.", '2022-06-11', "계속 쓰지마셈", '1234');

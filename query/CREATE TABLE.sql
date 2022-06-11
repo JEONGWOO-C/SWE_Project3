@@ -84,15 +84,6 @@ CREATE TABLE chats(
     chatDate datetime not null,			# 채팅 작성 시간
     roomNumber int not null				# 
     );
-    
-# chatsRoom 
-DROP TABLE if exists chatsRoom;
-CREATE TABLE chatRoom(
-	seller_id varchar(32) not null,		# 판매자 아이디
-	buyer_id varchar(32) not null,		# 구매자 아이디
-	postnum int not null,				# 게시글 번호
-    roomNumber int default 1 primary key auto_increment	# 계시글번호 
-    );
 
 # reports Table
 DROP TABLE if exists reports;

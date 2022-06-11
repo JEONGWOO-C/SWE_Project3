@@ -5,8 +5,8 @@ export default async (app, connection) => {
     const { id } = req.query;
     console.log(id);
     await connection.query(
-      "SELECT Q.postnum, Q.title, Q.postDate, Q.isAnswered, U.username FROM QnA Q, users U WHERE Q.writerID = ? AND U.id = Q.writerID;",
-      [id],
+      "SELECT Q.postnum, Q.title, Q.postDate, Q.isAnswered, U.username FROM QnA Q, users U WHERE (U.id = Q.writerID AND Q.pw='') OR (U.id = ? AND Q.writerID = ?)ORDER BY postnum;",
+      [id, id],
       (error, data) => {
         if (error) console.log(error);
         const result = data;
