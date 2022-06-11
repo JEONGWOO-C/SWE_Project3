@@ -75,6 +75,17 @@ const WriteQnA = ({ history }) => {
             </div>
           </div>
         </SubTitle>
+        
+        {/* 비공개 클릭 시 */}
+        <SubTitle>
+          비밀번호
+          <div style={{ marginTop: "-28px" }}>
+            <InputText
+              placeholder="비밀번호 4자를 입력해주세요."
+              style={{ height: "25px", width: "20%" }}
+            />
+          </div>
+        </SubTitle>
 
         <hr />
         <div style={{ textAlign: "center" }}>
