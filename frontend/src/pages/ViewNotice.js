@@ -1,20 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  CardWrapper,
-  CardHeader,
-  CardHeading,
-  CardBody,
-  CardFieldset,
-  CardInput,
-  CardTitle,
-  CardSelect,
-  CardSelectOption,
-  CardLink
-} from '../components/Card';
-import { CardButton } from './ViewFAQ';
-import '../App.css';
-import styled from 'styled-components';
+import { CardWrapper } from "../components/Card";
+import { CardButton } from "./ViewFAQ";
+import "../App.css";
+import styled from "styled-components";
+import axios from "axios";
 
 export const Body = styled.div`
   display: flex;
@@ -25,28 +15,38 @@ const ViewNotice = ({ history }) => {
   let navigate = useNavigate();
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
+  const [noticeData, setNoticeData] = useState([]);
+  console.log(noticeData);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getNoticebyPostnum", {
+        params: { postnum: postnum },
+      })
+      .then(({ data }) => setNoticeData(data));
+  }, []);
 
   return (
     <Body>
       <CardWrapper>
         {postnum}
-        <div className='View'>
-          <div className='top_title'>
-            <div id='title_txt'>홈페이지 오픈했어요!</div>
-            <div className='date_div'>2022-06-10</div>
+        <div className="View">
+          <div className="top_title">
+            <div id="title_txt">홈페이지 오픈했어요!</div>
+            <div className="date_div">2022-06-10</div>
           </div>
 
           <div>
-            <div className='content'>많이 이용해 주세요 :)</div>
+            <div className="content">많이 이용해 주세요 :)</div>
           </div>
         </div>
 
-        <CardButton onClick={()=>navigate('/writeNotice')}>
+        <CardButton onClick={() => navigate("/writeNotice")}>
           수정하기
         </CardButton>
       </CardWrapper>
     </Body>
   );
-}
+};
 
 export default ViewNotice;
