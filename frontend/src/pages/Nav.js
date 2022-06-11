@@ -65,6 +65,7 @@ const Nav = ({ history }) => {
     if (e.key === "Enter") {
       const result = await searchPost(searchWord);
       console.log(result);
+      navigate("/search", {state:{search:searchWord, result: result}})
     }
   };
 
