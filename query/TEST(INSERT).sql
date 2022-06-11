@@ -97,12 +97,16 @@ VALUES
 ('test2', 4, '2022-06-09 15:00:06'),
 ('test2', 1, '2022-06-09 18:00:06');
 
-INSERT chats(seller_id, buyer_id, writer, postnum, msg, chatDate)
+INSERT chats(writer, msg, chatDate, roomNumber)
 VALUES
-('test2','test1','test1', 11, '2341234', '2022-06-09 16:00:06'),
-('test2','test1','test2', 11, 'test', '2022-06-09 16:00:08'),
-('test2','test1','test1', 11, 'easwfager', '2022-06-09 16:00:10'),
-('test2','test1','test2', 11, 'test', '2022-06-09 16:01:06');
+('test1', '2341234', '2022-06-09 16:00:06', 1),
+('test2', 'test', '2022-06-09 16:00:08', 1),
+('test1', 'easwfager', '2022-06-09 16:00:10', 1),
+('test2', 'test', '2022-06-09 16:01:06', 1);
+
+INSERT chatRoom(seller_id, buyer_id, postnum, roomNumber)
+VALUES
+('test2','test1', 11, 1);
 
 INSERT FAQ(title, postDate, postBody)
 VALUES
