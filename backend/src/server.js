@@ -18,6 +18,7 @@ import setFavorite from "./api/User/setFavorite.js";
 import updateView from "./api/Post/updateView.js";
 import updateRecentPosts from "./api/User/updateRecentPosts.js";
 import updateAgeGroupOfPost from "./api/Post/updateAgeGroupOfPost.js";
+import searchPost from "./api/Post/searchPost.js";
 import { addChat, showChat, getSeller } from "./api/Chat/chat.js";
 
 const connection = init();
@@ -57,6 +58,7 @@ setFavorite(app, connection);
 updateView(app, connection);
 updateRecentPosts(app, connection);
 updateAgeGroupOfPost(app, connection);
+searchPost(app, connection);
 showChat(app, connection);
 addChat(app, connection);
 getSeller(app, connection);
