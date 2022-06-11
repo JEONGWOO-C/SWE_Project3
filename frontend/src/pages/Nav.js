@@ -65,7 +65,7 @@ const Nav = ({ history }) => {
     if (e.key === "Enter") {
       const result = await searchPost(searchWord);
       console.log(result);
-      navigate("/search", {state:{search:searchWord, result: result}})
+      navigate("/search", { state: { search: searchWord, result: result } })
     }
   };
 
@@ -134,6 +134,9 @@ const Nav = ({ history }) => {
   }
   // admin값이 true면 admin 네비게이션
   let admin = false;
+  if (info)
+    if (info.token)
+      admin = (info.token.type == 'admin')
   return (
     <Body>
       <CardWrapper
@@ -171,7 +174,12 @@ const Nav = ({ history }) => {
             </CardFieldset>
             {info ? (
               <TitleWrapper>
+                {admin ? 
+                <CardBody>관리자님 환영합니다!</CardBody> 
+                : 
                 <CardBody>{info.name} 님 환영합니다!</CardBody>
+                }
+
                 <CardBody
                   style={{ cursor: "pointer" }}
                   onClick={() => {
@@ -207,40 +215,69 @@ const Nav = ({ history }) => {
             )}
           </TitleWrapper>
         </CardHeader>
-        <TitleWrapper
-          style={{
-            paddingBottom: "20px",
-          }}
-        >
-          <div className="menu-container">
-            <button onClick={onClick} className="menu-trigger">
-              <span>
-                <CardBody>카테고리</CardBody>
-              </span>
-            </button>
-            <nav
-              ref={dropdownRef}
-              className={`menu ${isActive ? "active" : "inactive"}`}
-            >
-              {isActive ? <ul>{list()}</ul> : null}
-            </nav>
-          </div>
-
-          <TitleWrapper
-            style={{
-              width: "700px",
-            }}
-          >
-            {admin ? (
+        {admin ?
+          <div>
+            <TitleWrapper style={{ paddingBottom: '20px' }}>
               <CardBody
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  <div>{navigate("/admin")}</div>;
+                  <div>{navigate("/membermanagement")}</div>;
                 }}
               >
                 회원 관리
               </CardBody>
-            ) : (
+
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  <div>{navigate("/adminmanagement")}</div>;
+                }}
+              >
+                관리자 관리
+              </CardBody>
+
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  <div>{navigate("/confirmreport")}</div>;
+                }}
+              >
+                신고 게시물
+              </CardBody>
+
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => { navigate("/custcenter") }}
+              >
+                고객센터
+              </CardBody>
+            </TitleWrapper>
+          </div>
+          :
+          <TitleWrapper
+            style={{
+              paddingBottom: "20px",
+            }}
+          >
+            <div className="menu-container">
+              <button onClick={onClick} className="menu-trigger">
+                <span>
+                  <CardBody>카테고리</CardBody>
+                </span>
+              </button>
+              <nav
+                ref={dropdownRef}
+                className={`menu ${isActive ? "active" : "inactive"}`}
+              >
+                {isActive ? <ul>{list()}</ul> : null}
+              </nav>
+            </div>
+
+            <TitleWrapper
+              style={{
+                width: "700px",
+              }}
+            >
               <CardBody
                 style={{ cursor: "pointer" }}
                 onClick={() => {
@@ -259,13 +296,85 @@ const Nav = ({ history }) => {
               >
                 내상점
               </CardBody>
-            )}
 
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? (
+                    <div>{navigate("/wish")}</div>
+                  ) : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
+                }}
+              >
+                찜목록
+              </CardBody>
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? (
+                    <div>{navigate("/viewed")}</div>
+                  ) : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
+                }}
+              >
+                최근본상품
+              </CardBody>
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? (
+                    <div>{navigate("/talk")}</div>
+                  ) : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
+                }}
+              >
+                OO톡
+              </CardBody>
+              <CardBody
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  info ? (
+                    <div>{navigate("/custcenter")}</div>
+                  ) : (
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
+                  );
+                }}
+              >
+                고객센터
+              </CardBody>
+            </TitleWrapper>
             <CardBody
               style={{ cursor: "pointer" }}
               onClick={() => {
                 info ? (
-                  <div>{navigate("/wish")}</div>
+                  <div>{navigate("/sell")}</div>
                 ) : (
                   <div>
                     {Swal.fire(
@@ -277,72 +386,11 @@ const Nav = ({ history }) => {
                 );
               }}
             >
-              찜목록
+              판매하기
             </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                info ? (
-                  <div>{navigate("/viewed")}</div>
-                ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
-                );
-              }}
-            >
-              최근본상품
-            </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                info ? (
-                  <div>{navigate("/talk")}</div>
-                ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
-                );
-              }}
-            >
-              OO톡
-            </CardBody>
-            <CardBody
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                navigate("/custcenter");
-              }}
-            >
-              고객센터
-            </CardBody>
+
           </TitleWrapper>
-          <CardBody
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              info ? (
-                <div>{navigate("/sell")}</div>
-              ) : (
-                <div>
-                  {Swal.fire(
-                    "로그인이 필요합니다.",
-                    "로그인 창으로 이동합니다."
-                  )}
-                  {navigate("/login")}
-                </div>
-              );
-            }}
-          >
-            판매하기
-          </CardBody>
-        </TitleWrapper>
+        }
       </CardWrapper>
     </Body>
   );
