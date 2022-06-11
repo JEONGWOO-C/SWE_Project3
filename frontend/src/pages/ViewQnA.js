@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { CardWrapper } from "../components/Card";
+import { CardWrapper, CardInput } from "../components/Card";
 import "../App.css";
 import styled from "styled-components";
 import axios from "axios";
+import { getInfoFromCookie } from "../components/Auth";
+import Swal from "sweetalert2";
+
 
 export const Body = styled.div`
   display: flex;
   width: 100%;
 `;
 
+export const Title = styled.div`
+  padding-top: 48px;
+  padding-bottom: 64px;
+  padding-left: 64px;
+  font-size: 40px;
+  font-weight: bold;
+`;
+
 export const CardButton = styled.button`
   float: right;
   display: block;
-  width: 140px;
-  height: 60px;
-  padding: 12px 0;
+  width: 100px;
+  height: 36px;
+  padding: 0px 0;
+  margin: 0px 12px;
   font-family: inherit;
   font-size: 20px;
   font-weight: 700;
@@ -37,46 +49,87 @@ const ViewQnA = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
   const [QnAdata, setQnAdata] = useState([]);
+  const [pw, setPW] = useState("");
+  const [pass, setPass] = useState(false);
+
   console.log(QnAdata);
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/getNoticebyPostnum", {
+      .get("http://localhost:4000/getQnAbyPostnum", {
         params: { postnum: postnum },
       })
       .then(({ data }) => setQnAdata(data));
   }, []);
 
+  const info = getInfoFromCookie();
+
+  let admin = false;
+  if (info) if (info.token) admin = info.token.type == "admin";
+
+  
   return (
     <Body>
-      <CardWrapper>
-        <div className="View">
-          <div className="top_title">
-            <div id="title_txt">도와주세요</div>
-            <div className="date_div">작성자: / 2022-06-10</div>
-          </div>
+      {QnAdata[0] ?
 
-          <div>
-            <div className="content">이거 이렇게 해줘어</div>
-          </div>
-        </div>
+        <CardWrapper>
+          {QnAdata[0].pw&&!pass&&!admin ?
+            <div>
+              <Title>비밀글입니다. 비밀번호를 입력하세요.</Title>
+              <div style={{ display: 'flex', paddingLeft: '100px' }}>
+                <div style={{ width: '100px', fontSize: '20px' }}>비밀번호:</div>
+                <CardInput style={{ width: '100px' }}
+                  placeholder="4자리 비밀번호"
+                  type="password"
+                  onChange={(e) => { setPW(e.target.value) }}
+                />
+                <CardButton onClick={(e) => {
+                  if (pw === QnAdata[0].pw) {
+                    Swal.fire('비밀번호가 일치합니다', "success")
+                    setPass(true);
+                  }
+                  else {
+                    Swal.fire('비밀번호가 일치하지 않습니다', "error")
+                  }
+                }}>확인</CardButton>
+              </div>
 
-        <div className="comment">
-          <hr />
-          답변하기
-          <p />
-          <textarea
-            className="review-input"
-            placeholder="답변을 입력해주세요."
-          ></textarea>
-          <CardButton>등록하기</CardButton>
-        </div>
+            </div>
+            :
+            <div>
+              <div className="View">
+                <div className="top_title">
+                  <div id="title_txt">{QnAdata[0].title}</div>
+                  <div className="date_div">작성자 ID: {QnAdata[0].writerID} / {QnAdata[0].postDate.split('T')[0]}</div>
+                </div>
 
-        <div className="admin">
-          {/* 아이디, 답변내용 */}
-          <div>➡ 관리자 : 네~ 알겠습니다</div>
-        </div>
-      </CardWrapper>
+                <div>
+                  <div className="content">{QnAdata[0].postBody}</div>
+                </div>
+              </div>
+
+              <div className="admin">
+                {/* 아이디, 답변내용 */}
+                <div>➡ 관리자 : 네~ 알겠습니다</div>
+              </div>
+
+              {admin ?
+                <div className="comment">
+                  <hr />
+                  답변하기
+                  <p />
+                  <textarea
+                    className="review-input"
+                    placeholder="답변을 입력해주세요."
+                  ></textarea>
+                  <CardButton>등록하기</CardButton>
+                </div>
+
+                : null}
+            </div>
+          }
+        </CardWrapper>
+        : null}
     </Body>
   );
 };

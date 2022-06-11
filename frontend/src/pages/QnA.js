@@ -52,6 +52,7 @@ function printList(list, navigate) {
         <div> {list[i].title} </div>
         <div className="acenter"> {list[i].username} </div>
         <div className="acenter"> {list[i].postDate.split('T')[0]} </div>
+        <div className="acenter"> {list[i].pw ? '비공개' : '공개'}</div>
         <div className="acenter"> {list[i].isAnswered ? '답변완료' : '대기중'}</div>
       </div>
     )
