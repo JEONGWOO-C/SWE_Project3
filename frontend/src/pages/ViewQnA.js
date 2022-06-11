@@ -41,7 +41,7 @@ const ViewQnA = ({ history }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/getNoticebyPostnum", {
+      .get("http://localhost:4000/getQnAbyPostnum", {
         params: { postnum: postnum },
       })
       .then(({ data }) => setQnAdata(data));
