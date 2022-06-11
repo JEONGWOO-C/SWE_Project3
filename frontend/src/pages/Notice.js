@@ -16,6 +16,8 @@ import { Body, Title } from "./CustCenter";
 import "../App.css";
 import styled from "styled-components";
 import axios from "axios";
+import { getInfoFromCookie } from "../components/Auth";
+
 
 export const CardButton = styled.button`
   display: block;
@@ -56,6 +58,14 @@ function printList(list, navigate) {
   return array;
 }
 
+
+const info = getInfoFromCookie();
+
+let admin = false;
+  if(info)
+    if(info.token)
+      admin = (info.token.type=='admin')
+
 const Notice = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
 
@@ -86,9 +96,10 @@ const Notice = ({ history }) => {
         </div>
 
         {/* 관리자한테만 버튼 보이고 작동하도록 */}
-        <CardButton onClick={() => navigate("/writeNotice")}>
+        {admin? <CardButton onClick={() => navigate("/writeNotice")}>
           공지 등록
-        </CardButton>
+        </CardButton> : null}
+        
       </CardWrapper>
     </Body>
   );
