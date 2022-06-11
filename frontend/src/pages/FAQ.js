@@ -44,13 +44,13 @@ const FAQ = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
   const listNum = [1, 2];
   const view_url = "/viewFAQ/" + listNum[0];
-  var [FAQdata, setFAQData] = useState([]);
-  console.log(FAQdata);
+  var [FAQlist, setFAQlist] = useState([]);
+  console.log(FAQlist);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/getFAQ", {})
-      .then(({ data }) => setFAQData(data));
+      .then(({ data }) => setFAQlist(data));
   }, []);
 
   let navigate = useNavigate();
