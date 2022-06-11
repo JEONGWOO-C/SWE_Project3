@@ -51,8 +51,8 @@ const ModifyNotice = ({ history }) => {
       })
       .then(({ data }) => {
         setNoticeData(data);
-        setBody(data.postBody);
         setTitle(data.title);
+        setBody(data.postBody);
       });
   }, []);
 
