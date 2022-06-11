@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
 import {
   CardWrapper,
   CardHeader,
@@ -46,10 +46,13 @@ export const CardButton = styled.button`
 
 const ViewFAQ = ({ history }) => {
   let navigate = useNavigate();
+  const navigateState = useLocation().state;
+  const postnum = navigateState && navigateState.postnum;
 
   return (
     <Body>
       <CardWrapper>
+      {postnum}
         <div className='View'>
           <div className='top_title'>
             <div id='title_txt'>구매는 어떻게 하면 되나요?</div>
@@ -60,7 +63,6 @@ const ViewFAQ = ({ history }) => {
             <div className='content'>알아서 하세요</div>
           </div>
         </div>
-
         <CardButton onClick={()=>navigate('/writeFAQ')}>
           수정하기
         </CardButton>
