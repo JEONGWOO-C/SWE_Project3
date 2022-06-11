@@ -49,10 +49,10 @@ const QnA = ({ history }) => {
 
   let navigate = useNavigate();
   const info = getInfoFromCookie();
-  console.log(info);
+
   var [QnAlist, setQnAlist] = useState([]);
   console.log(QnAlist);
-
+  console.log(info);
   useEffect(() => {
     axios
       .get("http://localhost:4000/getQnA", { headers: { token: info.token } })

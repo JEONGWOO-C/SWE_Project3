@@ -19,7 +19,8 @@ CREATE TABLE admins(
     phone varchar(11) not null,
     email varchar(32),
     id varchar(32) not null primary key,
-    pw varchar(16) not null
+    pw varchar(16) not null,
+    isApproved boolean default false
 );
     
 #찜 table

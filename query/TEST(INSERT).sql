@@ -7,6 +7,11 @@ VALUES
 ('이민석', '01033333333', 'tester3@market.com', 23, 'test3', 'test3333', ''),
 ('이세연', '01044444444', 'tester4@market.com', 12, 'test4', 'test4444', '');
 
+INSERT admins(adminname, phone, id, pw, isApproved)
+VALUES
+("관리자1", "01012345678", 'admin1', 'admin111', true),
+("관리자2", "01012345678", 'admin2', 'admin222', false);
+
 INSERT posts(title, postDate, views, fav)
 VALUES
 ('아이폰12미니', '2022-06-09 16:00:00', 10,1),
@@ -114,8 +119,3 @@ INSERT QnA(writerID, title, postDate, postBody)
 VALUES
 ("test2", "OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
 ("test2", "현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
-
-INSERT NOTICE(title, postDate, postBody)
-VALUES
-("OO마켓 홈페이지 개설!", '2022-06-11', "많이 이용해 주세요 :)"),
-("현재 기능 추가 구현중입니다.", '2022-06-11', "아직 쓰지마셈");
