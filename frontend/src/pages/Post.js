@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardWrapper, CardBody, CardButton } from "../components/Card";
+import { CardWrapper, CardBody, CardButton, CardHeading } from "../components/Card";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,6 +8,7 @@ import { BiUser, BiHeart } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
+import { PieChart } from "react-minimal-pie-chart";
 
 const Body = styled.div`
   display: flex;
@@ -47,16 +48,16 @@ function calDiff(data) {
     // index 0:년, 1:월 2:일 3:시 4:분 5:초
     const start = new Date(
       data_split[0] +
-        "-" +
-        data_split[1] +
-        "-" +
-        data_split[2] +
-        " " +
-        data_split[3] +
-        ":" +
-        data_split[4] +
-        ":" +
-        data_split[5]
+      "-" +
+      data_split[1] +
+      "-" +
+      data_split[2] +
+      " " +
+      data_split[3] +
+      ":" +
+      data_split[4] +
+      ":" +
+      data_split[5]
     );
     const now = new Date();
     const diff = (now.getTime() - start.getTime()) / 1000;
@@ -76,6 +77,7 @@ function Price(data) {
   if (data) return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
+
 const Post = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
@@ -84,6 +86,71 @@ const Post = ({ history }) => {
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
   var navigate = useNavigate()
+
+  const Chart = () => {
+    const data = [
+      { title: '10대', value: postData.teens, color: '#ff6600' },
+      { title: '20대', value: postData.twenties, color: '#99ff00' },
+      { title: '30대', value: postData.thirties, color: '#00ff66' },
+      { title: '40대', value: postData.fourties, color: '#0099ff' },
+      { title: '50대', value: postData.fifties, color: '#6600ff' },
+      { title: '60대 이상', value: postData.overSixties, color: '#ff0099' }
+    ]
+    let total = data[0].value + data[1].value + data[2].value + data[3].value + data[4].value + data[5].value;
+    return (
+      <div style={{ display: 'flex', padding: '50px'}}>
+        <PieChart
+          data={data}
+          animate
+          style={{ width: '50%' }}
+        />
+        <div style={{ paddingLeft: '100px', marginBottom:'auto', marginTop:'auto'}}>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[0].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[0].title} </div>
+              <div> {(data[0].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[1].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[1].title} </div>
+              <div> {(data[1].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[2].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[2].title} </div>
+              <div> {(data[2].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[3].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[3].title} </div>
+              <div> {(data[3].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[4].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[4].title} </div>
+              <div> {(data[4].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', padding: '12px'}}>
+            <div style={{ width: '20px', height: '20px', background: (data[5].color)}}></div>
+            <div style={{paddingLeft: '10px'}}>
+              <div style={{paddingBottom: '10px'}}> {data[5].title} </div>
+              <div> {(data[5].value/total*100).toFixed(0)+'%'} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   useEffect(() => {
     axios
@@ -111,108 +178,56 @@ const Post = ({ history }) => {
   }, []);
 
   return (
-    <Body style={{}}>
-      <CardWrapper style={{ display: "flex" }}>
-        <CardBody style={{ width: "36%", padding: "64px" }}>
-          {/* <Slider {...settings}>
+
+    <Body>
+      <CardWrapper>
+        <div style={{ display: "flex" }}>
+          <CardBody style={{ width: "36%", padding: "64px" }}>
+            {/* <Slider {...settings}>
             {slider()}
           </Slider> */}
-          <img
-            src={postData.photo}
-            width="100%"
-            heightL="100%"
-            alt="이미지 없음"
-            style={postData.isSelling ? null : { opacity: 0.5 }}
-          />
-        </CardBody>
-        <CardBody style={{ width: "40%", padding: "64px" }}>
-          {postData.isSelling ? (
-            <div
-              style={{
-                padding: "4px 0",
-                background: "#033a7a",
-                color: "#fff",
-                width: "100px",
-                height: "32px",
-                textAlign: "center",
-                borderRadius: "5px",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              판매중
-            </div>
-          ) : (
-            <div
-              style={{
-                padding: "4px 0",
-                background: "lightgray",
-                width: "100px",
-                height: "32px",
-                textAlign: "center",
-                borderRadius: "5px",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              판매완료
-            </div>
-          )}
-
-          <div
-            style={{
-              display: "flex",
-              paddingTop: "24px",
-              paddingBottom: "8px",
-            }}
-          >
-            <div>
-              <BiUser style={{ width: "80px", height: "80px" }} />
-            </div>
-            <div style={{ margin: "16px", width: "400px" }}>
-              <div style={{ fontWeight: "bold", fontSize: "36px" }}>
-                {postData.name}
+            <img
+              src={postData.photo}
+              width="100%"
+              heightL="100%"
+              alt="이미지 없음"
+              style={postData.isSelling ? null : { opacity: 0.5 }}
+            />
+          </CardBody>
+          <CardBody style={{ width: "40%", padding: "64px" }}>
+            {postData.isSelling ? (
+              <div
+                style={{
+                  padding: "4px 0",
+                  background: "#033a7a",
+                  color: "#fff",
+                  width: "100px",
+                  height: "32px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                판매중
               </div>
-            </div>
-            <div
-              style={{
-                marginTop: "30px",
-                fontWeight: "bold",
-                fontSize: "24px",
-              }}
-            >
-              {postData.score}
-            </div>
-          </div>
-          <hr />
-          <div style={{ marginTop: "16px" }}>
-            <div style={{ fontWeight: "bold", fontSize: "28px" }}>
-              {postData.title}
-            </div>
-            <div
-              style={{
-                marginTop: "8px",
-                marginBottom: "8px",
-                color: "#858688",
-              }}
-            >
-              {postData.category} - {calDiff(postData.postDate)}
-            </div>
-            <div style={{ fontWeight: "bold", fontSize: "28px" }}>
-              {Price(postData.price)}
-            </div>
-            <div
-              style={{
-                marginTop: "24px",
-                marginBottom: "24px",
-                fontSize: "20px",
-              }}
-            >
-              {postData.descript}
-            </div>
-            <div style={{ color: "lightgray" }}>
-              찜 {postData.fav} - 채팅 30 - 조회 {postData.views}
-            </div>
+            ) : (
+              <div
+                style={{
+                  padding: "4px 0",
+                  background: "lightgray",
+                  width: "100px",
+                  height: "32px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                판매완료
+              </div>
+            )}
+
             <div
               style={{
                 display: "flex",
@@ -220,50 +235,115 @@ const Post = ({ history }) => {
                 paddingBottom: "8px",
               }}
             >
-              <BiHeart
-                style={{ width: "60px", height: "60px", paddingRight: "16px" }}
-                onClick={async (e) => {
-                  isFavorite = setFav(
-                    userInfo.id,
-                    postnum,
-                    isFavorite,
-                    postData.fav
-                  );
-                }}
-              />
-              <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
-                <CardButton
-                  style={{
-                    width: "140px",
-                    height: "60px",
-                    fontSize: "20px",
-                    backgroundColor: "#033a7a",
-                    color: "white",
-                  }}
-                  onClick={()=>{
-                    navigate("/talk", { state: { postnum: postnum } })}
-                  }
-                >
-                  채팅하기
-                </CardButton>
+              <div>
+                <BiUser style={{ width: "80px", height: "80px" }} />
               </div>
-              <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
-                <CardButton
-                  style={{
-                    width: "210px",
-                    height: "60px",
-                    fontSize: "20px",
-                    backgroundColor: "lightgray",
-                    color: "white",
-                  }}
-                >
-                  이 게시글 신고하기
-                </CardButton>
+              <div style={{ margin: "16px", width: "400px" }}>
+                <div style={{ fontWeight: "bold", fontSize: "36px" }}>
+                  {postData.name}
+                </div>
+              </div>
+              <div
+                style={{
+                  marginTop: "30px",
+                  fontWeight: "bold",
+                  fontSize: "24px",
+                }}
+              >
+                {postData.score}
               </div>
             </div>
-          </div>
-        </CardBody>
+            <hr />
+            <div style={{ marginTop: "16px" }}>
+              <div style={{ fontWeight: "bold", fontSize: "28px" }}>
+                {postData.title}
+              </div>
+              <div
+                style={{
+                  marginTop: "8px",
+                  marginBottom: "8px",
+                  color: "#858688",
+                }}
+              >
+                {postData.category} - {calDiff(postData.postDate)}
+              </div>
+              <div style={{ fontWeight: "bold", fontSize: "28px" }}>
+                {Price(postData.price)}
+              </div>
+              <div
+                style={{
+                  marginTop: "24px",
+                  marginBottom: "24px",
+                  fontSize: "20px",
+                }}
+              >
+                {postData.descript}
+              </div>
+              <div style={{ color: "lightgray" }}>
+                찜 {postData.fav} - 채팅 30 - 조회 {postData.views}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "24px",
+                  paddingBottom: "8px",
+                }}
+              >
+                <BiHeart
+                  style={{ width: "60px", height: "60px", paddingRight: "16px" }}
+                  onClick={async (e) => {
+                    isFavorite = setFav(
+                      userInfo.id,
+                      postnum,
+                      isFavorite,
+                      postData.fav
+                    );
+                  }}
+                />
+                <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
+                  <CardButton
+                    style={{
+                      width: "140px",
+                      height: "60px",
+                      fontSize: "20px",
+                      backgroundColor: "#033a7a",
+                      color: "white",
+                    }}
+                    onClick={() => {
+                      navigate("/talk", { state: { postnum: postnum } })
+                    }
+                    }
+                  >
+                    채팅하기
+                  </CardButton>
+                </div>
+                <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
+                  <CardButton
+                    style={{
+                      width: "210px",
+                      height: "60px",
+                      fontSize: "20px",
+                      backgroundColor: "lightgray",
+                      color: "white",
+                    }}
+                  >
+                    이 게시글 신고하기
+                  </CardButton>
+                </div>
+              </div>
+            </div>
+
+          </CardBody>
+        </div>
+        <div>
+            <CardHeading>연령별 조회 현황</CardHeading>
+            <div style={{padding: '0px 200px'}}>
+              <Chart />
+            </div>
+        </div>
+        
       </CardWrapper>
+
     </Body>
   );
 };
