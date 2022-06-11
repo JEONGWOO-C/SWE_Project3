@@ -44,13 +44,13 @@ const Notice = ({ history }) => {
   // 게시글 이동 테스트 코드 (db에서 게시글 번호를 받아서 페이지 이동)
   const listNum = 1;
   const view_url = "/viewNotice/" + listNum;
-  var [noticeData, setNoticeData] = useState([]);
-  console.log(noticeData);
+  var [noticeList, setNoticeList] = useState([]);
+  console.log(noticeList);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/getNotice", {})
-      .then(({ data }) => setNoticeData(data));
+      .then(({ data }) => setNoticeList(data));
   }, []);
 
   let navigate = useNavigate();
