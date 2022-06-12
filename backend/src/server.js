@@ -47,6 +47,9 @@ import UploadQnAComment from "./api/Admin/UploadQnAComment.js";
 import getPrice from "./api/Payment/getPrice.js";
 import charging from "./api/Payment/charging.js";
 import reportPost from "./api/Post/reportPost.js";
+import getReportList from "./api/Admin/getReportList.js";
+import deletePost from "./api/Admin/deletePost.js";
+import deleteReportbyPostnum from "./api/Admin/deleteReportbyPostnum.js";
 
 const connection = init();
 const app = express();
@@ -116,6 +119,9 @@ UploadQnAComment(app, connection);
 getPrice(app, connection);
 charging(app, connection);
 reportPost(app, connection);
+getReportList(app, connection);
+deletePost(app, connection);
+deleteReportbyPostnum(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
