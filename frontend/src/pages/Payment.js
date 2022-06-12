@@ -51,7 +51,21 @@ const Payment = ({ history }) => {
   const postnum = navigateState && navigateState.postnum
   const info = getInfoFromCookie();
   const [value, setValue] = useState([0]);
-  let money = 0;
+  const [money, setMoney] = useState(0);
+  useEffect(()=>{
+    axios.get("http://localhost:4000/userInfo",{
+      headers:{token:info.token}
+    }).then(({data})=>{console.log(data);setMoney(data[0].mileage);})
+  }, [])
+  const [price, setPrice] = useState(0);
+  useEffect(()=>{
+    if(typeof postnum === 'number')
+      axios.get("http://localhost:4000/getPrice",{
+        headers:{token:info.token}
+      }).then(({data})=>setPrice(data))
+  }, [])
+  
+  console.log(info.token)
   /*var [chatList,setChatList] = useState([]);
   useEffect(()=>{
     axios
@@ -144,9 +158,19 @@ const Payment = ({ history }) => {
             .then(result => {
               if (result.isConfirmed) {
                 // 마일리지가 구매하는 상품의 개수보다 적다면
-                  // 에러 출력
+                if(price>value+money)
+                  Swal.fire('충전량이 부족합니다.', '필요 마일리지: '+(parseInt(price) - parseInt(value))+'원', 'Error');
                 // 아니라면 구매 완료
-                Swal.fire('충전이 완료되었습니다.', '보유 마일리지: '+(parseInt(money) + parseInt(value))+'원', 'success');
+                else{
+                  axios.post("http://localhost:4000/charging",{
+                    value:value+money
+                  },{headers:{token:info.token}})
+                  .then(({data})=>{
+                    console.log(data);
+                    Swal.fire('충전이 완료되었습니다.', '보유 마일리지: '+(parseInt(money) + parseInt(value))+'원', 'success');
+                  })
+                  window.location.reload()
+                }
                 //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
                 // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
              }

@@ -57,14 +57,18 @@ const AdminManagement = ({ history }) => {
   const [state,setState] = useState(true);
   const [user_list,setUserList] = useState([]);
   useEffect(()=>{
-    axios.post("http://localhost:4000/getAdminMemberList")
+    axios.post("http://localhost:4000/getAdminList")
     .then(({data})=>{console.log(data);setUserList(data)})
   },[])
 
-  function Tab(i) {
+  function Tab(i,value) {
     //유저 아이디를 인자로 받고 그 아이디의 회원가입 승인 요청을 해줌
-    user_list[i].confirm = true;
+    user_list[i].confirm = value;
     setState(!state);
+    axios.post(
+      "http://localhost:4000/setApproved",{
+        id: user_list[i].id, approved: value
+      })
   }
   function Table(user_list) {
     let array = [];
@@ -77,8 +81,8 @@ const AdminManagement = ({ history }) => {
           <Td>{user_list[i].phone}</Td>
           <Td>{user_list[i].email}</Td>
           <Td style={{width: '200px', display: 'flex'}}>
-              <CardButton onClick={(e)=>{Tab(i);}}>승인</CardButton>
-              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i);}}>거절</CardButton>
+              <CardButton onClick={(e)=>{Tab(i,true);}}>승인</CardButton>
+              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i,false);}}>거절</CardButton>
           </Td>
         </Tr>)
     }

@@ -1,5 +1,5 @@
 export default async (app, connection) => {
-  app.post("/getMemberList", async (req, res, next) => {
+  app.post("/getAdminList", async (req, res, next) => {
     await connection.query(
       "SELECT * FROM admins",
       [],
