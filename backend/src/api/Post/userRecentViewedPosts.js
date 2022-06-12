@@ -4,7 +4,7 @@ export default async (app, connection) => {
   app.use("/userRecentViewedPosts", async (req, res, next) => {
     const { id } = req.query;
     connection.query(
-      "SELECT PO.postnum, PO.title, PR.price, PR.isSelling, PO.views, PH.photo FROM posts PO, product PR, photos PH, recentPosts RC WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND PO.postnum = RC.postnum AND RC.id = ? ORDER BY RC.viewDate desc LIMIT 10",
+      "SELECT PO.postnum, PO.title, PR.price, PR.isSelling, PO.views, PH.photo FROM posts PO, product PR, photos PH, recentPosts RC, users US WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND PO.postnum = RC.postnum AND RC.id = ? AND PR.seller_id = US.id AND US.ban = false ORDER BY RC.viewDate desc LIMIT 10",
       [id],
       (error, data) => {
         if (error) console.log(error);
