@@ -67,28 +67,29 @@ const refuseReport = async (postnum) => {
   }
 };
 
-export function printList(list, key) {
+function printList(list, key) {
   console.log(list);
   console.log("key " + key);
 
+  let array = [];
   for (var i = 0; i < key.length; i++) {
     for (var j = 0; j < list[key[i]].length; j++) {
       let item = list[key[i]][j];
-      let array = [];
       array.push(
-        <CardTitle>
-          게시물번호 - {item.postnum} / 신고자 - {item.writer} / 신고이유 -
-          {item.reason} / 신고 일시 - {item.reportDate}
-        </CardTitle>
+        <div>
+        게시물번호 - {item.postnum} / 신고자 - {item.writer} / 신고이유 -
+        {item.reason} / 신고 일시 - {item.reportDate}
+        <button onClick={()=>{approveReport(item.postnum);refuseReport(item.postnum);}}>승인</button>
+        <button onClick={()=>{refuseReport(item.postnum); }}>거절</button>
+        </div>
       );
     }
   }
+  return array;
 }
 
 const ConfirmReport = ({ history }) => {
   const [reportList, setReportList] = useState([]);
-  var keys = Object.keys(reportList);
-
   useEffect(() => {
     axios.get("http://localhost:4000/getReportList").then(({ data }) => {
       setReportList(data);
