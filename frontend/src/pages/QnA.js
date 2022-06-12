@@ -45,17 +45,26 @@ function printList(list, navigate) {
   let array = [];
   for (let i = 0; i < list.length; i++) {
     array.push(
-      <div className="list_grid_qna list_data"
-        style={{ cursor: 'pointer', marginTop: '4px' }}
-        onClick={() => { navigate("/viewQnA/" + list[i].postnum, { state: { postnum: list[i].postnum } }) }}>
+      <div
+        className="list_grid_qna list_data"
+        style={{ cursor: "pointer", marginTop: "4px" }}
+        onClick={() => {
+          navigate("/viewQnA/" + list[i].postnum, {
+            state: { postnum: list[i].postnum },
+          });
+        }}
+      >
         <div className="acenter"> {list[i].postnum} </div>
         <div> {list[i].title} </div>
         <div className="acenter"> {list[i].username} </div>
-        <div className="acenter"> {list[i].postDate.split('T')[0]} </div>
-        <div className="acenter"> {list[i].pw ? '비공개' : '공개'}</div>
-        <div className="acenter"> {list[i].isAnswered ? '답변완료' : '대기중'}</div>
+        <div className="acenter"> {list[i].postDate.split("T")[0]} </div>
+        <div className="acenter"> {list[i].pw ? "비공개" : "공개"}</div>
+        <div className="acenter">
+          {" "}
+          {list[i].isAnswered ? "답변완료" : "대기중"}
+        </div>
       </div>
-    )
+    );
   }
   return array;
 }
@@ -68,19 +77,26 @@ const QnA = ({ history }) => {
   let navigate = useNavigate();
   const info = getInfoFromCookie();
 
+  let admin = false;
+  if (info) if (info.token) admin = info.token.type === "admin";
+  console.log(admin);
+
   var [QnAlist, setQnAlist] = useState([]);
   console.log(QnAlist);
-  console.log(info);
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/getQnA", { headers: { token: info.token } })
-      .then(({ data }) => setQnAlist(data));
-  }, []);
 
-  let admin = false;
-  if (info)
-    if (info.token)
-      admin = (info.token.type == 'admin')
+  useEffect(() => {
+    if (admin) {
+      axios
+        .get("http://localhost:4000/getAdminQnA")
+        .then(({ data }) => setQnAlist(data));
+    } else {
+      axios
+        .get("http://localhost:4000/getQnA", {
+          headers: { token: info.token },
+        })
+        .then(({ data }) => setQnAlist(data));
+    }
+  }, []);
 
   return (
     <Body>
@@ -100,15 +116,18 @@ const QnA = ({ history }) => {
           {printList(QnAlist, navigate)}
         </div>
 
-        {admin? null:
-        <CardButton
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            { navigate("/writeQnA") }
-          }}
-        >
-          문의 등록
-        </CardButton>}
+        {admin ? null : (
+          <CardButton
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              {
+                navigate("/writeQnA");
+              }
+            }}
+          >
+            문의 등록
+          </CardButton>
+        )}
       </CardWrapper>
     </Body>
   );
