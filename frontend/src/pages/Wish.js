@@ -46,7 +46,13 @@ const Wish = ({ history }) => {
     <Body style={{}}>
       <CardWrapper>
         <Title>찜목록</Title>
-        {PrintProducts(wishList, wishList.length, 5)}
+        {wishList.length === 0 ? (
+          <CardHeading style={{ width: "100%" }}>
+            "찜 목록 상품이 존재하지 않습니다."
+          </CardHeading>
+        ) : (
+          PrintProducts(wishList, wishList.length, 5)
+        )}
       </CardWrapper>
     </Body>
   );

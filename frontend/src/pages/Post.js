@@ -87,7 +87,6 @@ const Post = ({ history }) => {
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
   var navigate = useNavigate()
-
   const Chart = () => {
     const data = [
       { title: '10대', value: postData.teens, color: '#ff6600' },
@@ -240,7 +239,10 @@ const Post = ({ history }) => {
                 <BiUser style={{ width: "80px", height: "80px" }} />
               </div>
               <div style={{ margin: "16px", width: "400px" }}>
-                <div style={{ fontWeight: "bold", fontSize: "36px" }}>
+                <div style={{ fontWeight: "bold", fontSize: "36px", cursor: "pointer" }}
+                  onClick={()=>{
+                    Swal.fire("'"+postData.username+"'님의 연락처","전화번호: 000-0000-0000 / 이메일: zzzzz@zzz.zzz")
+                  }}>
                   {postData.username}
                 </div>
               </div>
@@ -281,7 +283,7 @@ const Post = ({ history }) => {
                 {postData.descript}
               </div>
               <div style={{ color: "lightgray" }}>
-                찜 {postData.fav} - 채팅 30 - 조회 {postData.views}
+                찜 {postData.fav} - 조회 {postData.views}
               </div>
               <div
                 style={{
@@ -321,12 +323,32 @@ const Post = ({ history }) => {
                       backgroundColor: "#033a7a",
                       color: "white",
                     }}
-                    onClick={() => {
-                      navigate("/talk", { state: { postnum: postnum } })
-                    }
-                    }
+                    onClick={()=>{
+                      Swal.fire({
+                        title: '구매 하시겠습니까?',
+                        text: '구매하시면 마일리지가 차감됩니다.',
+                        icon: 'question',
+
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '구매',
+                        cancelButtonText: '취소',
+                        reverseButtons: true,
+                      })
+                      .then(result => {
+                        if (result.isConfirmed) {
+                          // 마일리지가 구매하는 상품의 개수보다 적다면
+                            // 에러 출력
+                          // 아니라면 구매 완료
+                          Swal.fire('구매가 완료되었습니다.', '남은 마일리지: OOO원', 'success');
+                          //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
+                          // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
+                       }
+                      });
+                    }}
                   >
-                    채팅하기
+                    구매하기
                   </CardButton>
                 </div>
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
@@ -337,6 +359,29 @@ const Post = ({ history }) => {
                       fontSize: "20px",
                       backgroundColor: "lightgray",
                       color: "white",
+                    }}
+                    onClick={()=>{
+                      Swal.fire({
+                        title: '이 게시글 신고하기',
+                        text: '이 게시글을 신고 하시겠습니까?',
+                        icon: 'question',
+
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '신고',
+                        cancelButtonText: '취소',
+                        reverseButtons: true,
+                      })
+                      .then(result => {
+                        if (result.isConfirmed) {
+                          Swal.fire('신고 완료', '신고가 완료 되었습니다.', 'success');
+                      }
+
+                        // 이후 처리되는 용.
+                        
+                      
+                      });
                     }}
                   >
                     이 게시글 신고하기

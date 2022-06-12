@@ -337,7 +337,7 @@ const Nav = ({ history }) => {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
-                    <div>{navigate("/talk")}</div>
+                    <div>{navigate("/payment")}</div>
                   ) : (
                     <div>
                       {Swal.fire(
@@ -349,7 +349,7 @@ const Nav = ({ history }) => {
                   );
                 }}
               >
-                OO톡
+                마일리지 충전
               </CardBody>
               <CardBody
                 style={{ cursor: "pointer" }}
