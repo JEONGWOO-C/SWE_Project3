@@ -28,17 +28,17 @@ const Body = styled.div`
   width: 100%;
 `;
 
-const styledTable = styled.table`
-  width: '80%';
-  border-collapse: 'collapse'
-`;
-
 const Tr = styled.tr`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   &:nth-child(odd){background-color: #e6f1ff;}
   &:nth-child(even) { background-color: #f0f7ff; }
   &:hover { background-color: #ffc5c2; cursor: pointer; }
+`;
+
+const TitleTr = styled.tr`
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 
 const Td = styled.td`
@@ -82,7 +82,7 @@ const AdminManagement = ({ history }) => {
           <Td>{user_list[i].email}</Td>
           <Td style={{width: '200px', display: 'flex'}}>
               <CardButton onClick={(e)=>{Tab(i,true);}}>승인</CardButton>
-              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i,false);}}>거절</CardButton>
+              <CardButton style={{ backgroundColor: 'red'}}onClick={(e)=>{Tab(i,false);}}>거절</CardButton>
           </Td>
         </Tr>)
     }
@@ -92,14 +92,16 @@ const AdminManagement = ({ history }) => {
     <Body style={{}}>
       <CardWrapper style={{ textAlign: 'center'}}>
         <Title>관리자 승인</Title>
-        <styledTable>
-            <Td>ID</Td>
-            <Td>이름</Td>
-            <Td>전화번호</Td>
-            <Td>이메일</Td>
-            <Td>승인대기</Td>
+        <table style={{width: '80%',borderCollapse: 'collapse',margin:'auto'}}>
+            <TitleTr>
+              <Td>ID</Td>
+              <Td>이름</Td>
+              <Td>전화번호</Td>
+              <Td>이메일</Td>
+              <Td>승인대기</Td>
+            </TitleTr>
           {Table(user_list)}
-        </styledTable>
+        </table>
       </CardWrapper>
     </Body>
   )

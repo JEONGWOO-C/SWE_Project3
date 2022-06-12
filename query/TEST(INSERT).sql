@@ -100,13 +100,6 @@ VALUES
 ('test2', 4, '2022-06-09 15:00:06'),
 ('test2', 1, '2022-06-09 18:00:06');
 
-INSERT chats(writer, msg, chatDate, roomNumber)
-VALUES
-('test1', '2341234', '2022-06-09 16:00:06', 1),
-('test2', 'test', '2022-06-09 16:00:08', 1),
-('test1', 'easwfager', '2022-06-09 16:00:10', 1),
-('test2', 'test', '2022-06-09 16:01:06', 1);
-
 INSERT FAQ(title, postDate, postBody)
 VALUES
 ("구매는 어떻게 하면 되나요?", '2022-06-11', "알아서 하세요"),

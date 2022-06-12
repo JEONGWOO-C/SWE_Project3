@@ -9,8 +9,9 @@ export default async (app, connection) => {
         for (var i = 0; i < data.length; i++) {
           if (result[data[i].postnum] === undefined)
             result[data[i].postnum] = [];
-          result[data[i].postnum].push(data[0]);
+          result[data[i].postnum].push(data[i]);
         }
+        console.log(result)
         return res.send(result);
       }
     );
