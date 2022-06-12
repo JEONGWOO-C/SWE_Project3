@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import MyShop from './pages/MyShop';
 import Wish from './pages/Wish';
 import Viewed from './pages/Viewed';
-import Talk from './pages/Talk';
+import Payment from './pages/Payment';
 import CustCenter from './pages/CustCenter';
 import FAQ from './pages/FAQ';
 import ViewFAQ from './pages/ViewFAQ';
@@ -54,7 +54,7 @@ class App extends Component {
           <Route path='/myshop' element={<MyShop />} />
           <Route path='/wish' element={<Wish />} />
           <Route path='/viewed' element={<Viewed />} />
-          <Route path='/talk' element={<Talk />} />
+          <Route path='/payment' element={<Payment />} />
           <Route path='/custcenter' element={<CustCenter />} />
           <Route path='/faq' element={<FAQ />} />
           <Route path='/viewFAQ/:data' element={<ViewFAQ />} />
