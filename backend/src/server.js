@@ -33,11 +33,20 @@ import UploadNotice from "./api/CustomerCenter/UploadNotice.js";
 import ModifyNotice from "./api/CustomerCenter/ModifyNotice.js";
 import ModifyFAQ from "./api/CustomerCenter/ModifyFAQ.js";
 import getQnAbyPostnum from "./api/CustomerCenter/getQnAbyPostnum.js";
-import { passwordUpdate, privateUpdate, profileUpdate } from "./api/User/userUpdate.js";
+import {
+  passwordUpdate,
+  privateUpdate,
+  profileUpdate,
+} from "./api/User/userUpdate.js";
 import getMemberList from "./api/Admin/getMemberList.js";
 import getAdminMemberList from "./api/Admin/getAdminMemberList.js";
 import { releaseBan, setBan } from "./api/Admin/banControl.js";
-import { delAdmin, releaseApproved, setApproved } from "./api/Admin/ApproveControl.js";
+import {
+  delAdmin,
+  releaseApproved,
+  setApproved,
+} from "./api/Admin/ApproveControl.js";
+import getAdminQnA from "./api/Admin/getAdminQnA.js";
 
 const connection = init();
 const app = express();
@@ -104,7 +113,8 @@ setBan(app, connection);
 releaseBan(app, connection);
 setApproved(app, connection);
 releaseApproved(app, connection);
-delAdmin(app,connection);
+delAdmin(app, connection);
+getAdminQnA(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
