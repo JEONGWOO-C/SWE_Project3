@@ -47,6 +47,7 @@ import {
   setApproved,
 } from "./api/Admin/ApproveControl.js";
 import getAdminQnA from "./api/Admin/getAdminQnA.js";
+import UploadQnAComment from "./api/Admin/UploadQnAComment.js";
 
 const connection = init();
 const app = express();
@@ -115,6 +116,7 @@ setApproved(app, connection);
 releaseApproved(app, connection);
 delAdmin(app, connection);
 getAdminQnA(app, connection);
+UploadQnAComment(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

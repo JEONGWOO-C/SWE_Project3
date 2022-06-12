@@ -148,6 +148,7 @@ CREATE TABLE QnA(
     title varchar(32) not null,
     postDate date not null,		-- 게시글 작성시간
     postBody varchar(512),
+    postComment varchar(256) default "",
     isAnswered boolean default false,
     pw varchar(4) 
 );
