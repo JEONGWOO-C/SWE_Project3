@@ -16,7 +16,13 @@ import { handleLogin } from "../components/Auth";
 const login = async (id, pw) => {
   const result = await handleLogin(id, pw);
   console.log(result);
-  if (result === true) {
+  if (result === 'isBanned') {
+    Swal.fire(
+      "해당 아이디는 차단된 아이디입니다.",
+      "관리자에게 문의 바랍니다.",
+      "error"
+    );
+  } else if (result === true) {
     Swal.fire("로그인이 성공하였습니다.", "환영합니다.", "success").then(
       (result) => {
         if (result.isConfirmed) {
