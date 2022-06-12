@@ -10,7 +10,8 @@ CREATE TABLE users(
     id varchar(32) not null primary key,
     pw varchar(16) not null,
     info varchar(512) default '',
-    score int default 5 -- default 5 range 0 ~ 10
+    score int default 5, -- default 5 range 0 ~ 10
+    ban bool default false
 );
 
 DROP TABLE if exists admins;
