@@ -11,7 +11,8 @@ CREATE TABLE users(
     pw varchar(16) not null,
     info varchar(512) default '',
     score int default 5, -- default 5 range 0 ~ 10
-    ban bool default false
+    ban bool default false,
+    mileage int default 0
 );
 
 DROP TABLE if exists admins;
