@@ -81,10 +81,10 @@ CREATE TABLE comments(
 # reports Table
 DROP TABLE if exists reports;
 CREATE TABLE reports(
-	writer varchar(32) not null primary key,	# 작성자 아이디
-	postnum int not null,						# 게시글 번호
-    reason varchar(128) not null,				# 신고 내용
-    reportDate datetime not null);				# 작성 시간
+	writer varchar(32) not null,			# 작성자 아이디
+	postnum int not null,					# 게시글 번호
+    reason varchar(128) not null,			# 신고 내용
+    reportDate datetime not null);			# 작성 시간
 
 # 연령별 거래량 통계정보 table
 DROP TABLE if exists agePreffered;

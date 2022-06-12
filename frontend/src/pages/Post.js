@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { CardWrapper, CardBody, CardButton, CardHeading } from "../components/Card";
+import {
+  CardWrapper,
+  CardBody,
+  CardButton,
+  CardHeading,
+} from "../components/Card";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getInfoFromCookie, getTokenFromCookie } from "../components/Auth";
-import { BiUser, BiHeart } from "react-icons/bi";
+import { getTokenFromCookie } from "../components/Auth";
+import { BiUser } from "react-icons/bi";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
@@ -43,22 +48,31 @@ const setFav = async (id, postnum, isFavorite, fav) => {
   else return true;
 };
 
+const reportPost = async (writer, postnum, reason) => {
+  const res = await axios.post("http://localhost:4000/reportPost", {
+    writer: writer,
+    postnum: postnum,
+    reason: reason,
+  });
+  return res.data;
+};
+
 function calDiff(data) {
   if (data) {
     const data_split = data.split(/[-T:.]/);
     // index 0:년, 1:월 2:일 3:시 4:분 5:초
     const start = new Date(
       data_split[0] +
-      "-" +
-      data_split[1] +
-      "-" +
-      data_split[2] +
-      " " +
-      data_split[3] +
-      ":" +
-      data_split[4] +
-      ":" +
-      data_split[5]
+        "-" +
+        data_split[1] +
+        "-" +
+        data_split[2] +
+        " " +
+        data_split[3] +
+        ":" +
+        data_split[4] +
+        ":" +
+        data_split[5]
     );
     const now = new Date();
     const diff = (now.getTime() - start.getTime()) / 1000;
@@ -78,7 +92,6 @@ function Price(data) {
   if (data) return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
-
 const Post = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
@@ -86,71 +99,115 @@ const Post = ({ history }) => {
   var [postData, setPostData] = useState([]);
   var [userInfo, setUserInfo] = useState([]);
   var [isFavorite, setIsFavorite] = useState([]);
-  var navigate = useNavigate()
+  var navigate = useNavigate();
   const Chart = () => {
     const data = [
-      { title: '10대', value: postData.teens, color: '#ff6600' },
-      { title: '20대', value: postData.twenties, color: '#99ff00' },
-      { title: '30대', value: postData.thirties, color: '#00ff66' },
-      { title: '40대', value: postData.fourties, color: '#0099ff' },
-      { title: '50대', value: postData.fifties, color: '#6600ff' },
-      { title: '60대 이상', value: postData.overSixties, color: '#ff0099' }
-    ]
-    let total = data[0].value + data[1].value + data[2].value + data[3].value + data[4].value + data[5].value;
+      { title: "10대", value: postData.teens, color: "#ff6600" },
+      { title: "20대", value: postData.twenties, color: "#99ff00" },
+      { title: "30대", value: postData.thirties, color: "#00ff66" },
+      { title: "40대", value: postData.fourties, color: "#0099ff" },
+      { title: "50대", value: postData.fifties, color: "#6600ff" },
+      { title: "60대 이상", value: postData.overSixties, color: "#ff0099" },
+    ];
+    let total =
+      data[0].value +
+      data[1].value +
+      data[2].value +
+      data[3].value +
+      data[4].value +
+      data[5].value;
     return (
-      <div style={{ display: 'flex', padding: '50px' }}>
-        <PieChart
-          data={data}
-          animate
-          style={{ width: '50%' }}
-        />
-        <div style={{ paddingLeft: '100px', marginBottom: 'auto', marginTop: 'auto' }}>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[0].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[0].title} </div>
-              <div> {(data[0].value / total * 100).toFixed(0) + '%'} </div>
+      <div style={{ display: "flex", padding: "50px" }}>
+        <PieChart data={data} animate style={{ width: "50%" }} />
+        <div
+          style={{
+            paddingLeft: "100px",
+            marginBottom: "auto",
+            marginTop: "auto",
+          }}
+        >
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[0].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[0].title} </div>
+              <div> {((data[0].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[1].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[1].title} </div>
-              <div> {(data[1].value / total * 100).toFixed(0) + '%'} </div>
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[1].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[1].title} </div>
+              <div> {((data[1].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[2].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[2].title} </div>
-              <div> {(data[2].value / total * 100).toFixed(0) + '%'} </div>
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[2].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[2].title} </div>
+              <div> {((data[2].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[3].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[3].title} </div>
-              <div> {(data[3].value / total * 100).toFixed(0) + '%'} </div>
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[3].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[3].title} </div>
+              <div> {((data[3].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[4].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[4].title} </div>
-              <div> {(data[4].value / total * 100).toFixed(0) + '%'} </div>
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[4].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[4].title} </div>
+              <div> {((data[4].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
-          <div style={{ display: 'flex', padding: '12px' }}>
-            <div style={{ width: '20px', height: '20px', background: (data[5].color) }}></div>
-            <div style={{ paddingLeft: '10px' }}>
-              <div style={{ paddingBottom: '10px' }}> {data[5].title} </div>
-              <div> {(data[5].value / total * 100).toFixed(0) + '%'} </div>
+          <div style={{ display: "flex", padding: "12px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "20px",
+                background: data[5].color,
+              }}
+            ></div>
+            <div style={{ paddingLeft: "10px" }}>
+              <div style={{ paddingBottom: "10px" }}> {data[5].title} </div>
+              <div> {((data[5].value / total) * 100).toFixed(0) + "%"} </div>
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     axios
@@ -178,7 +235,6 @@ const Post = ({ history }) => {
   }, []);
 
   return (
-
     <Body>
       <CardWrapper>
         <div style={{ display: "flex" }}>
@@ -239,10 +295,19 @@ const Post = ({ history }) => {
                 <BiUser style={{ width: "80px", height: "80px" }} />
               </div>
               <div style={{ margin: "16px", width: "400px" }}>
-                <div style={{ fontWeight: "bold", fontSize: "36px", cursor: "pointer" }}
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "36px",
+                    cursor: "pointer",
+                  }}
                   onClick={() => {
-                    Swal.fire("'" + postData.username + "'님의 연락처", "전화번호: 000-0000-0000 / 이메일: zzzzz@zzz.zzz")
-                  }}>
+                    Swal.fire(
+                      "'" + postData.username + "'님의 연락처",
+                      "전화번호: 000-0000-0000 / 이메일: zzzzz@zzz.zzz"
+                    );
+                  }}
+                >
                   {postData.username}
                 </div>
               </div>
@@ -292,9 +357,15 @@ const Post = ({ history }) => {
                   paddingBottom: "8px",
                 }}
               >
-                {isFavorite ?
+                {isFavorite ? (
                   <BsHeartFill
-                    style={{ width: "60px", height: "60px", paddingRight: "16px", cursor: 'pointer', color: 'red' }}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      paddingRight: "16px",
+                      cursor: "pointer",
+                      color: "red",
+                    }}
                     onClick={async (e) => {
                       isFavorite = setFav(
                         userInfo.id,
@@ -303,8 +374,16 @@ const Post = ({ history }) => {
                         postData.fav
                       );
                     }}
-                  /> : <BsHeart
-                    style={{ width: "60px", height: "60px", paddingRight: "16px", cursor: 'pointer', color: 'red' }}
+                  />
+                ) : (
+                  <BsHeart
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      paddingRight: "16px",
+                      cursor: "pointer",
+                      color: "red",
+                    }}
                     onClick={async (e) => {
                       isFavorite = setFav(
                         userInfo.id,
@@ -313,7 +392,8 @@ const Post = ({ history }) => {
                         postData.fav
                       );
                     }}
-                  />}
+                  />
+                )}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   <CardButton
                     style={{
@@ -325,27 +405,30 @@ const Post = ({ history }) => {
                     }}
                     onClick={() => {
                       Swal.fire({
-                        title: '구매 하시겠습니까?',
-                        text: '구매하시면 마일리지가 차감됩니다.',
-                        icon: 'question',
+                        title: "구매 하시겠습니까?",
+                        text: "구매하시면 마일리지가 차감됩니다.",
+                        icon: "question",
 
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: '구매',
-                        cancelButtonText: '취소',
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "구매",
+                        cancelButtonText: "취소",
                         reverseButtons: true,
-                      })
-                        .then(result => {
-                          if (result.isConfirmed) {
-                            // 마일리지가 구매하는 상품의 개수보다 적다면
-                            // 에러 출력
-                            // 아니라면 구매 완료
-                            Swal.fire('구매가 완료되었습니다.', '남은 마일리지: OOO원', 'success');
-                            //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
-                            // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
-                          }
-                        });
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          // 마일리지가 구매하는 상품의 개수보다 적다면
+                          // 에러 출력
+                          // 아니라면 구매 완료
+                          Swal.fire(
+                            "구매가 완료되었습니다.",
+                            "남은 마일리지: OOO원",
+                            "success"
+                          );
+                          //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
+                          // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
+                        }
+                      });
                     }}
                   >
                     구매하기
@@ -362,34 +445,47 @@ const Post = ({ history }) => {
                     }}
                     onClick={() => {
                       Swal.fire({
-                        title: '이 게시글 신고하기',
-                        text: '이 게시글을 신고 하시겠습니까?',
-                        icon: 'question',
+                        title: "이 게시글 신고하기",
+                        text: "이 게시글을 신고 하시겠습니까?",
+                        icon: "question",
 
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: '신고',
-                        cancelButtonText: '취소',
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "신고",
+                        cancelButtonText: "취소",
                         reverseButtons: true,
-                      })
-                        .then(result => {
-                          if (result.isConfirmed) {
-                            Swal.fire({
-                              title: '이 게시글 신고하기',
-                              text: '신고 내용을 입력하세요.',
-                              input: 'text',
-                              inputPlaceholder: '신고내용 입력..'
-                            })
-                            .then((result => {
-                                Swal.fire('신고가 완료 되었습니다', '신고 내용 : ' + result.value ,'success');
-                            }))
-                            // 이후 처리되는 내용.
-
-                            // Swal.fire('신고 완료', '신고가완료 되었습니다.', 'success');
-                          }
-                          // 이후 신고 리스트에 게시글을 올려 관리자가 관리 할 수 있음.                   
-                        });
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            title: "이 게시글 신고하기",
+                            text: "신고 내용을 입력하세요.",
+                            input: "text",
+                            inputPlaceholder: "신고내용 입력..",
+                          }).then((result) => {
+                            console.log(result);
+                            var reason = result.value;
+                            reportPost(userInfo.id, postnum, reason).then(
+                              (res) => {
+                                console.log(res);
+                                if (res) {
+                                  Swal.fire(
+                                    "신고가 완료 되었습니다",
+                                    "신고 내용 : " + result.value,
+                                    "success"
+                                  );
+                                } else {
+                                  Swal.fire(
+                                    "신고에 실패하셨습니다.",
+                                    "신고 내용을 입력해주세요.",
+                                    "error"
+                                  );
+                                }
+                              }
+                            );
+                          });
+                        }
+                      });
                     }}
                   >
                     이 게시글 신고하기
@@ -397,18 +493,15 @@ const Post = ({ history }) => {
                 </div>
               </div>
             </div>
-
           </CardBody>
         </div>
         <div>
           <CardHeading>연령별 조회 현황</CardHeading>
-          <div style={{ padding: '0px 200px' }}>
+          <div style={{ padding: "0px 200px" }}>
             <Chart />
           </div>
         </div>
-
       </CardWrapper>
-
     </Body>
   );
 };

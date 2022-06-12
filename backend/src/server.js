@@ -46,6 +46,7 @@ import getAdminQnA from "./api/Admin/getAdminQnA.js";
 import UploadQnAComment from "./api/Admin/UploadQnAComment.js";
 import getPrice from "./api/Payment/getPrice.js";
 import charging from "./api/Payment/charging.js";
+import reportPost from "./api/Post/reportPost.js";
 
 const connection = init();
 const app = express();
@@ -114,6 +115,7 @@ getAdminQnA(app, connection);
 UploadQnAComment(app, connection);
 getPrice(app, connection);
 charging(app, connection);
+reportPost(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
