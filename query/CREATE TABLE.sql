@@ -85,6 +85,15 @@ CREATE TABLE chats(
     roomNumber int not null				# 
     );
 
+# chats 
+DROP TABLE if exists chatRoom;
+CREATE TABLE chatRoom(
+	seller_id varchar(32) not null,		# 판매자 아이디
+    buyer_id varchar(32) not null,		# 구매자 아이디
+    postnum int not null,		    	# 
+    roomNumber int not null				# 
+    );
+
 # reports Table
 DROP TABLE if exists reports;
 CREATE TABLE reports(
