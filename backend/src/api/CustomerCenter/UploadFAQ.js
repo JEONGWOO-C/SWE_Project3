@@ -14,7 +14,6 @@ export default (app, connection) => {
       (error, data) => {
         if (error) res.send(false);
         else {
-          console.log("1231242");
           res.send(true);
         }
       }
