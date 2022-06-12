@@ -28,10 +28,6 @@ const Body = styled.div`
   width: 100%;
 `;
 
-const styledTable = styled.table`
-  width: '80%';
-  border-collapse: 'collapse'
-`;
 
 const Tr = styled.tr`
   border-top: 1px solid black;
@@ -97,7 +93,7 @@ const MemberManagement = ({ history }) => {
     <Body style={{}}>
       <CardWrapper style={{ textAlign: 'center'}}>
         <Title>회원 관리</Title>
-        <styledTable>
+        <table style={{width: '80%',borderCollapse: 'collapse',margin:'auto'}}>
             <TitleTr>
               <Td>ID</Td>
               <Td>이름</Td>
@@ -108,7 +104,7 @@ const MemberManagement = ({ history }) => {
               <Td>정지여부</Td>
             </TitleTr>
             {Table(user_list)}
-        </styledTable>
+        </table>
       </CardWrapper>
     </Body>
   )
