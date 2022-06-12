@@ -29,6 +29,7 @@ export const showChat = async (app, connection) => {
 
 export const addChat = (app, connection) => {
   app.post("/addChat", auth, chatInfo, async (req, res, next) => {
+    console.log("Work")
     const { id } = req.query;
     const {seller_id, buyer_id, postnum, msg} = req.body;
     var chatDate = toSqlDatetime(new Date());
@@ -39,6 +40,7 @@ export const addChat = (app, connection) => {
       "SELECT roomNumber FROM chatRoom WHERE seller_id = ? AND buyer_id = ? AND postnum = ?",
       [seller_id, buyer_id,postnum],
       (error, data) => {
+        console.log("Work2")
         if (error) throw error;
         if (data.length == 0){
           console.log('New Chat');
@@ -57,6 +59,7 @@ export const addChat = (app, connection) => {
                 });
             });
         }else{
+          console.log("Work3")
           console.log(data)
           roomNumber = data[0].roomNumber;
         }
@@ -78,13 +81,21 @@ export const addChat = (app, connection) => {
 
 export const getSeller = (app, connection) => {
   app.post("/getSeller", async (req, res, next) => {
-    const {postnum} = req.body;
+    const {postnum,roomNumber} = req.body;
+
+    const sql = (typeof postnum === 'number')?
+              "SELECT seller_id FROM product WHERE postnum = ?":
+              "SELECT seller_id FROM chatRoom WHERE roomNumber = ?";
+    const datas = (typeof postnum === 'number')? [postnum]:[roomNumber]
+
     connection.query(
-      "SELECT seller_id FROM product WHERE postnum = ?",
-      [postnum],
+      sql,datas,
       (error, data) => {
-        if (error) console.log(error);
-        res.send(id_protect(data[0].seller_id));
+        if (error) throw error;
+        else if(data.length == 0 ) res.send({result:false})
+        else{
+          res.send({result:true,token:id_protect(data[0].seller_id)});
+        }
       }
     );
   });
@@ -103,7 +114,7 @@ export const getBuyer = (app, connection) => {
           if(error) throw error;
           else if(data.length == 0 ) res.send({result:false})
           else{
-            res.send({result:true,token:id_protect(data[0])});
+            res.send({result:true,token:id_protect(data[0].buyer_id)});
           }
         }
       );

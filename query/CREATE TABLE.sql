@@ -10,7 +10,8 @@ CREATE TABLE users(
     id varchar(32) not null primary key,
     pw varchar(16) not null,
     info varchar(512) default '',
-    score int default 5 -- default 5 range 0 ~ 10
+    score int default 5, -- default 5 range 0 ~ 10
+    ban bool default false
 );
 
 DROP TABLE if exists admins;
@@ -82,6 +83,15 @@ CREATE TABLE chats(
 	writer varchar(32) not null,		# 작성자 아이디
     msg varchar(32) not null,			# 채팅 내용
     chatDate datetime not null,			# 채팅 작성 시간
+    roomNumber int not null				# 
+    );
+
+# chats 
+DROP TABLE if exists chatRoom;
+CREATE TABLE chatRoom(
+	seller_id varchar(32) not null,		# 판매자 아이디
+    buyer_id varchar(32) not null,		# 구매자 아이디
+    postnum int not null,		    	# 
     roomNumber int not null				# 
     );
 

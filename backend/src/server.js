@@ -1,4 +1,4 @@
-import express from "express";
+import express, { application } from "express";
 import cors from "cors";
 import { init } from "./config/db.js";
 import login from "./api/User/login.js";
@@ -33,6 +33,11 @@ import UploadNotice from "./api/CustomerCenter/UploadNotice.js";
 import ModifyNotice from "./api/CustomerCenter/ModifyNotice.js";
 import ModifyFAQ from "./api/CustomerCenter/ModifyFAQ.js";
 import getQnAbyPostnum from "./api/CustomerCenter/getQnAbyPostnum.js";
+import { passwordUpdate, privateUpdate, profileUpdate } from "./api/User/userUpdate.js";
+import getMemberList from "./api/Admin/getMemberList.js";
+import getAdminMemberList from "./api/Admin/getAdminMemberList.js";
+import { releasetBan, setBan } from "./api/Admin/banControl.js";
+import { delAdmin, setApproved } from "./api/Admin/ApproveControl.js";
 
 const connection = init();
 const app = express();
@@ -90,6 +95,15 @@ UploadNotice(app, connection);
 ModifyNotice(app, connection);
 ModifyFAQ(app, connection);
 getQnAbyPostnum(app, connection);
+profileUpdate(app, connection);
+privateUpdate(app, connection);
+passwordUpdate(app, connection);
+getMemberList(app, connection);
+getAdminMemberList(app, application);
+setBan(app, connection);
+releasetBan(app, connection);
+setApproved(app, connection);
+delAdmin(app,connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

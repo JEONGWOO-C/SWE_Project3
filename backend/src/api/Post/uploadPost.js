@@ -29,7 +29,7 @@ var upload = multer({ storage: storage });
 
 function FileUpload(req, res, next) {
   if (req.file === undefined) {
-    upload.single("img_file")(req, res, next);
+    upload.array("img_file")(req, res, next);
   } else {
     next();
   }

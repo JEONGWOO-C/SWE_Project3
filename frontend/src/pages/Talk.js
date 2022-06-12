@@ -18,6 +18,7 @@ import axios from 'axios';
 import { getInfoFromCookie } from '../components/Auth';
 import { Speech } from '../components/speech';
 import { CardButton } from './FAQ';
+import { ChatSelect } from '../components/TalkList.js';
 
 const Body = styled.div`
   display: flex;
@@ -28,9 +29,24 @@ const Body = styled.div`
 
 const Talk = ({ history }) => {
   const navigateState = useLocation().state;
-  const postnum = navigateState && navigateState.postnum;
-  const roomNum = navigateState && navigateState.roomNumber;
+  const postnum = navigateState && navigateState.postnum
   const info = getInfoFromCookie();
+
+  /*var [chatList,setChatList] = useState([]);
+  useEffect(()=>{
+    axios
+    .post("http://localhost:4000/getChatList",{},{
+      headers:{token: info.token},
+    }).then(({data}) =>setChatList(data.list))
+  })*/
+
+  var [roomNum,setRoomNum] = useState([]);
+  useEffect(()=>{
+    axios
+    .post("http://localhost:4000/lastChat",{},{
+      headers:{token: info.token},
+    }).then(({data}) =>setRoomNum(data.last))
+  })
 
   var [msg,setMsg] = useState([]);
   var [chatContent,setChatContent] = useState([]);
@@ -43,25 +59,28 @@ const Talk = ({ history }) => {
 
   var [seller_id,setSellerID] = useState([]);
   useEffect(()=>{
-    axios
-      .post("http://localhost:4000/getSeller",{
-        postnum:postnum})
-      .then(({data}) =>{
-        setSellerID(data.token);})
+    if(typeof postnum === 'number'){
+      axios
+        .post("http://localhost:4000/getSeller",{
+          postnum:postnum,roomNumber:roomNum})
+        .then(({data}) =>{
+          console.log(data.token);setSellerID(data.token);})
+    }
   },[])
 
   var [buyer_id,setBuyerID] = useState([]);
   useEffect(()=>{
-    axios
-      .post("http://localhost:4000/getBuyer",{
-        roomNumber:roomNum})
-      .then(({data}) =>{
-        console.log(data)
-        if(data.result)
+    if(typeof postnum === 'number')
+      setBuyerID(info.token);
+    else{
+      axios
+        .post("http://localhost:4000/getBuyer",{
+          roomNumber:roomNum})
+        .then(({data}) =>{
+          console.log(data)
           setBuyerID(data.token);
-        else
-          setBuyerID(info.token);
-      })
+        })
+    }
   },[])
 
   return (
@@ -71,32 +90,7 @@ const Talk = ({ history }) => {
 
         <div>
           <div className='chat_list'>
-            <div onClick={(e) => { }} /* 클릭하면 오른쪽에 chat_detail 띄워주기 */
-              style={{
-                borderBottom: 'solid 1px #ababab',
-                cursor: 'pointer'
-              }}
-            >
-              <div style={{ width: '30%', height: '60px', float: 'left' }}>
-                <BiUser style={{ width: '100%', height: '100%' }} />
-              </div>
-              <div>
-                <div>
-                  {/* 사용자 닉네임 */}
-                  <div style={{ width: '50%', float: 'left', fontSize: '19px', fontWeight: 'bold' }}>
-                    김광운
-                  </div>
-                  {/* 마지막 채팅 시간 */}
-                  <div style={{ color: '#ababab', fontWeight: 'lighter' }}>
-                    4분전
-                  </div>
-                </div>
-                {/* 마지막 채팅 내용 */}
-                <div style={{ paddingTop: '15px', marginBottom: '12px' }}>
-                  아아아아아아아아
-                </div>
-              </div>
-            </div>
+            <ChatSelect item={{username:'AAA'}} onClick={(e)=>{}} />
           </div>
 
           <div className='chat_detail'>
@@ -141,7 +135,7 @@ const Talk = ({ history }) => {
                         .post("http://localhost:4000/showChat",{postnum:postnum},{
                           headers:{token: info.token},
                         }).then(({data}) =>{setChatContent(data);})
-                    })
+                    } )
                 }}
               >
                 전송

@@ -19,6 +19,7 @@ import {
   Title,
   PrintProducts,
 } from "../components/Product";
+import axios from 'axios';
 
 const Body = styled.div`
   display: flex;
@@ -45,18 +46,21 @@ const Td = styled.td`
   font-weight: 700;
 `;
 
-
-
-
-let user_list = [
-  { id: '123', name: '임경택', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true },
-  { id: '123', name: '조정우', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: false },
-  { id: '123', name: '이민석', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true  },
-  { id: '123', name: '이세연', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true  }
-]
+// let user_list = [
+//   { id: '123', name: '임경택', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true },
+//   { id: '123', name: '조정우', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: false },
+//   { id: '123', name: '이민석', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true  },
+//   { id: '123', name: '이세연', phone: '112', email: 'eee@e.e', age: '2', score: '5', ban: true  }
+// ]
 
 const MemberManagement = ({ history }) => {
   const [state,setState] = useState(true);
+  const [user_list,setUserList] = useState([]);
+  useEffect(()=>{
+    axios.post("http://localhost:4000/getMemberList")
+    .then(({data})=>setUserList(data))
+  },[])
+  
   function Tab(i) {
     //유저 아이디를 인자로 받고 그 아이디의 정지 여부를 반대로 바꿈
     //정지였으면 해제로, 해제였으면 정지로
