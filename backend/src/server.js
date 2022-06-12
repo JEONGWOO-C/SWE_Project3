@@ -39,15 +39,13 @@ import {
   profileUpdate,
 } from "./api/User/userUpdate.js";
 import getMemberList from "./api/Admin/getMemberList.js";
-import getAdminMemberList from "./api/Admin/getAdminMemberList.js";
-import { releaseBan, setBan } from "./api/Admin/banControl.js";
-import {
-  delAdmin,
-  releaseApproved,
-  setApproved,
-} from "./api/Admin/ApproveControl.js";
+import getAdminList from "./api/Admin/getAdminList.js";
+import { setBan } from "./api/Admin/banControl.js";
+import { setApproved } from "./api/Admin/ApproveControl.js";
 import getAdminQnA from "./api/Admin/getAdminQnA.js";
 import UploadQnAComment from "./api/Admin/UploadQnAComment.js";
+import getPrice from "./api/Payment/getPrice.js";
+import charging from "./api/Payment/charging.js";
 
 const connection = init();
 const app = express();
@@ -109,7 +107,7 @@ profileUpdate(app, connection);
 privateUpdate(app, connection);
 passwordUpdate(app, connection);
 getMemberList(app, connection);
-getAdminMemberList(app, application);
+getAdminList(app, application);
 setBan(app, connection);
 releaseBan(app, connection);
 setApproved(app, connection);
@@ -117,6 +115,8 @@ releaseApproved(app, connection);
 delAdmin(app, connection);
 getAdminQnA(app, connection);
 UploadQnAComment(app, connection);
+getPrice(app, connection);
+charging(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));

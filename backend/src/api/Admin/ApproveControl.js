@@ -1,8 +1,22 @@
 export const setApproved = async (app, connection) => {
     app.post("/setApproved", async (req, res, next) => {
+        const {id,approved} = req.body;
+        await connection.query(
+            "UPDATE admins SET isApproved = ? WHERE id = ?",
+            [approved,id],
+            (error, data) => {
+                if (error) console.log(error);
+                const result = data;
+                return res.send(result);
+            }
+        );
+    });
+};
+export const releaseApproved = async (app, connection) => {
+    app.post("/releaseAppoved", async (req, res, next) => {
         const {id} = req.body;
         await connection.query(
-            "UPDATE admins SET isApproved = true WHERE id = ?",
+            "UPDATE admins SET isApproved = false WHERE id = ?",
             [id],
             (error, data) => {
             if (error) console.log(error);
@@ -12,11 +26,11 @@ export const setApproved = async (app, connection) => {
         );
     });
 };
-export const releaseApproved = async (app, connection) => {
-    app.post("/releasetAppoved", async (req, res, next) => {
+export const checkApproved = async (app, connection) => {
+    app.post("/checkApproved", async (req, res, next) => {
         const {id} = req.body;
         await connection.query(
-            "UPDATE admins SET isApproved = false WHERE id = ?",
+            "UPDATE admins SET isApproved = true WHERE id = ?",
             [id],
             (error, data) => {
             if (error) console.log(error);

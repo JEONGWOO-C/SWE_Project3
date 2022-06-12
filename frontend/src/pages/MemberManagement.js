@@ -55,7 +55,7 @@ const Td = styled.td`
 // ]
 
 const MemberManagement = ({ history }) => {
-  const [state,setState] = useState(true);
+  const [state,setState] = useState([]);
   const [user_list,setUserList] = useState([]);
   useEffect(()=>{
     axios.post("http://localhost:4000/getMemberList")
@@ -67,6 +67,10 @@ const MemberManagement = ({ history }) => {
     //정지였으면 해제로, 해제였으면 정지로
     user_list[i].ban = !(user_list[i].ban);
     setState(!state);
+    axios.post("http://localhost:4000/setBan",{
+      ban:user_list[i].ban,
+      id:user_list[i].id
+    })
   }
   function Table(user_list) {
     let array = [];
