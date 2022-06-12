@@ -60,15 +60,15 @@ export const StateButton = styled.button`
 `;
 
 const MyPage = ({ history }) => {
-  var [username,setUsername] = useState([]);
-  var [introduce,setIntroduce] = useState([]);
-  var [phone,setPhone] = useState([]);
-  var [email,setEmail] = useState([]);
-  var [age,setAge] = useState([]);
+  const [username,setUsername] = useState('');
+  var [introduce,setIntroduce] = useState('');
+  var [phone,setPhone] = useState('');
+  var [email,setEmail] = useState('');
+  var [age,setAge] = useState('');
 
-  var [origin_pw,setOriginPW] = useState([]);
-  var [new_pw,setNewPW] = useState([]);
-  var [confirm_pw,setConfirmPW] = useState([]);
+  var [origin_pw,setOriginPW] = useState('');
+  var [new_pw,setNewPW] = useState('');
+  var [confirm_pw,setConfirmPW] = useState('');
 
   const info = getInfoFromCookie();
   useEffect(()=>{
@@ -82,7 +82,7 @@ const MyPage = ({ history }) => {
       setEmail(data[0].email)
       setAge(data[0].age)
     })
-  })
+  },[])
 
   return(
     <Body>

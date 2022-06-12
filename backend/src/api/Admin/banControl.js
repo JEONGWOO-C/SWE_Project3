@@ -12,7 +12,7 @@ export const setBan = async (app, connection) => {
         );
     });
 };
-export const releasetBan = async (app, connection) => {
+export const releaseBan = async (app, connection) => {
     app.post("/releasetBan", async (req, res, next) => {
         const {id} = req.body;
         await connection.query(

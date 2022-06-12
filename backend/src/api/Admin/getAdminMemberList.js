@@ -1,7 +1,7 @@
 export default async (app, connection) => {
   app.post("/getMemberList", async (req, res, next) => {
     await connection.query(
-      "SELECT US.*, AD.isApproved, AD.adminname FROM users US INNER JOIN admins AD on US.id = AD.id",
+      "SELECT * FROM admins",
       [],
       (error, data) => {
         if (error) console.log(error);

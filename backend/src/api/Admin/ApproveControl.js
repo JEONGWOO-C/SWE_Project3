@@ -12,7 +12,7 @@ export const setApproved = async (app, connection) => {
         );
     });
 };
-export const releasetApproved = async (app, connection) => {
+export const releaseApproved = async (app, connection) => {
     app.post("/releasetAppoved", async (req, res, next) => {
         const {id} = req.body;
         await connection.query(

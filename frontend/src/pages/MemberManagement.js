@@ -41,6 +41,11 @@ const Tr = styled.tr`
   &:hover { background-color: #ffc5c2; cursor: pointer; }
 `;
 
+const TitleTr = styled.tr`
+border-top: 1px solid black;
+border-bottom: 1px solid black;
+`;
+
 const Td = styled.td`
   padding: 4px 20px;
   font-weight: 700;
@@ -93,14 +98,16 @@ const MemberManagement = ({ history }) => {
       <CardWrapper style={{ textAlign: 'center'}}>
         <Title>회원 관리</Title>
         <styledTable>
-            <Td>ID</Td>
-            <Td>이름</Td>
-            <Td>전화번호</Td>
-            <Td>이메일</Td>
-            <Td>나이</Td>
-            <Td>평점</Td>
-            <Td>정지여부</Td>
-          {Table(user_list)}
+            <TitleTr>
+              <Td>ID</Td>
+              <Td>이름</Td>
+              <Td>전화번호</Td>
+              <Td>이메일</Td>
+              <Td>나이</Td>
+              <Td>평점</Td>
+              <Td>정지여부</Td>
+            </TitleTr>
+            {Table(user_list)}
         </styledTable>
       </CardWrapper>
     </Body>

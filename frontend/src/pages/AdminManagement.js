@@ -77,16 +77,8 @@ const AdminManagement = ({ history }) => {
           <Td>{user_list[i].phone}</Td>
           <Td>{user_list[i].email}</Td>
           <Td style={{width: '200px', display: 'flex'}}>
-              <CardButton onClick={(e)=>{Tab(i);
-                axios.post(
-                  "http://localhost:4000/setApproved",{
-                    id: user_list[i].id
-                  })}}>승인</CardButton>
-              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i);
-                axios.post(
-                  "http://localhost:4000/delAdmin",{
-                    id: user_list[i].id
-                  })}}>거절</CardButton>
+              <CardButton onClick={(e)=>{Tab(i);}}>승인</CardButton>
+              <CardButton style={{ backgroundColor: 'red' }}onClick={(e)=>{Tab(i);}}>거절</CardButton>
           </Td>
         </Tr>)
     }

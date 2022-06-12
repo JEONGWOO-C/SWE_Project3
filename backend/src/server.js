@@ -36,8 +36,8 @@ import getQnAbyPostnum from "./api/CustomerCenter/getQnAbyPostnum.js";
 import { passwordUpdate, privateUpdate, profileUpdate } from "./api/User/userUpdate.js";
 import getMemberList from "./api/Admin/getMemberList.js";
 import getAdminMemberList from "./api/Admin/getAdminMemberList.js";
-import { releasetBan, setBan } from "./api/Admin/banControl.js";
-import { delAdmin, setApproved } from "./api/Admin/ApproveControl.js";
+import { releaseBan, setBan } from "./api/Admin/banControl.js";
+import { delAdmin, releaseApproved, setApproved } from "./api/Admin/ApproveControl.js";
 
 const connection = init();
 const app = express();
@@ -101,8 +101,9 @@ passwordUpdate(app, connection);
 getMemberList(app, connection);
 getAdminMemberList(app, application);
 setBan(app, connection);
-releasetBan(app, connection);
+releaseBan(app, connection);
 setApproved(app, connection);
+releaseApproved(app, connection);
 delAdmin(app,connection);
 
 app.listen(app.get("port"), () => {
