@@ -49,6 +49,7 @@ import reportPost from "./api/Post/reportPost.js";
 import getReportList from "./api/Admin/getReportList.js";
 import deletePost from "./api/Admin/deletePost.js";
 import deleteReportbyPostnum from "./api/Admin/deleteReportbyPostnum.js";
+import productSell from "./api/Payment/productSell.js";
 
 const connection = init();
 const app = express();
@@ -118,6 +119,7 @@ reportPost(app, connection);
 getReportList(app, connection);
 deletePost(app, connection);
 deleteReportbyPostnum(app, connection);
+productSell(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
