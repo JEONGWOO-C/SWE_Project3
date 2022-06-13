@@ -270,27 +270,35 @@ const MyPage = ({ history }) => {
           <CardButton
             style={{ marginLeft: "950px", width: "60px" }}
             onClick={async () => {
-              await axios
-                .post(
-                  "http://localhost:4000/passwordUpdate",
-                  {
-                    origin_pw: origin_pw,
-                    new_pw: new_pw,
-                    confirm_pw: confirm_pw,
-                  },
-                  { headers: { token: info.token } }
-                )
-                .then(({ data }) => {
-                  if (data.result === true) {
-                    Swal.fire("변경사항이 적용되었습니다.", "success").then(
-                      (result) => {
-                        if (result.isConfirmed) window.location.reload();
-                      }
-                    );
-                  } else {
-                    Swal.fire("오류 발생", data.error, "error");
-                  }
-                });
+              if (new_pw === confirm_pw) {
+                await axios
+                  .post(
+                    "http://localhost:4000/passwordUpdate",
+                    {
+                      origin_pw: origin_pw,
+                      new_pw: new_pw,
+                      confirm_pw: confirm_pw,
+                    },
+                    { headers: { token: info.token } }
+                  )
+                  .then(({ data }) => {
+                    if (data.result === true) {
+                      Swal.fire("변경사항이 적용되었습니다.", "success").then(
+                        (result) => {
+                          if (result.isConfirmed) window.location.reload();
+                        }
+                      );
+                    } else {
+                      Swal.fire("오류 발생", data.error, "error");
+                    }
+                  });
+              } else {
+                Swal.fire(
+                  "비밀번호 변경에 실패하였습니다.",
+                  "새로운 비밀번호와 비밀번호 확인에 <br>동일한 비밀번호를 입력해주세요.",
+                  "error"
+                );
+              }
             }}
           >
             변경
