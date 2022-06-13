@@ -1,7 +1,7 @@
 import auth from "../modules/auth.js";
 
 export default async (app, connection) => {
-    app.post("/charging", auth, async (req, res, next) => {
+    app.post("/setMileage", auth, async (req, res, next) => {
       const { id } = req.query;
       const { value } = req.body;
       await connection.query(

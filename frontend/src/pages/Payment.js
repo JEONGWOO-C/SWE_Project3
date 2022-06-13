@@ -162,7 +162,7 @@ const Payment = ({ history }) => {
                   Swal.fire('충전량이 부족합니다.', '필요 마일리지: '+(parseInt(price) - parseInt(value))+'원', 'Error');
                 // 아니라면 구매 완료
                 else{
-                  axios.post("http://localhost:4000/charging",{
+                  axios.post("http://localhost:4000/setMileage",{
                     value:value+money
                   },{headers:{token:info.token}})
                   .then(({data})=>{
