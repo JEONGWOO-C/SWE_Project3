@@ -431,11 +431,13 @@ const Post = ({ history }) => {
                             axios.post("http://localhost:4000/setMileage",{value:userInfo.mileage-postData.price},
                               {headers:{token:token}}
                             ).then(()=>{
-                            Swal.fire(
-                              "구매가 완료되었습니다.",
-                              "남은 마일리지: "+userInfo.mileage-postData.price+"원",
-                              "success"
-                            );})
+                              axios.post("http://localhost:4000/productSell",{postnum:postnum}
+                              ).then(()=>{
+                                Swal.fire(
+                                  "구매가 완료되었습니다.",
+                                  "남은 마일리지: "+userInfo.mileage-postData.price+"원",
+                                  "success"
+                                );})})
                           }
                           //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
                           // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
