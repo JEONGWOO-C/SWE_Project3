@@ -56,6 +56,7 @@ CREATE TABLE product(
     category varchar(16) not null,		# 제품 종류
     descript varchar(512) default "",	# 제품 설명
     seller_id varchar(32) not null,		# 판매자 ID
+    buyer_id varchar(32) default "",	# 구매자 ID
     isSelling boolean default true		# 판매여부
     );
 
