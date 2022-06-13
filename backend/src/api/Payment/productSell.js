@@ -1,9 +1,10 @@
 export default async (app, connection) => {
   app.post("/productSell", async (req, res, next) => {
-    const { postnum } = req.body;
+    const { postnum, buyer_id } = req.body;
+    console.log(buyer_id);
     await connection.query(
-      "UPDATE product SET isSelling = false WHERE postnum = ?",
-      [postnum],
+      "UPDATE product SET isSelling = false, buyer_id = ? WHERE postnum = ?",
+      [buyer_id, postnum],
       (error, data) => {
         if (error) {
           console.log(error);

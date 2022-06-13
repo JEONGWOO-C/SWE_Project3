@@ -9,7 +9,7 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getTokenFromCookie } from "../components/Auth";
-import { BiUser } from "react-icons/bi";
+import { BiInfoCircle, BiUser } from "react-icons/bi";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
@@ -438,6 +438,7 @@ const Post = ({ history }) => {
                                 axios
                                   .post("http://localhost:4000/productSell", {
                                     postnum: postnum,
+                                    buyer_id: userInfo.id,
                                   })
                                   .then(() => {
                                     Swal.fire(
