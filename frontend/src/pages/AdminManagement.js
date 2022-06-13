@@ -65,10 +65,17 @@ const AdminManagement = ({ history }) => {
     //유저 아이디를 인자로 받고 그 아이디의 회원가입 승인 요청을 해줌
     user_list[i].confirm = value;
     setState(!state);
-    axios.post(
-      "http://localhost:4000/setApproved",{
-        id: user_list[i].id, approved: value
-      })
+    if(value == true)
+      axios.post(
+        "http://localhost:4000/setApproved",{
+          id: user_list[i].id, approved: true
+        })
+    else{
+      axios.post(
+        "http://localhost:4000/delAdmin",{
+          id: user_list[i].id
+        })
+    }
   }
   function Table(user_list) {
     let array = [];

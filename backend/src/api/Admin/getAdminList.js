@@ -5,7 +5,6 @@ export default async (app, connection) => {
       [],
       (error, data) => {
         if (error) console.log(error);
-        console.log(data);
         var result = []
         for(var i=0;i<data.length;i++){
            result.push({
