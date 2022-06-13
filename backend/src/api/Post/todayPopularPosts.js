@@ -1,7 +1,7 @@
 export default async (app, connection) => {
   app.get("/todayPopularPosts", async (req, res, next) => {
     await connection.query(
-      "SELECT PO.postnum, PO.postDate, PO.title, PR.price, PR.isSelling, PO.views, PO.fav, PH.photo FROM posts PO, product PR, photos PH, users US WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND US.ban = false ORDER BY PO.views desc",
+      "SELECT PO.postnum, PO.postDate, PO.title, PR.price, PR.isSelling, PO.views, PO.fav, PH.photo FROM posts PO, product PR, photos PH, users US WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND US.ban = false AND US.id = PR.seller_id  ORDER BY PO.views desc",
       [],
       (error, data) => {
         var result = [];
@@ -27,6 +27,7 @@ export default async (app, connection) => {
             if (result.length == 5) break;
           }
         }
+        console.log(result);
         return res.send(result);
       }
     );
