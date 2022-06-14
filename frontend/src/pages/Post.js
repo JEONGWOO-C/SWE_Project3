@@ -427,39 +427,36 @@ const Post = ({ history }) => {
                             );
                           }
                           // 아니라면 구매 완료
-                          else {
-                            axios
-                              .post(
-                                "http://localhost:4000/setMileage",
-                                { value: parseInt(userInfo.mileage) - parseInt(postData.price)},
-                                { headers: { token: token } }
-                              )
-                              .then(() => {
-                                axios
-                                  .post("http://localhost:4000/productSell", {
-                                    postnum: postnum,
-                                    buyer_id: userInfo.id,
-                                    seller_id: postData.seller_id,
-                                    price:postData.price
-                                  })
-                                  .then(() => {
-                                    Swal.fire(
-                                      "구매가 완료되었습니다.",
-                                      "남은 마일리지: " +
-                                        eval(
-                                          userInfo.mileage +
-                                            "-" +
-                                            postData.price
-                                        ) +
-                                        "원",
-                                      "success"
-                                    ).then((result) => {
-                                      if (result.isConfirmed)
-                                        window.location.reload();
-                                    });
+                          axios.post(
+                            "http://localhost:4000/setMileage",
+                            { value: parseInt(userInfo.mileage) - parseInt(postData.price) },
+                            { headers: { token: token } }
+                          )
+                            .then(() => {
+                              axios
+                                .post("http://localhost:4000/productSell", {
+                                  postnum: postnum,
+                                  buyer_id: userInfo.id,
+                                  seller_id: postData.seller_id,
+                                  price: postData.price
+                                })
+                                .then(() => {
+                                  Swal.fire(
+                                    "구매가 완료되었습니다.",
+                                    "남은 마일리지: " +
+                                    eval(
+                                      userInfo.mileage +
+                                      "-" +
+                                      postData.price
+                                    ) +
+                                    "원",
+                                    "success"
+                                  ).then((result) => {
+                                    if (result.isConfirmed)
+                                      window.location.reload();
                                   });
-                              });
-                          }
+                                });
+                            });
                         }
                       });
                     }}
