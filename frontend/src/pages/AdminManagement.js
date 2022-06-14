@@ -20,7 +20,6 @@ import {
   PrintProducts,
 } from "../components/Product";
 import axios from 'axios';
-import Swal from "sweetalert2";
 
 const Body = styled.div`
   display: flex;
@@ -55,95 +54,59 @@ const Td = styled.td`
 // ]
 
 const AdminManagement = ({ history }) => {
-  const [state, setState] = useState(true);
-  const [user_list, setUserList] = useState([]);
-  useEffect(() => {
+  const [state,setState] = useState(true);
+  const [user_list,setUserList] = useState([]);
+  useEffect(()=>{
     axios.post("http://localhost:4000/getAdminList")
-      .then(({ data }) => { console.log(data); setUserList(data) })
-  }, [])
+    .then(({data})=>{console.log(data);setUserList(data)})
+  },[])
 
-  function Tab(i, value) {
+  function Tab(i,value) {
     //유저 아이디를 인자로 받고 그 아이디의 회원가입 승인 요청을 해줌
     user_list[i].confirm = value;
     setState(!state);
-    // if (value == true)
+    if(value == true)
       axios.post(
-        "http://localhost:4000/setApproved", {
-        id: user_list[i].id, approved: value
-      })
-    // else {
-    //   axios.post(
-    //     "http://localhost:4000/delAdmin", {
-    //     id: user_list[i].id
-    //   })
-    // }
+        "http://localhost:4000/setApproved",{
+          id: user_list[i].id, approved: true
+        })
+    else{
+      axios.post(
+        "http://localhost:4000/delAdmin",{
+          id: user_list[i].id
+        })
+    }
   }
   function Table(user_list) {
     let array = [];
     for (let i = 0; i < user_list.length; i++) {
-        array.push(
-          <Tr>
-            <Td>{user_list[i].id}</Td>
-            <Td>{user_list[i].adminname}</Td>
-            <Td>{user_list[i].phone}</Td>
-            <Td>{user_list[i].email}</Td>
-            <Td>{user_list[i].confirm?'승인':'대기'}</Td>
-            <Td style={{ display: 'flex' }}>
-              <CardButton onClick={(e) => {
-                Swal.fire({
-                  title: "관리자 승인",
-                  text: "'" + user_list[i].adminname + "'를 관리자로 승인 하시겠습니까?",
-                  icon: "question",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "승인",
-                  cancelButtonText: "취소",
-                  reverseButtons: true,
-                }).then((result) => {
-                  if (result.isConfirmed){
-                    Tab(i, true);
-                    window.location.reload();
-                  }
-                })
-              }}>
-                승인
-              </CardButton>
-              <CardButton style={{ backgroundColor: 'red' }} onClick={(e) => {
-                Swal.fire({
-                  title: "관리자 대기",
-                  text: "'" + user_list[i].adminname + "'관리자를 대기상태로 변경하시겠습니까?",
-                  icon: "question",
-                  showCancelButton: true,
-                  confirmButtonColor: "#3085d6",
-                  cancelButtonColor: "#d33",
-                  confirmButtonText: "변경",
-                  cancelButtonText: "취소",
-                  reverseButtons: true,
-                }).then((result) => {
-                  if (result.isConfirmed){
-                    Tab(i, false);
-                    window.location.reload();
-                  }
-                })}}>대기</CardButton>
-            </Td>
-          </Tr>)
+      if(!user_list[i].confirm)
+      array.push(
+        <Tr>
+          <Td>{user_list[i].id}</Td>
+          <Td>{user_list[i].name}</Td>
+          <Td>{user_list[i].phone}</Td>
+          <Td>{user_list[i].email}</Td>
+          <Td style={{width: '200px', display: 'flex'}}>
+              <CardButton onClick={(e)=>{Tab(i,true);}}>승인</CardButton>
+              <CardButton style={{ backgroundColor: 'red'}}onClick={(e)=>{Tab(i,false);}}>거절</CardButton>
+          </Td>
+        </Tr>)
     }
     return array
   }
   return (
     <Body style={{}}>
-      <CardWrapper style={{ textAlign: 'center' }}>
+      <CardWrapper style={{ textAlign: 'center'}}>
         <Title>관리자 승인</Title>
-        <table style={{ width: '80%', borderCollapse: 'collapse', margin: 'auto' }}>
-          <TitleTr>
-            <Td>ID</Td>
-            <Td>이름</Td>
-            <Td>전화번호</Td>
-            <Td>이메일</Td>
-            <Td>상태</Td>
-            <Td>승인대기</Td>
-          </TitleTr>
+        <table style={{width: '80%',borderCollapse: 'collapse',margin:'auto'}}>
+            <TitleTr>
+              <Td>ID</Td>
+              <Td>이름</Td>
+              <Td>전화번호</Td>
+              <Td>이메일</Td>
+              <Td>승인대기</Td>
+            </TitleTr>
           {Table(user_list)}
         </table>
       </CardWrapper>

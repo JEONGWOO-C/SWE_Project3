@@ -9,8 +9,8 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getTokenFromCookie } from "../components/Auth";
-import { BiUser } from "react-icons/bi";
-import { BsHeart, BsHeartFill, BsStar, BsStarFill } from "react-icons/bs";
+import { BiInfoCircle, BiUser } from "react-icons/bi";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -63,16 +63,16 @@ function calDiff(data) {
     // index 0:년, 1:월 2:일 3:시 4:분 5:초
     const start = new Date(
       data_split[0] +
-      "-" +
-      data_split[1] +
-      "-" +
-      data_split[2] +
-      " " +
-      data_split[3] +
-      ":" +
-      data_split[4] +
-      ":" +
-      data_split[5]
+        "-" +
+        data_split[1] +
+        "-" +
+        data_split[2] +
+        " " +
+        data_split[3] +
+        ":" +
+        data_split[4] +
+        ":" +
+        data_split[5]
     );
     const now = new Date();
     const diff = (now.getTime() - start.getTime()) / 1000;
@@ -210,6 +210,7 @@ const Post = ({ history }) => {
     );
   };
 
+
   function score_star(score) {
     // score는 10점 만점
     return (
@@ -232,6 +233,7 @@ const Post = ({ history }) => {
     navigate("/login")
   }
   
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/getPostData", {
@@ -274,6 +276,7 @@ const Post = ({ history }) => {
             />
           </CardBody>
           <CardBody style={{ width: "40%", padding: "64px" }}>
+
             <div style={{ display: 'flex' }}>
               {postData.isSelling ? (
                 <div
@@ -308,6 +311,7 @@ const Post = ({ history }) => {
                 </div>
               )}
             </div>
+
             <div
               style={{
                 display: "flex",
@@ -316,9 +320,9 @@ const Post = ({ history }) => {
               }}
             >
               <div>
-                <BiUser style={{ width: "80px", height: "80px", paddingRight: '20px' }} />
+                <BiUser style={{ width: "80px", height: "80px" }} />
               </div>
-              <div style={{ margin: "16px", width: "232px" }}>
+              <div style={{ margin: "16px", width: "400px" }}>
                 <div
                   style={{
                     fontWeight: "bold",
@@ -342,7 +346,7 @@ const Post = ({ history }) => {
                   fontSize: "24px",
                 }}
               >
-                {score_star(2.7)}
+                {postData.score}
               </div>
             </div>
             <hr />
@@ -371,7 +375,7 @@ const Post = ({ history }) => {
               >
                 {postData.descript}
               </div>
-              <div style={{ color: "#888" }}>
+              <div style={{ color: "lightgray" }}>
                 찜 {postData.fav} - 조회 {postData.views}
               </div>
               <div
@@ -517,6 +521,7 @@ const Post = ({ history }) => {
                       거래완료
                     </CardButton>
                   }
+
                 </div>
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   <CardButton
@@ -524,7 +529,7 @@ const Post = ({ history }) => {
                       width: "210px",
                       height: "60px",
                       fontSize: "20px",
-                      backgroundColor: "#444",
+                      backgroundColor: "lightgray",
                       color: "white",
                     }}
                     onClick={() => {
