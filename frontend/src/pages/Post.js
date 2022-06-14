@@ -92,6 +92,7 @@ function Price(data) {
   if (data) return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 }
 
+
 const Post = ({ history }) => {
   const navigateState = useLocation().state;
   const postnum = navigateState && navigateState.postnum;
@@ -222,6 +223,15 @@ const Post = ({ history }) => {
       </div>
     )
   }
+
+  function toLogin(){
+    Swal.fire(
+      "로그인이 필요합니다.",
+      "로그인 창으로 이동합니다."
+    )
+    navigate("/login")
+  }
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/getPostData", {
@@ -297,22 +307,6 @@ const Post = ({ history }) => {
                   판매완료
                 </div>
               )}
-              {/* <  CardButton
-
-                style={{
-                  marginLeft: '200px',
-                  padding: "4px 0",
-                  background: "#888",
-                  width: "160px",
-                  height: "40px",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                 판매자 정보 
-              </CardButton> */}
             </div>
             <div
               style={{
@@ -387,105 +381,142 @@ const Post = ({ history }) => {
                   paddingBottom: "8px",
                 }}
               >
-                {isFavorite ? (
-                  <BsHeartFill
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      paddingRight: "16px",
-                      cursor: "pointer",
-                      color: "red",
-                    }}
-                    onClick={async (e) => {
-                      isFavorite = setFav(
-                        userInfo.id,
-                        postnum,
-                        isFavorite,
-                        postData.fav
-                      );
-                    }}
-                  />
-                ) : (
+                {token ?
+                  isFavorite ? (
+                    <BsHeartFill
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        paddingRight: "16px",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                      onClick={async (e) => {
+                        isFavorite = setFav(
+                          userInfo.id,
+                          postnum,
+                          isFavorite,
+                          postData.fav
+                        );
+                      }}
+                    />
+                  ) : (
+                    <BsHeart
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        paddingRight: "16px",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                      onClick={async (e) => {
+                        isFavorite = setFav(
+                          userInfo.id,
+                          postnum,
+                          isFavorite,
+                          postData.fav
+                        );
+                      }}
+                    />
+                  )
+                  :
                   <BsHeart
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      paddingRight: "16px",
-                      cursor: "pointer",
-                      color: "red",
-                    }}
-                    onClick={async (e) => {
-                      isFavorite = setFav(
-                        userInfo.id,
-                        postnum,
-                        isFavorite,
-                        postData.fav
-                      );
-                    }}
-                  />
-                )}
+                      style={{
+                        width: "60px",
+                        height: "60px",
+                        paddingRight: "16px",
+                        cursor: "pointer",
+                        color: "red",
+                      }}
+                      onClick={async (e) => {
+                        toLogin(navigate);
+                      }}
+                    />}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
-                  <CardButton
-                    style={{
+                  {postData.isSelling ?
+                    <CardButton
+                      style={{
+                        width: "140px",
+                        height: "60px",
+                        fontSize: "20px",
+                        backgroundColor: "#033a7a",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        token ?
+                          Swal.fire({
+                            title: "구매 하시겠습니까?",
+                            text: "구매하시면 마일리지가 차감됩니다.",
+                            icon: "question",
+
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "구매",
+                            cancelButtonText: "취소",
+                            reverseButtons: true,
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              // 마일리지가 구매하는 상품의 개수보다 적다면
+                              // 에러 출력
+                              // 아니라면 구매 완료
+                              if (parseInt(userInfo.mileage) - parseInt(postData.price) < 0)
+                                Swal.fire(
+                                  "구매가 실패",
+                                  "보유 마일리지가 적습니다.",
+                                  "error"
+                                )
+                              else {
+                                axios.post(
+                                  "http://localhost:4000/setMileage",
+                                  { value: parseInt(userInfo.mileage) - parseInt(postData.price) },
+                                  { headers: { token: token } }
+                                )
+                                  .then(() => {
+                                    axios
+                                      .post("http://localhost:4000/productSell", {
+                                        postnum: postnum,
+                                        buyer_id: userInfo.id,
+                                        seller_id: postData.seller_id,
+                                        price: postData.price
+                                      })
+                                      .then(() => {
+                                        Swal.fire(
+                                          "구매가 완료되었습니다.",
+                                          "남은 마일리지: " +
+                                          eval(
+                                            userInfo.mileage +
+                                            "-" +
+                                            postData.price
+                                          ) +
+                                          "원",
+                                          "success"
+                                        ).then((result) => {
+                                          if (result.isConfirmed)
+                                            window.location.reload();
+                                        });
+                                      });
+                                  });
+                              }
+                            }
+                          })
+                          :
+                          <div>{toLogin(navigate)}</div>
+                      }}
+                    >
+                      구매하기
+                    </CardButton>
+                    :
+                    <CardButton style={{
                       width: "140px",
                       height: "60px",
                       fontSize: "20px",
-                      backgroundColor: "#033a7a",
+                      backgroundColor: "rgb(116,126,155)",
                       color: "white",
-                    }}
-                    onClick={() => {
-                      Swal.fire({
-                        title: "구매 하시겠습니까?",
-                        text: "구매하시면 마일리지가 차감됩니다.",
-                        icon: "question",
-
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "구매",
-                        cancelButtonText: "취소",
-                        reverseButtons: true,
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          // 마일리지가 구매하는 상품의 개수보다 적다면
-                          // 에러 출력
-                          // 아니라면 구매 완료
-                          axios.post(
-                            "http://localhost:4000/setMileage",
-                            { value: parseInt(userInfo.mileage) - parseInt(postData.price) },
-                            { headers: { token: token } }
-                          )
-                            .then(() => {
-                              axios
-                                .post("http://localhost:4000/productSell", {
-                                  postnum: postnum,
-                                  buyer_id: userInfo.id,
-                                  seller_id: postData.seller_id,
-                                  price: postData.price
-                                })
-                                .then(() => {
-                                  Swal.fire(
-                                    "구매가 완료되었습니다.",
-                                    "남은 마일리지: " +
-                                    eval(
-                                      userInfo.mileage +
-                                      "-" +
-                                      postData.price
-                                    ) +
-                                    "원",
-                                    "success"
-                                  ).then((result) => {
-                                    if (result.isConfirmed)
-                                      window.location.reload();
-                                  });
-                                });
-                            });
-                        }
-                      });
-                    }}
-                  >
-                    구매하기
-                  </CardButton>
+                    }}>
+                      거래완료
+                    </CardButton>
+                  }
                 </div>
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   <CardButton
@@ -497,48 +528,51 @@ const Post = ({ history }) => {
                       color: "white",
                     }}
                     onClick={() => {
-                      Swal.fire({
-                        title: "이 게시글 신고하기",
-                        text: "이 게시글을 신고 하시겠습니까?",
-                        icon: "question",
+                      token ?
+                        Swal.fire({
+                          title: "이 게시글 신고하기",
+                          text: "이 게시글을 신고 하시겠습니까?",
+                          icon: "question",
 
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "신고",
-                        cancelButtonText: "취소",
-                        reverseButtons: true,
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          Swal.fire({
-                            title: "이 게시글 신고하기",
-                            text: "신고 내용을 입력하세요.",
-                            input: "text",
-                            inputPlaceholder: "신고내용 입력..",
-                          }).then((result) => {
-                            console.log(result);
-                            var reason = result.value;
-                            reportPost(userInfo.id, postnum, reason).then(
-                              (res) => {
-                                console.log(res);
-                                if (res) {
-                                  Swal.fire(
-                                    "신고가 완료 되었습니다",
-                                    "신고 내용 : " + result.value,
-                                    "success"
-                                  );
-                                } else {
-                                  Swal.fire(
-                                    "신고에 실패하셨습니다.",
-                                    "신고 내용을 입력해주세요.",
-                                    "error"
-                                  );
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "신고",
+                          cancelButtonText: "취소",
+                          reverseButtons: true,
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            Swal.fire({
+                              title: "이 게시글 신고하기",
+                              text: "신고 내용을 입력하세요.",
+                              input: "text",
+                              inputPlaceholder: "신고내용 입력..",
+                            }).then((result) => {
+                              console.log(result);
+                              var reason = result.value;
+                              reportPost(userInfo.id, postnum, reason).then(
+                                (res) => {
+                                  console.log(res);
+                                  if (res) {
+                                    Swal.fire(
+                                      "신고가 완료 되었습니다",
+                                      "신고 내용 : " + result.value,
+                                      "success"
+                                    );
+                                  } else {
+                                    Swal.fire(
+                                      "신고에 실패하셨습니다.",
+                                      "신고 내용을 입력해주세요.",
+                                      "error"
+                                    );
+                                  }
                                 }
-                              }
-                            );
-                          });
-                        }
-                      });
+                              );
+                            });
+                          }
+                        })
+                        :
+                        <div>{toLogin(navigate)}</div>
                     }}
                   >
                     이 게시글 신고하기

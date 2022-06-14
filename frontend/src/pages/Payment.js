@@ -90,15 +90,14 @@ const Payment = ({ history }) => {
         </SubTitle>
         <SubTitle style={{ display: "flex" }}>
           <div style={{ marginRight: "60px" }}>보유 마일리지 :</div>
-          <div>{money}원</div>
+          <div>{money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"}</div>
         </SubTitle>
         <SubTitle style={{ display: "flex" }}>
           <div style={{ marginRight: "36px" }}>충전 후 마일리지 :</div>
           <div>
             {parseInt(money) + parseInt(value)
-              ? parseInt(money) + parseInt(value)
-              : parseInt(money)}
-            원
+              ? (parseInt(money) + parseInt(value)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
+              : parseInt(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"}
           </div>
         </SubTitle>
         <CardButton
@@ -130,8 +129,7 @@ const Payment = ({ history }) => {
                       Swal.fire(
                         "충전이 완료되었습니다.",
                         "보유 마일리지: " +
-                          (parseInt(money) + parseInt(value)) +
-                          "원",
+                        (parseInt(money) + parseInt(value)) .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원",
                         "success"
                       ).then((result) => {
                         if (result.isConfirmed) window.location.reload();

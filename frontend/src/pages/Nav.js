@@ -132,6 +132,15 @@ const Nav = ({ history }) => {
     }
     return array;
   }
+
+  function toLogin(){
+    Swal.fire(
+      "로그인이 필요합니다.",
+      "로그인 창으로 이동합니다."
+    )
+    navigate("/login")
+  }
+  
   // admin값이 true면 admin 네비게이션
   let admin = false;
   if (info)
@@ -284,13 +293,7 @@ const Nav = ({ history }) => {
                   info ? (
                     <div>{navigate("/myshop")}</div>
                   ) : (
-                    <div>
-                      {Swal.fire(
-                        "로그인이 필요합니다.",
-                        "로그인 창으로 이동합니다."
-                      )}
-                      {navigate("/login")}
-                    </div>
+                    <div>{toLogin(navigate)}</div>
                   );
                 }}
               >
@@ -303,13 +306,7 @@ const Nav = ({ history }) => {
                   info ? (
                     <div>{navigate("/wish")}</div>
                   ) : (
-                    <div>
-                      {Swal.fire(
-                        "로그인이 필요합니다.",
-                        "로그인 창으로 이동합니다."
-                      )}
-                      {navigate("/login")}
-                    </div>
+                    <div>{toLogin(navigate)}</div>
                   );
                 }}
               >
@@ -321,13 +318,7 @@ const Nav = ({ history }) => {
                   info ? (
                     <div>{navigate("/viewed")}</div>
                   ) : (
-                    <div>
-                      {Swal.fire(
-                        "로그인이 필요합니다.",
-                        "로그인 창으로 이동합니다."
-                      )}
-                      {navigate("/login")}
-                    </div>
+                    <div>{toLogin(navigate)}</div>
                   );
                 }}
               >
@@ -339,13 +330,7 @@ const Nav = ({ history }) => {
                   info ? (
                     <div>{navigate("/payment")}</div>
                   ) : (
-                    <div>
-                      {Swal.fire(
-                        "로그인이 필요합니다.",
-                        "로그인 창으로 이동합니다."
-                      )}
-                      {navigate("/login")}
-                    </div>
+                    <div>{toLogin(navigate)}</div>
                   );
                 }}
               >
@@ -357,13 +342,7 @@ const Nav = ({ history }) => {
                   info ? (
                     <div>{navigate("/custcenter")}</div>
                   ) : (
-                    <div>
-                      {Swal.fire(
-                        "로그인이 필요합니다.",
-                        "로그인 창으로 이동합니다."
-                      )}
-                      {navigate("/login")}
-                    </div>
+                    <div>{toLogin(navigate)}</div>
                   );
                 }}
               >
@@ -376,13 +355,7 @@ const Nav = ({ history }) => {
                 info ? (
                   <div>{navigate("/sell")}</div>
                 ) : (
-                  <div>
-                    {Swal.fire(
-                      "로그인이 필요합니다.",
-                      "로그인 창으로 이동합니다."
-                    )}
-                    {navigate("/login")}
-                  </div>
+                  <div>{toLogin(navigate)}</div>
                 );
               }}
             >
