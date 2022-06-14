@@ -27,6 +27,7 @@ const Body = styled.div`
 const Viewed = ({ history }) => {
   const info = getInfoFromCookie();
   var [recentView, setRecentView] = useState([]);
+  const [viewIsSelling, setViewIsSelling] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:4000/userRecentViewedPosts", {
@@ -45,9 +46,10 @@ const Viewed = ({ history }) => {
           <CardHeading style={{ width: "100%" }}>
             "최근 본 상품이 존재하지 않습니다."
           </CardHeading>
-        ) : (
-          PrintProducts(recentView, recentView.length, 5)
-        )}
+        ) : <div>
+          <div style={{ marginTop: '-40px', paddingBottom: '20px', paddingLeft: '1020px' }}><input type={'checkbox'} onClick={() => { setViewIsSelling(!viewIsSelling) }} /> 거래완료 상품 보지 않기</div>
+          {PrintProducts(recentView, recentView.length, 5, viewIsSelling)}
+        </div>}
       </CardWrapper>
     </Body>
   );

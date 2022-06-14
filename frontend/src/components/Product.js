@@ -38,7 +38,7 @@ export const Product = ({ item }) => {
     return <div></div>;
   }
   return (
-    <ProducBody
+    <ProducBody style={{ width: '128px' }}
       onClick={() => {
         updateView(item.views, item.postnum);
         updateRecentPosts(item.postnum);
@@ -47,9 +47,9 @@ export const Product = ({ item }) => {
       }}
     >
       <div>
-        <img src={item.photo} width={128} height={128} alt="이미지없음" />
+        <img src={item.photo} width={128} height={128} alt="이미지없음"></img>
       </div>
-      {item.title}
+      {item.isSelling ? item.title : <div><span style={{ fontWeight: "bold" }}>[거래완료] </span>{item.title}</div>}
       <div style={{ fontSize: "18px", fontWeight: "bold" }}>{price}</div>
       <div>
         찜{item.fav}, 조회{item.views}
@@ -65,21 +65,42 @@ export function PrintProduct(list, start, num) {
   return array;
 }
 
-export function PrintProducts(list, length, num) {
+export function PrintProducts(list, length, num, viewIsSelling) {
   let array = [];
   let i = 0;
-  console.log(parseInt(length / num));
-  for (; i < parseInt(length / num); i++) {
-    array.push(
-      <ProductWrapper>{PrintProduct(list, num * i, num)}</ProductWrapper>
-    );
+  if (viewIsSelling) {
+    let temp = 0;
+    let newList = [];
+    for (let j = 0; j < length; j++)
+      if (list[j].isSelling)
+        newList[temp++] = list[j];
+    console.log(newList)
+    for (; i < parseInt(newList.length / num); i++) {
+      array.push(
+        <ProductWrapper>{PrintProduct(newList, num * i, num)}</ProductWrapper>
+      );
+    }
+    if (newList.length % num) {
+      array.push(
+        <ProductWrapper>
+          {PrintProduct(newList, i * num, newList.length % num)}
+        </ProductWrapper>
+      );
+    }
   }
-  if (length % num) {
-    array.push(
-      <ProductWrapper>
-        {PrintProduct(list, i * num, length % num)}
-      </ProductWrapper>
-    );
+  else {
+    for (; i < parseInt(length / num); i++) {
+      array.push(
+        <ProductWrapper>{PrintProduct(list, num * i, num)}</ProductWrapper>
+      );
+    }
+    if (length % num) {
+      array.push(
+        <ProductWrapper>
+          {PrintProduct(list, i * num, length % num)}
+        </ProductWrapper>
+      );
+    }
   }
   return array;
 }

@@ -13,6 +13,7 @@ import {
 import Swal from "sweetalert2";
 import { CheckAdminID } from "../components/Auth";
 import axios from "axios";
+
 const adminid_check = async (id) => {
   const result = await CheckAdminID(id);
   console.log(result);
@@ -73,7 +74,7 @@ const AdminRegister = ({}) => {
     <div>
       <CardWrapper>
         <CardHeader>
-          <CardHeading>회원가입</CardHeading>
+          <CardHeading>관리자 회원가입</CardHeading>
         </CardHeader>
 
         <CardBody>
@@ -138,7 +139,7 @@ const AdminRegister = ({}) => {
           <div style={{ padding: "32px", textAlign: "center" }}>
             이미 계정이 있습니다.{" "}
             <a
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/adminlogin")}
               style={{
                 fontWeight: "bold",
                 fontSize: "18px",
@@ -146,7 +147,7 @@ const AdminRegister = ({}) => {
                 textDecoration: "underline",
               }}
             >
-              로그인 페이지
+              관리자 로그인 페이지
             </a>
             로 이동.
           </div>

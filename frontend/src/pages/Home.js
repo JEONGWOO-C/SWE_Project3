@@ -12,7 +12,7 @@ import {
   CardLink,
 } from "../components/Card";
 import styled from "styled-components";
-import { ProductWrapper, Product, Title } from "../components/Product";
+import { ProductWrapper, PrintProducts, Title } from "../components/Product";
 import axios from "axios";
 
 const Body = styled.div`
@@ -42,15 +42,11 @@ const Home = ({ history }) => {
       <CardWrapper>
         <Title>금일 인기 매물</Title>
         <ProductWrapper>
-          {popularPosts.map((item) => (
-            <Product item={item} />
-          ))}
+          {PrintProducts(popularPosts, popularPosts.length, 5)}
         </ProductWrapper>
         <Title>최근 등록된 매물</Title>
         <ProductWrapper>
-          {recentPosts.map((item) => (
-            <Product item={item} />
-          ))}
+          {PrintProducts(recentPosts, recentPosts.length, 5)}
         </ProductWrapper>
       </CardWrapper>
     </Body>

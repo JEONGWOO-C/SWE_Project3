@@ -15,7 +15,7 @@ const Body = styled.div`
 const Category = ({ history }) => {
   const navigateState = useLocation().state;
   const category = navigateState && navigateState.category;
-
+  const [viewIsSelling, setViewIsSelling] = useState(false);
   var [categoryPosts, setCategoryPosts] = useState([]);
   useEffect(() => {
     axios
@@ -32,9 +32,12 @@ const Category = ({ history }) => {
     <Body style={{}}>
       <CardWrapper>
         <Title>{category}</Title>
-          {categoryPosts.length === 0
-            ? <CardHeading style={{width: '100%'}}>"해당 카테고리의 게시물이 존재하지 않습니다."</CardHeading>
-            : PrintProducts(categoryPosts, categoryPosts.length, 5)}
+        {categoryPosts.length === 0
+          ? <CardHeading style={{ width: '100%' }}>"해당 카테고리의 게시물이 존재하지 않습니다."</CardHeading>
+          : <div>
+            <div style={{ marginTop: '-40px', paddingBottom: '20px', paddingLeft: '1020px' }}><input type={'checkbox'} onClick={() => { setViewIsSelling(!viewIsSelling) }} /> 거래완료 상품 보지 않기</div>
+            {PrintProducts(categoryPosts, categoryPosts.length, 5, viewIsSelling)}
+          </div>}
       </CardWrapper>
     </Body>
   );

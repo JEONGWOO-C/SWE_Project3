@@ -32,6 +32,7 @@ const Body = styled.div`
 const Wish = ({ history }) => {
   const info = getInfoFromCookie();
   const [wishList, setWishList] = useState([]);
+  const [viewIsSelling, setViewIsSelling] = useState(false);
 
   useEffect(() => {
     axios
@@ -50,9 +51,10 @@ const Wish = ({ history }) => {
           <CardHeading style={{ width: "100%" }}>
             "찜 목록 상품이 존재하지 않습니다."
           </CardHeading>
-        ) : (
-          PrintProducts(wishList, wishList.length, 5)
-        )}
+        ) : <div>
+          <div style={{ marginTop: '-40px', paddingBottom: '20px', paddingLeft: '1020px' }}><input type={'checkbox'} onClick={() => { setViewIsSelling(!viewIsSelling) }} /> 거래완료 상품 보지 않기</div>
+          {PrintProducts(wishList, wishList.length, 5, viewIsSelling)}
+        </div>}
       </CardWrapper>
     </Body>
   );

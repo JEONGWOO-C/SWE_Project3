@@ -46,6 +46,7 @@ const SalesDetail = ({ history }) => {
     <Body style={{}}>
       <CardWrapper>
         <Title>판매내역</Title>
+        {PrintProducts(SoldProducts, SoldProducts.length, 3)}
       </CardWrapper>
     </Body>
   );
