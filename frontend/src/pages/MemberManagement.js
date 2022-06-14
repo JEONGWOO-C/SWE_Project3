@@ -78,7 +78,7 @@ const MemberManagement = ({ history }) => {
       array.push(
         <Tr>
           <Td>{user_list[i].id}</Td>
-          <Td>{user_list[i].username}</Td>
+          <Td>{user_list[i].name}</Td>
           <Td>{user_list[i].phone}</Td>
           <Td>{user_list[i].email}</Td>
           <Td>{user_list[i].age}</Td>
