@@ -297,10 +297,11 @@ const Post = ({ history }) => {
               ) : (
                 <div
                   style={{
+                    marginLeft: '200px',
                     padding: "4px 0",
-                    background: "lightgray",
-                    width: "100px",
-                    height: "32px",
+                    background: "#888",
+                    width: "160px",
+                    height: "40px",
                     textAlign: "center",
                     borderRadius: "5px",
                     fontSize: "20px",
@@ -320,9 +321,9 @@ const Post = ({ history }) => {
               }}
             >
               <div>
-                <BiUser style={{ width: "80px", height: "80px" }} />
+                <BiUser style={{ width: "80px", height: "80px", paddingRight: '20px' }} />
               </div>
-              <div style={{ margin: "16px", width: "400px" }}>
+              <div style={{ margin: "16px", width: "232px" }}>
                 <div
                   style={{
                     fontWeight: "bold",
@@ -346,7 +347,7 @@ const Post = ({ history }) => {
                   fontSize: "24px",
                 }}
               >
-                {postData.score}
+                {score_star(postData.score)}
               </div>
             </div>
             <hr />
@@ -375,7 +376,7 @@ const Post = ({ history }) => {
               >
                 {postData.descript}
               </div>
-              <div style={{ color: "lightgray" }}>
+              <div style={{ color: "#888" }}>
                 찜 {postData.fav} - 조회 {postData.views}
               </div>
               <div
