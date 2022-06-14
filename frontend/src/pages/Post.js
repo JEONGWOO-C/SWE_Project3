@@ -450,13 +450,39 @@ const Post = ({ history }) => {
                           // 마일리지가 구매하는 상품의 개수보다 적다면
                           // 에러 출력
                           // 아니라면 구매 완료
-                          Swal.fire(
-                            "구매가 완료되었습니다.",
-                            "남은 마일리지: OOO원",
-                            "success"
-                          );
-                          //구매 완료시 마일리지 차감 후 상품 상태 바꾸기
-                          // 구매자의 구매 내역 및 판매자의 판매 내역에 상품 추가
+                          else {
+                            axios
+                              .post(
+                                "http://localhost:4000/setMileage",
+                                { value: parseInt(userInfo.mileage) - parseInt(postData.price)},
+                                { headers: { token: token } }
+                              )
+                              .then(() => {
+                                axios
+                                  .post("http://localhost:4000/productSell", {
+                                    postnum: postnum,
+                                    buyer_id: userInfo.id,
+                                    seller_id: postData.seller_id,
+                                    price:postData.price
+                                  })
+                                  .then(() => {
+                                    Swal.fire(
+                                      "구매가 완료되었습니다.",
+                                      "남은 마일리지: " +
+                                        eval(
+                                          userInfo.mileage +
+                                            "-" +
+                                            postData.price
+                                        ) +
+                                        "원",
+                                      "success"
+                                    ).then((result) => {
+                                      if (result.isConfirmed)
+                                        window.location.reload();
+                                    });
+                                  });
+                              });
+                          }
                         }
                       });
                     }}
