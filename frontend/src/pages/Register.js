@@ -16,6 +16,7 @@ import {
 import Swal from "sweetalert2";
 import { CheckID } from "../components/Auth";
 import axios from "axios";
+
 const id_check = async (id) => {
   const result = await CheckID(id);
   console.log(result);

@@ -174,10 +174,10 @@ const Nav = ({ history }) => {
             </CardFieldset>
             {info ? (
               <TitleWrapper>
-                {admin ? 
-                <CardBody>관리자님 환영합니다!</CardBody> 
-                : 
-                <CardBody>{info.name} 님 환영합니다!</CardBody>
+                {admin ?
+                  <CardBody>관리자님 환영합니다!</CardBody>
+                  :
+                  <CardBody>{info.name} 님 환영합니다!</CardBody>
                 }
 
                 <CardBody

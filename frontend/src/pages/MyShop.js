@@ -107,12 +107,12 @@ const MyShop = ({ history }) => {
           <div style={{ marginTop: "40px" }}>
             <div style={{ padding: "10px 100px" }}>
               <CardButton onClick={(e) => navigate("/salesdetail")}>
-                판매내역
+                판매 내역
               </CardButton>
             </div>
             <div style={{ padding: "10px 100px" }}>
               <CardButton onClick={(e) => navigate("/purchasedetail")}>
-                구매내역
+                구매 내역
               </CardButton>
             </div>
           </div>
