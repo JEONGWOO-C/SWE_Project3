@@ -431,7 +431,7 @@ const Post = ({ history }) => {
                             axios
                               .post(
                                 "http://localhost:4000/setMileage",
-                                { value: userInfo.mileage - postData.price },
+                                { value: parseInt(userInfo.mileage) - parseInt(postData.price)},
                                 { headers: { token: token } }
                               )
                               .then(() => {
@@ -439,6 +439,8 @@ const Post = ({ history }) => {
                                   .post("http://localhost:4000/productSell", {
                                     postnum: postnum,
                                     buyer_id: userInfo.id,
+                                    seller_id: postData.seller_id,
+                                    price:postData.price
                                   })
                                   .then(() => {
                                     Swal.fire(
