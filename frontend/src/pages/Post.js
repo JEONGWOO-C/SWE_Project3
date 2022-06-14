@@ -9,8 +9,8 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getTokenFromCookie } from "../components/Auth";
-import { BiInfoCircle, BiUser } from "react-icons/bi";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BiUser } from "react-icons/bi";
+import { BsHeart, BsHeartFill, BsStar, BsStarFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -63,16 +63,16 @@ function calDiff(data) {
     // index 0:년, 1:월 2:일 3:시 4:분 5:초
     const start = new Date(
       data_split[0] +
-        "-" +
-        data_split[1] +
-        "-" +
-        data_split[2] +
-        " " +
-        data_split[3] +
-        ":" +
-        data_split[4] +
-        ":" +
-        data_split[5]
+      "-" +
+      data_split[1] +
+      "-" +
+      data_split[2] +
+      " " +
+      data_split[3] +
+      ":" +
+      data_split[4] +
+      ":" +
+      data_split[5]
     );
     const now = new Date();
     const diff = (now.getTime() - start.getTime()) / 1000;
@@ -209,6 +209,19 @@ const Post = ({ history }) => {
     );
   };
 
+  function score_star(score) {
+    // score는 10점 만점
+    return (
+      <div style={{ dispaly: 'flex' }}>
+        <div style={{ color: 'rgb(214,214,214)', marginTop: '-8px' }}>
+          ★★★★★ <span style={{ color: 'black', fontSize: '18px' }}> {score}</span>
+        </div>
+        <div style={{ color: 'rgb(246,196,15)', marginTop: '-32px', overflow: "hidden", width: (score * 24) + 'px' }}>
+          ★★★★★
+        </div>
+      </div>
+    )
+  }
   useEffect(() => {
     axios
       .get("http://localhost:4000/getPostData", {
@@ -251,39 +264,56 @@ const Post = ({ history }) => {
             />
           </CardBody>
           <CardBody style={{ width: "40%", padding: "64px" }}>
-            {postData.isSelling ? (
-              <div
-                style={{
-                  padding: "4px 0",
-                  background: "#033a7a",
-                  color: "#fff",
-                  width: "100px",
-                  height: "32px",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                판매중
-              </div>
-            ) : (
-              <div
-                style={{
-                  padding: "4px 0",
-                  background: "lightgray",
-                  width: "100px",
-                  height: "32px",
-                  textAlign: "center",
-                  borderRadius: "5px",
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                판매완료
-              </div>
-            )}
+            <div style={{ display: 'flex' }}>
+              {postData.isSelling ? (
+                <div
+                  style={{
+                    padding: "4px 0",
+                    background: "#033a7a",
+                    color: "#fff",
+                    width: "100px",
+                    height: "32px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  판매중
+                </div>
+              ) : (
+                <div
+                  style={{
+                    padding: "4px 0",
+                    background: "lightgray",
+                    width: "100px",
+                    height: "32px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  판매완료
+                </div>
+              )}
+              {/* <  CardButton
 
+                style={{
+                  marginLeft: '200px',
+                  padding: "4px 0",
+                  background: "#888",
+                  width: "160px",
+                  height: "40px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                 판매자 정보 
+              </CardButton> */}
+            </div>
             <div
               style={{
                 display: "flex",
@@ -292,9 +322,9 @@ const Post = ({ history }) => {
               }}
             >
               <div>
-                <BiUser style={{ width: "80px", height: "80px" }} />
+                <BiUser style={{ width: "80px", height: "80px", paddingRight: '20px' }} />
               </div>
-              <div style={{ margin: "16px", width: "400px" }}>
+              <div style={{ margin: "16px", width: "232px" }}>
                 <div
                   style={{
                     fontWeight: "bold",
@@ -318,7 +348,7 @@ const Post = ({ history }) => {
                   fontSize: "24px",
                 }}
               >
-                {postData.score}
+                {score_star(2.7)}
               </div>
             </div>
             <hr />
@@ -347,7 +377,7 @@ const Post = ({ history }) => {
               >
                 {postData.descript}
               </div>
-              <div style={{ color: "lightgray" }}>
+              <div style={{ color: "#888" }}>
                 찜 {postData.fav} - 조회 {postData.views}
               </div>
               <div
@@ -418,14 +448,7 @@ const Post = ({ history }) => {
                       }).then((result) => {
                         if (result.isConfirmed) {
                           // 마일리지가 구매하는 상품의 개수보다 적다면
-                          if (userInfo.mileage < postData.price) {
-                            // 에러 출력
-                            Swal.fire(
-                              "마일리지가 부족합니다.",
-                              "현재 마일리지: " + userInfo.mileage + "원",
-                              "error"
-                            );
-                          }
+                          // 에러 출력
                           // 아니라면 구매 완료
                           else {
                             axios
@@ -473,7 +496,7 @@ const Post = ({ history }) => {
                       width: "210px",
                       height: "60px",
                       fontSize: "20px",
-                      backgroundColor: "lightgray",
+                      backgroundColor: "#444",
                       color: "white",
                     }}
                     onClick={() => {
