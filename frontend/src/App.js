@@ -33,6 +33,7 @@ import AdminRegister from './pages/AdminRegister';
 import ConfirmReport from './pages/ConfirmReport';
 import ModifyFAQ from './pages/ModifyFAQ';
 import ModifyNotice from './pages/ModifyNotice';
+import SellerInfo from './pages/SellerInfo';
 
 import './App.css';
 
@@ -79,6 +80,7 @@ class App extends Component {
           <Route path='/adminregister' element={<AdminRegister />} />
           <Route path='/modifyFAQ' element={<ModifyFAQ />} />
           <Route path='/modifyNotice' element={<ModifyNotice />} />
+          <Route path='/sellerinfo' element={<SellerInfo />} />
 
 
         </Routes>

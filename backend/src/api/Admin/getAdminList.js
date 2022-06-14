@@ -8,9 +8,10 @@ export default async (app, connection) => {
         var result = []
         for(var i=0;i<data.length;i++){
            result.push({
+             adminname : data[i].adminname,
              id : data[i].id,
              name : data[i].name,
-             phoe : data[i].phone,
+             phone : data[i].phone,
              email : data[i].email,
              confirm : data[i].isApproved
            });
