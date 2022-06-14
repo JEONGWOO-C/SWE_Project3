@@ -7,10 +7,10 @@ VALUES
 ('이민석', '01033333333', 'tester3@market.com', 23, 'test3', 'test3333', ''),
 ('이세연', '01044444444', 'tester4@market.com', 12, 'test4', 'test4444', '');
 
-INSERT admins(adminname, phone, id, pw, isApproved)
+INSERT admins(adminname, phone,email, id, pw, isApproved)
 VALUES
-("관리자1", "01012345678", 'admin1', 'admin111', true),
-("관리자2", "01012345678", 'admin2', 'admin222', false);
+("관리자1", "01012345678",'email1@naver.com', 'admin1', 'admin111', true),
+("관리자2", "01012345678",'email2@naver.com', 'admin2', 'admin222', false);
 
 INSERT posts(title, postDate, views, fav)
 VALUES

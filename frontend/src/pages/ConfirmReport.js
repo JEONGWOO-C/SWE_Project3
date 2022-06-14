@@ -136,6 +136,7 @@ function Table(list, key, navigate) {
                 }).then((result) => {
                   if (result.isConfirmed){
                     approveReport(item.postnum);
+                    refuseReport(item.postnum);
                   }
                 })}}>
               승인
