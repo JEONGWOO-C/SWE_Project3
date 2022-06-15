@@ -135,8 +135,8 @@ function Table(list, key, navigate) {
                   reverseButtons: true,
                 }).then((result) => {
                   if (result.isConfirmed){
-                    approveReport(item.postnum);
                     refuseReport(item.postnum);
+                    approveReport(item.postnum);
                   }
                 })}}>
               승인

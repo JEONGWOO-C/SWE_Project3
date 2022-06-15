@@ -236,7 +236,21 @@ const Nav = ({ history }) => {
         </CardHeader>
         {admin ?
           <div>
+            
             <TitleWrapper style={{ paddingBottom: '20px' }}>
+            <div className="menu-container">
+              <button onClick={onClick} className="menu-trigger">
+                <span>
+                  <CardBody>카테고리</CardBody>
+                </span>
+              </button>
+              <nav
+                ref={dropdownRef}
+                className={`menu ${isActive ? "active" : "inactive"}`}
+              >
+                {isActive ? <ul>{list()}</ul> : null}
+              </nav>
+            </div>
               <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
