@@ -129,7 +129,7 @@ const Sell = ({}) => {
           상품사진
           <div style={{ marginTop: "-27px", marginLeft: "200px" }}>
             <img
-            width={'500px'}
+            width={'150px'}
               src={imageUrl ? imageUrl : "/image.PNG"}
               onClick={handleClick}
             />
