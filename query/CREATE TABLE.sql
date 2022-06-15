@@ -10,9 +10,9 @@ CREATE TABLE users(
     id varchar(32) not null primary key,
     pw varchar(16) not null,
     info varchar(512) default '',
-    score int default 3, -- default 5 range 0 ~ 10
+    score DECIMAL(2,1) default 3.0, -- default 3 range 1 ~ 5
     ban bool default false,
-    mileage int default 0
+    mileage BIGINT default 0
 );
 
 DROP TABLE if exists admins;
