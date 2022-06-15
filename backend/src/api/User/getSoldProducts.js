@@ -5,7 +5,7 @@ export default async (app, connection) => {
     const { id } = req.query;
     console.log(id);
     await connection.query(
-      "SELECT PO.postnum, PO.title, PR.isSelling, PO.views, PO.fav, PO.postDate, PR.price, PH.photo FROM posts PO, product PR, photos PH WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND PR.seller_id = ? AND PR.isSelling = false;",
+      "SELECT * FROM posts PO, product PR, photos PH WHERE PO.postnum = PR.postnum AND PO.postnum = PH.postnum AND PR.seller_id = ? AND PR.isSelling = false ORDER BY PO.postDate;",
       [id],
       (error, data) => {
         if (error) console.log(error);

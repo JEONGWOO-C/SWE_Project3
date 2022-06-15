@@ -22,15 +22,23 @@ const Body = styled.div`
 function score_star(score) {
   // score는 10점 만점
   return (
-    <div style={{ dispaly: 'flex' }}>
-      <div style={{ color: 'rgb(214,214,214)', marginTop: '0px' }}>
-        ★★★★★ <span style={{ color: 'black', fontSize: '18px' }}> {score}</span>
+    <div style={{ dispaly: "flex" }}>
+      <div style={{ color: "rgb(214,214,214)", marginTop: "0px" }}>
+        ★★★★★ <span style={{ color: "black", fontSize: "18px" }}> {score}</span>
       </div>
-      <div style={{ color: 'rgb(246,196,15)', marginTop: '-24px', marginLeft: '-15px', overflow: "hidden", width: (score * 24) + 'px' }}>
+      <div
+        style={{
+          color: "rgb(246,196,15)",
+          marginTop: "-24px",
+          marginLeft: "-15px",
+          overflow: "hidden",
+          width: score * 24 + "px",
+        }}
+      >
         ★★★★★
       </div>
     </div>
-  )
+  );
 }
 
 const MyShop = ({ history }) => {
@@ -39,7 +47,9 @@ const MyShop = ({ history }) => {
   var [shopInfo, setShopInfo] = useState([]);
   var [userProducts, setUserProducts] = useState([]);
   const [mainContent, setMainContent] = useState(true);
-  console.log(shopInfo);
+  var [soldProducts, setSoldProducts] = useState([]);
+  console.log(soldProducts);
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/userInfo", {
@@ -55,8 +65,16 @@ const MyShop = ({ history }) => {
       })
       .then(({ data }) => setUserProducts(data));
   }, []);
-  console.log("userProudcts:" + userProducts);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/getSoldProducts", {
+        headers: { token: token },
+      })
+      .then(({ data }) => {
+        setSoldProducts(data);
+      });
+  }, []);
 
   return (
     <Body>
@@ -109,17 +127,27 @@ const MyShop = ({ history }) => {
           </div>
 
           <div style={{ fontWeight: "bold", fontSize: "18px" }}>
-            <div style={{ display: "flex", paddingLeft: "110px" }}
-              onClick={() => setMainContent(true)}>
+            <div
+              style={{ display: "flex", paddingLeft: "110px" }}
+              onClick={() => setMainContent(true)}
+            >
               <div>상품</div>
               {/* 사용자 상품 개수 */}
               <div style={{ paddingLeft: "110px" }}>{userProducts.length}</div>
             </div>
-            <div style={{ display: "flex", paddingLeft: "110px", cursor: 'pointer' }}
-              onClick={() => setMainContent(false)}>
+            <div
+              style={{
+                display: "flex",
+                paddingLeft: "110px",
+                cursor: "pointer",
+              }}
+              onClick={() => setMainContent(false)}
+            >
               <div>평점</div>
               {/* 사용자 평점 */}
-              <div style={{ paddingLeft: "15px" }}>{score_star(shopInfo.score)}</div>
+              <div style={{ paddingLeft: "15px" }}>
+                {score_star(shopInfo.score)}
+              </div>
             </div>
           </div>
           <div style={{ marginTop: "40px" }}>
@@ -135,17 +163,16 @@ const MyShop = ({ history }) => {
             </div>
           </div>
         </div>
-        {mainContent ?
+        {mainContent ? (
           <CardBody>
             <Title>판매상품</Title>
             {PrintProducts(userProducts, userProducts.length, 3)}
           </CardBody>
-          :
+        ) : (
           <CardBody>
-            <Title>평점 /  후기</Title>
-            
+            <Title>평점 / 후기</Title>
           </CardBody>
-        }
+        )}
       </CardWrapper>
     </Body>
   );

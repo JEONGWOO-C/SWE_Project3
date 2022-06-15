@@ -12,8 +12,8 @@ export default async (app, connection) => {
         if (error) res.send({ result: false, msg: "QUERY ERROR" });
         else {
           connection.query(
-            "UPDATE product SET review = ? WHERE postnum = ?;",
-            [review, postnum],
+            "UPDATE product SET review = ?, score = ? WHERE postnum = ?;",
+            [review, score, postnum],
             (error) => {
               if (error) res.send({ result: false, msg: "QUERY ERROR" });
             }
