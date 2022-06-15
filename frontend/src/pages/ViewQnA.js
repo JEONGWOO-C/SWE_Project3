@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { getInfoFromCookie } from "../components/Auth";
 import Swal from "sweetalert2";
+import { BsFillArrowRightCircleFill } from "react-icons/bs"
 
 export const Body = styled.div`
   display: flex;
@@ -139,9 +140,9 @@ const ViewQnA = ({ history }) => {
 
               <div className="admin">
                 {QnAdata[0].postComment === "" ? (
-                  <div>➡ 관리자 답변 대기중입니다.</div>
+                  <div><BsFillArrowRightCircleFill /> 관리자 답변 대기중입니다.</div>
                 ) : (
-                  <div>답변➡ {QnAdata[0].postComment}</div>
+                  <div>답변<BsFillArrowRightCircleFill />  {QnAdata[0].postComment}</div>
                 )}
               </div>
 

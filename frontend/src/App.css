@@ -156,30 +156,3 @@
   min-height: 440px;
   border-bottom: solid 1px #ababab;
 }
-
-/* 네비게이션 버튼 커스텀 */
-.select {
-  padding: 0;
-  margin: 10px;
-}
-
-.select input[type=radio]{
-  display: none;
-  background-color: #fff;
-}
-
-.select input[type=radio]+label{
-  display: inline-block;
-  cursor: pointer;
-  height: 28px;
-  border: none;
-  line-height: 28px;
-  text-align: center;
-  font-size: 15px;
-  color: #333;
-}
-
-.select input[type=radio]:checked+label{
-  color: #033a7a;
-  font-weight: bold;
-}
