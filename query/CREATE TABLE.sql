@@ -91,39 +91,39 @@ CREATE TABLE reports(
 #최근 본 게시물 table 
 DROP TABLE if exists recentPosts;
 CREATE TABLE recentPosts(
-	id varchar(32) not null,
-    postnum int not null,
-    viewDate datetime not null
+	id varchar(32) not null,				# 사용자 ID
+    postnum int not null,					# 게시글 번호
+    viewDate datetime not null				# 게시글 열람 시간
 );
 
 #고객센터 FAQ table
 DROP TABLE IF EXISTS FAQ;
 CREATE TABLE FAQ(
-	postnum int not null primary key auto_increment,
-    title varchar(32) not null,
-    postDate date not null,		-- 게시글 작성시간
-    postBody varchar(512)
+	postnum int not null primary key auto_increment,	#FAQ 번호
+    title varchar(32) not null,							#FAQ 제목
+    postDate date not null,								#FAQ 작성시간
+    postBody varchar(512)								#FAQ 내용
 );
 
 #고객센터 공지사항 table
 DROP TABLE IF EXISTS NOTICE;
 CREATE TABLE NOTICE(
-	postnum int not null primary key auto_increment,
-    title varchar(32) not null,
-    postDate date not null,		-- 게시글 작성시간
-    postBody varchar(512)
+	postnum int not null primary key auto_increment,	#공지사항 번호
+    title varchar(32) not null,							#공지사항 제목
+    postDate date not null,								#공지사항 작성시간
+    postBody varchar(512)								#공지사항 내용
 );
 
 DROP TABLE IF EXISTS QnA;
 CREATE TABLE QnA(
-	postnum int not null primary key auto_increment,
-    writerID varchar(32) not null,
-    title varchar(32) not null,
-    postDate date not null,		-- 게시글 작성시간
-    postBody varchar(512),
-    postComment varchar(256) default "",
-    isAnswered boolean default false,
-    pw varchar(4) 
+	postnum int not null primary key auto_increment,	#Q&A 번호
+    writerID varchar(32) not null,						#Q&A 작성자ID
+    title varchar(32) not null,							#Q&A 제목
+    postDate date not null,								#Q&A 작성시간
+    postBody varchar(512),								#Q&A 내용
+    postComment varchar(256) default "",				#Q&A 답변
+    isAnswered boolean default false,					#Q&A 답변여부
+    pw varchar(4)										#Q&A 비밀번호
 );
 
 -- Triger -- 
