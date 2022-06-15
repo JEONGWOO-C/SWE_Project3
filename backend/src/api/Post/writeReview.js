@@ -1,18 +1,16 @@
 export default async (app, connection) => {
   app.post("/writeReview", async (req, res, next) => {
-    const { postnum, score, buyer_id, review } = req.body;
+    const { postnum, score, seller_id, review } = req.body;
 
     if (review === "")
       return res.send({ result: false, msg: "후기를 작성해 주세요." });
 
     connection.query(
-      "UPDATE users AS U, product AS P SET U.score = (score + ?)/2 AND P.review = ? WHERE U.id = ? AND P.postnum = ?",
-      [score, review, buyer_id, postnum],
+      "UPDATE users SET score = (score + ?)/2 WHERE id = ?",
+      [score, seller_id],
       (error, data) => {
-        if (error) {
-          console.log(error);
-          res.send({ result: false, msg: "QUERY ERROR" });
-        } else {
+        if (error) res.send({ result: false, msg: "QUERY ERROR" });
+        else {
           connection.query(
             "UPDATE product SET review = ? WHERE postnum = ?;",
             [review, postnum],

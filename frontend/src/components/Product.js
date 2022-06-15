@@ -29,11 +29,11 @@ export const Title = styled.div`
   font-weight: bold;
 `;
 
-const writeReview = async (postnum, score, buyer_id, review) => {
+const writeReview = async (postnum, score, seller_id, review) => {
   const res = await axios.post("http://localhost:4000/writeReview", {
     postnum: postnum,
     score: score,
-    buyer_id: buyer_id,
+    seller_id: seller_id,
     review: review,
   });
   if (res.data.result === true) {
@@ -140,7 +140,7 @@ export function PrintProduct(list, start, num, setScore) {
                         writeReview(
                           list[i].postnum,
                           score[0],
-                          list[i].buyer_id,
+                          list[i].seller_id,
                           score[1]
                         );
                       }
