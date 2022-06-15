@@ -52,6 +52,7 @@ import deleteReportbyPostnum from "./api/Admin/deleteReportbyPostnum.js";
 import productSell from "./api/Payment/productSell.js";
 import getPurchasedProducts from "./api/User/getPurchasedProducts.js";
 import getSoldProducts from "./api/User/getSoldProducts.js";
+import writeReview from "./api/Post/writeReview.js";
 
 const connection = init();
 const app = express();
@@ -124,6 +125,7 @@ deleteReportbyPostnum(app, connection);
 productSell(app, connection);
 getPurchasedProducts(app, connection);
 getSoldProducts(app, connection);
+writeReview(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
