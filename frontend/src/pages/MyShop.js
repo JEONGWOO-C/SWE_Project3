@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import { BiUser, BiCog } from "react-icons/bi";
 import { getTokenFromCookie } from "../components/Auth";
-import { Title, PrintProducts } from "../components/Product";
+import { Title, PrintProducts, Product } from "../components/Product";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -20,10 +20,10 @@ const Body = styled.div`
 `;
 
 function score_star(score) {
-  // score는 10점 만점
+  // score는 5점 만점
   return (
     <div style={{ dispaly: "flex" }}>
-      <div style={{ color: "rgb(214,214,214)", marginTop: "0px" }}>
+      <div style={{ color: "rgb(214,214,214)", marginTop: "0px", fontSize: "18px" }}>
         ★★★★★ <span style={{ color: "black", fontSize: "18px" }}> {score}</span>
       </div>
       <div
@@ -32,6 +32,7 @@ function score_star(score) {
           marginTop: "-24px",
           overflow: "hidden",
           width: score * 24 + "px",
+          fontSize: "18px"
         }}
       >
         ★★★★★
@@ -39,7 +40,19 @@ function score_star(score) {
     </div>
   );
 }
-
+function printComments(soldProducts){
+  let array = [];
+  for(let i = 0; i<soldProducts.length; i++){
+    array.push(
+      <div style={{padding: '10px', width: '400px'}}>
+        <div style={{display: 'flex'}}>{soldProducts[i].buyer_id} / {score_star(soldProducts[i].score)}</div>
+        <div>{soldProducts[i].title}</div>
+        <div>{soldProducts[i].review}</div>
+      </div>
+    )
+  }
+  return array;
+}
 const MyShop = ({ history }) => {
   const token = getTokenFromCookie();
   const navigate = useNavigate();
@@ -170,6 +183,7 @@ const MyShop = ({ history }) => {
         ) : (
           <CardBody>
             <Title>평점 / 후기</Title>
+            {printComments(soldProducts)}
           </CardBody>
         )}
       </CardWrapper>
