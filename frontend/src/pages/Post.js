@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { getTokenFromCookie } from "../components/Auth";
 import { BiInfoCircle, BiUser } from "react-icons/bi";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import {IoMdArrowDropdown} from "react-icons/io";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
@@ -278,6 +279,9 @@ const Post = ({ history }) => {
   console.log(userInfo);
   console.log(postData);
 
+  let phone;
+   if(postData.phone)
+    phone = postData.phone.substr(0,3)+'-'+postData.phone.substr(3,4)+'-'+postData.phone.substr(7,4)
   return (
     <Body>
       <CardWrapper>
@@ -354,12 +358,14 @@ const Post = ({ history }) => {
                   }}
                   onClick={() => {
                     Swal.fire(
-                      "'" + postData.username + "'님의 연락처",
-                      "전화번호: 000-0000-0000 / 이메일: zzzzz@zzz.zzz"
+                      "'" + postData.username + "'님의 정보",
+                      "소개글: "+postData.info+"<br>"+
+                      "전화번호: "+phone+"<br>"+
+                      "이메일: "+postData.email
                     );
                   }}
                 >
-                  {postData.username}
+                  {postData.username}<IoMdArrowDropdown />
                 </div>
               </div>
               <div
