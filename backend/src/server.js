@@ -53,6 +53,7 @@ import productSell from "./api/Payment/productSell.js";
 import getPurchasedProducts from "./api/User/getPurchasedProducts.js";
 import getSoldProducts from "./api/User/getSoldProducts.js";
 import writeReview from "./api/Post/writeReview.js";
+import modifyPost from "./api/Post/modifyPost.js";
 
 const connection = init();
 const app = express();
@@ -126,6 +127,7 @@ productSell(app, connection);
 getPurchasedProducts(app, connection);
 getSoldProducts(app, connection);
 writeReview(app, connection);
+modifyPost(app, connection);
 
 app.listen(app.get("port"), () => {
   console.log("Port : " + app.get("port"));
