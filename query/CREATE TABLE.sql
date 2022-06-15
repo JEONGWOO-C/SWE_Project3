@@ -72,15 +72,6 @@ CREATE TABLE photos(
     photo varchar(64)					# 이미지 URL
     );
 
-#comments Table
-DROP TABLE if exists comments;
-CREATE TABLE comments(
-	id varchar(64) not null primary key,	# 작성자 아이디
-	postnum int not null,					# 게시글 번호
-    msg varchar(32) not null,				# 댓글 내용
-    commentDate datetime not null			# 작성 시간
-    );
-
 # reports Table
 DROP TABLE if exists reports;
 CREATE TABLE reports(
