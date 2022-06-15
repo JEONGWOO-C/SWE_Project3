@@ -5,6 +5,8 @@ import {
   updateRecentPosts,
   updateAgeGroupOfPost,
 } from "./clickPost";
+import { CardButton } from "./Card"
+import Swal from "sweetalert2";
 
 export const ProductWrapper = styled.div`
   display: flex;
@@ -54,18 +56,56 @@ export const Product = ({ item }) => {
       <div>
         찜{item.fav}, 조회{item.views}
       </div>
+
     </ProducBody>
   );
 };
-export function PrintProduct(list, start, num) {
+export function PrintProduct(list, start, num, setScore) {
   let array = [];
+
   for (let i = start; i < start + num; i++) {
-    array.push(<Product item={list[i]} />);
+    array.push(
+      setScore ?
+
+        <div>
+          <Product item={list[i]} />
+          <CardButton style={{ marginLeft: '64px', width: '128px', marginTop: '-48px' }}
+            onClick={(e) => {
+              const score = [];
+              Swal.fire({
+                title: "평점 등록",
+                text: "평점을 등록해주세요.(1~5)",
+                input: "range",
+                inputAttributes: {
+                  min: 1,
+                  max: 5
+                }
+              }).then(
+                ((result) => {
+                  score.push(result.value);
+                  Swal.fire({
+                    title: "후기 등록",
+                    text: "후기를 입력하세요.",
+                    input: "text",
+                    inputPlaceholder: "후기 입력..",
+                  }).then((result) => {
+                    score.push(result.value);
+                  })
+                }))
+                console.log(score)
+            }}>
+            후기등록
+          </CardButton>
+        </div>
+        :
+        <Product item={list[i]} />
+
+    );
   }
   return array;
 }
 
-export function PrintProducts(list, length, num, viewIsSelling) {
+export function PrintProducts(list, length, num, viewIsSelling, setScore) {
   let array = [];
   let i = 0;
   if (viewIsSelling) {
@@ -77,13 +117,13 @@ export function PrintProducts(list, length, num, viewIsSelling) {
     console.log(newList)
     for (; i < parseInt(newList.length / num); i++) {
       array.push(
-        <ProductWrapper>{PrintProduct(newList, num * i, num)}</ProductWrapper>
+        <ProductWrapper>{PrintProduct(newList, num * i, num, setScore)}</ProductWrapper>
       );
     }
     if (newList.length % num) {
       array.push(
         <ProductWrapper>
-          {PrintProduct(newList, i * num, newList.length % num)}
+          {PrintProduct(newList, i * num, newList.length % num, setScore)}
         </ProductWrapper>
       );
     }
@@ -91,13 +131,13 @@ export function PrintProducts(list, length, num, viewIsSelling) {
   else {
     for (; i < parseInt(length / num); i++) {
       array.push(
-        <ProductWrapper>{PrintProduct(list, num * i, num)}</ProductWrapper>
+        <ProductWrapper>{PrintProduct(list, num * i, num, setScore)}</ProductWrapper>
       );
     }
     if (length % num) {
       array.push(
         <ProductWrapper>
-          {PrintProduct(list, i * num, length % num)}
+          {PrintProduct(list, i * num, length % num, setScore)}
         </ProductWrapper>
       );
     }

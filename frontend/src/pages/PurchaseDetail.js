@@ -46,7 +46,7 @@ const PurchaseDetail = ({ history }) => {
     <Body style={{}}>
       <CardWrapper>
         <Title>구매내역</Title>
-        {PrintProducts(purchasedProducts, purchasedProducts.length, 3)}
+        {PrintProducts(purchasedProducts, purchasedProducts.length, 5, false, true)}
       </CardWrapper>
     </Body>
   );

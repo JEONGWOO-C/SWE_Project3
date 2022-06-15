@@ -19,6 +19,20 @@ const Body = styled.div`
   width: 100%;
 `;
 
+function score_star(score) {
+  // score는 10점 만점
+  return (
+    <div style={{ dispaly: 'flex' }}>
+      <div style={{ color: 'rgb(214,214,214)', marginTop: '0px' }}>
+        ★★★★★ <span style={{ color: 'black', fontSize: '18px' }}> {score}</span>
+      </div>
+      <div style={{ color: 'rgb(246,196,15)', marginTop: '-24px', marginLeft: '-15px', overflow: "hidden", width: (score * 24) + 'px' }}>
+        ★★★★★
+      </div>
+    </div>
+  )
+}
+
 const MyShop = ({ history }) => {
   const token = getTokenFromCookie();
   const navigate = useNavigate();
@@ -41,6 +55,21 @@ const MyShop = ({ history }) => {
       .then(({ data }) => setUserProducts(data));
   }, []);
   console.log("userProudcts:" + userProducts);
+  function mainContent(content) {
+
+    return (
+      content == 'score' ?
+        <CardBody>
+          <Title>평점 내용</Title>
+        </CardBody>
+        :
+        <CardBody>
+          <Title>판매상품</Title>
+          {PrintProducts(userProducts, userProducts.length, 3)}
+        </CardBody>
+
+    )
+  }
 
   return (
     <Body>
@@ -101,7 +130,7 @@ const MyShop = ({ history }) => {
             <div style={{ display: "flex", paddingLeft: "110px" }}>
               <div>평점</div>
               {/* 사용자 평점 */}
-              <div style={{ paddingLeft: "110px" }}>{shopInfo.score}</div>
+              <div style={{ paddingLeft: "15px" }}>{score_star(shopInfo.score)}</div>
             </div>
           </div>
           <div style={{ marginTop: "40px" }}>
@@ -117,10 +146,7 @@ const MyShop = ({ history }) => {
             </div>
           </div>
         </div>
-        <CardBody>
-          <Title>판매상품</Title>
-          {PrintProducts(userProducts, userProducts.length, 3)}
-        </CardBody>
+        {mainContent()}
       </CardWrapper>
     </Body>
   );
