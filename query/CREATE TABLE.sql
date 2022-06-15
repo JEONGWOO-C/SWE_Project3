@@ -88,18 +88,6 @@ CREATE TABLE reports(
     reason varchar(128) not null,			# 신고 내용
     reportDate datetime not null);			# 작성 시간
 
-# 연령별 거래량 통계정보 table
-DROP TABLE if exists agePreffered;
-CREATE TABLE agePreffered(
-	category varchar(16) not null primary key,
-    teens int default 0,			-- 10대
-    twenties int default 0,			-- 20대
-    thirties int default 0,			-- 30대
-    fourties int default 0,			-- 40대
-    fifties int default 0,			-- 50대
-    overSixties int default 0		-- 60대 이상
-);
-
 #최근 본 게시물 table 
 DROP TABLE if exists recentPosts;
 CREATE TABLE recentPosts(
