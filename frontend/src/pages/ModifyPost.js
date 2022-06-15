@@ -139,7 +139,7 @@ const ModifyPost = ({}) => {
         <SubTitle>
           상품사진
           <div style={{ marginTop: "-27px", marginLeft: "200px" }}>
-            <img src={postData.photo} />
+            <img src={postData.photo} width={'150px'}/>
           </div>
         </SubTitle>
 
