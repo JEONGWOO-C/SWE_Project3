@@ -100,7 +100,7 @@ const MemberManagement = ({ history }) => {
         <table style={{width: '80%',borderCollapse: 'collapse',margin:'auto'}}>
             <TitleTr>
               <Td>ID</Td>
-              <Td>이름</Td>
+              <Td>닉네임</Td>
               <Td>전화번호</Td>
               <Td>이메일</Td>
               <Td>나이</Td>
