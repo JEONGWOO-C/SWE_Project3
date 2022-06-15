@@ -57,7 +57,8 @@ CREATE TABLE product(
     descript varchar(512) default "",	# 제품 설명
     seller_id varchar(32) not null,		# 판매자 ID
     buyer_id varchar(32) default "",	# 구매자 ID
-    isSelling boolean default true		# 판매여부
+    isSelling boolean default true,		# 판매여부
+    review varchar(128) default ""		#후기
     );
 
 #photos Table
