@@ -363,7 +363,7 @@ const Nav = ({ history }) => {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
-                    <div>{navigate("/talk")}</div>
+                    <div>{navigate("/payment")}</div>
                   ) : (
                     <div>
                       {Swal.fire(
