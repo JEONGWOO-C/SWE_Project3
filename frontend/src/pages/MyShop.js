@@ -31,7 +31,7 @@ function score_star(score) {
           color: "rgb(246,196,15)",
           marginTop: "-24px",
           overflow: "hidden",
-          width: score * 24 + "px",
+          width: score * 18 + "px",
           fontSize: "18px"
         }}
       >
@@ -40,14 +40,16 @@ function score_star(score) {
     </div>
   );
 }
-function printComments(soldProducts){
+function printComments(soldProducts, navigate){
   let array = [];
   for(let i = 0; i<soldProducts.length; i++){
     array.push(
-      <div style={{padding: '10px', width: '400px'}}>
-        <div style={{display: 'flex'}}>{soldProducts[i].buyer_id} / {score_star(soldProducts[i].score)}</div>
-        <div>{soldProducts[i].title}</div>
-        <div>{soldProducts[i].review}</div>
+      <div style={{maring: '10px', padding: '10px', width: '400px', background: i%2?'#e6f1ff':'#f0f7ff'}}
+      onClick={()=>{navigate('/post', {state:{postnum:soldProducts[i].postnum}})}}>
+        <div style={{padding: '0px 4px', fontSize: '18px', fontWeight:' bold'}}>{soldProducts[i].buyer_id}</div>
+        <div style={{padding: '2px', marginTop:'-6px'}}>{score_star(soldProducts[i].score)}</div>
+        <div style={{padding: '4px 2px', fontSize: '15px'}}>{soldProducts[i].title}</div>
+        <div style={{padding: '4px'}}>{soldProducts[i].review}</div>
       </div>
     )
   }
@@ -183,7 +185,7 @@ const MyShop = ({ history }) => {
         ) : (
           <CardBody>
             <Title>평점 / 후기</Title>
-            {printComments(soldProducts)}
+            {printComments(soldProducts, navigate)}
           </CardBody>
         )}
       </CardWrapper>
