@@ -30,7 +30,6 @@ function score_star(score) {
         style={{
           color: "rgb(246,196,15)",
           marginTop: "-24px",
-          marginLeft: "-15px",
           overflow: "hidden",
           width: score * 24 + "px",
         }}

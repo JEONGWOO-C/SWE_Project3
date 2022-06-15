@@ -3,7 +3,6 @@ import {
   CardWrapper,
   CardHeader,
   CardHeading,
-  CardBody,
   CardFieldset,
   CardInput,
   CardTitle,
@@ -16,12 +15,18 @@ import { Link } from "react-router-dom";
 import { useNavigate, withRouter } from "react-router";
 import "../dropdown.css";
 import { getInfoFromCookie, logout } from "../components/Auth";
+import { FaHashtag } from "react-icons/fa"
 import { searchPost } from "../components/searchPost";
 import Swal from "sweetalert2";
 
 const Body = styled.div`
   //position: fixed;
   width: 100%;
+`;
+
+export const CardBody = styled.div`
+  padding-right: 20px;
+  padding-left: 20px;
 `;
 
 const StyledLink = styled(Link)`
@@ -132,15 +137,15 @@ const Nav = ({ history }) => {
     }
     return array;
   }
-
-  function toLogin(){
+  
+  function toLogin() {
     Swal.fire(
       "로그인이 필요합니다.",
       "로그인 창으로 이동합니다."
     )
     navigate("/login")
   }
-  
+
   // admin값이 true면 admin 네비게이션
   let admin = false;
   if (info)
@@ -166,7 +171,9 @@ const Nav = ({ history }) => {
                 navigate("/");
               }}
             >
-              OO마켓
+              <div className="title"><FaHashtag />다잇샵</div>
+              <div className="select" style={{marginTop: '-35px', height: '31px', width: '115px'}}><input type="radio" id="logo" name="navButton" />
+                    <label for="logo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
             </CardHeading>
             <CardFieldset
               style={{
@@ -183,42 +190,45 @@ const Nav = ({ history }) => {
             </CardFieldset>
             {info ? (
               <TitleWrapper>
-                {admin ?
-                  <CardBody>관리자님 환영합니다!</CardBody>
-                  :
-                  <CardBody>{info.name} 님 환영합니다!</CardBody>
+                {admin ? 
+                <CardBody>관리자님 환영합니다!</CardBody> 
+                : 
+                <CardBody>{info.name} 님 환영합니다!</CardBody>
                 }
 
-                <CardBody
+                <CardBody className="select"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     logout();
                     navigate("/");
                   }}
                 >
-                  로그아웃
+                  <input type="radio" id="logout" name="navButton" />
+                    <label for="logout">로그아웃</label>
                 </CardBody>
                 {admin ? null : (
-                  <CardBody
+                  <CardBody className="select"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       navigate("/mypage");
                     }}
                   >
-                    마이페이지
+                    <input type="radio" id="mypage" name="navButton" />
+                    <label for="mypage">마이페이지</label>
                   </CardBody>
                 )}
               </TitleWrapper>
             ) : (
               <TitleWrapper>
-                <CardBody
+                <CardBody className="select"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     logout();
                     navigate("/login");
                   }}
                 >
-                  로그인 / 회원가입
+                  <input type="radio" id="login" name="navButton" />
+                    <label for="login">로그인 / 회원가입</label>
                 </CardBody>
               </TitleWrapper>
             )}
@@ -227,38 +237,42 @@ const Nav = ({ history }) => {
         {admin ?
           <div>
             <TitleWrapper style={{ paddingBottom: '20px' }}>
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   <div>{navigate("/membermanagement")}</div>;
                 }}
               >
-                회원 관리
+                <input type="radio" id="manageUser" name="navButton" />
+                    <label for="manageUser">회원 관리</label>
               </CardBody>
 
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   <div>{navigate("/adminmanagement")}</div>;
                 }}
               >
-                관리자 관리
+                <input type="radio" id="manageAdmin" name="navButton" />
+                    <label for="manageAdmin">관리자 관리</label>
               </CardBody>
 
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   <div>{navigate("/confirmreport")}</div>;
                 }}
               >
-                신고 게시물
+                <input type="radio" id="confirm" name="navButton" />
+                    <label for="confirm">신고 게시물</label>
               </CardBody>
 
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => { navigate("/custcenter") }}
               >
-                고객센터
+                <input type="radio" id="center1" name="navButton" />
+                    <label for="center1">고객센터</label>
               </CardBody>
             </TitleWrapper>
           </div>
@@ -287,79 +301,121 @@ const Nav = ({ history }) => {
                 width: "700px",
               }}
             >
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
                     <div>{navigate("/myshop")}</div>
                   ) : (
-                    <div>{toLogin(navigate)}</div>
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
                   );
                 }}
               >
-                내상점
+                <input type="radio" id="myshop" name="navButton" />
+                    <label for="myshop">내상점</label>
               </CardBody>
 
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
                     <div>{navigate("/wish")}</div>
                   ) : (
-                    <div>{toLogin(navigate)}</div>
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
                   );
                 }}
               >
-                찜목록
+                <input type="radio" id="wish" name="navButton" />
+                    <label for="wish">찜목록</label>
               </CardBody>
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
                     <div>{navigate("/viewed")}</div>
                   ) : (
-                    <div>{toLogin(navigate)}</div>
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
                   );
                 }}
               >
-                최근본상품
+                <input type="radio" id="viewe" name="navButton" />
+                    <label for="viewe">최근본상품</label>
               </CardBody>
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
-                    <div>{navigate("/payment")}</div>
+                    <div>{navigate("/talk")}</div>
                   ) : (
-                    <div>{toLogin(navigate)}</div>
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
                   );
                 }}
               >
-                마일리지 충전
+                <input type="radio" id="pay" name="navButton" />
+                    <label for="pay">마일리지 충전</label>
               </CardBody>
-              <CardBody
+              <CardBody className="select"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   info ? (
                     <div>{navigate("/custcenter")}</div>
                   ) : (
-                    <div>{toLogin(navigate)}</div>
+                    <div>
+                      {Swal.fire(
+                        "로그인이 필요합니다.",
+                        "로그인 창으로 이동합니다."
+                      )}
+                      {navigate("/login")}
+                    </div>
                   );
                 }}
               >
-                고객센터
+                <input type="radio" id="center" name="navButton" />
+                    <label for="center">고객센터</label>
               </CardBody>
             </TitleWrapper>
-            <CardBody
+            <CardBody className="select"
               style={{ cursor: "pointer" }}
               onClick={() => {
                 info ? (
                   <div>{navigate("/sell")}</div>
                 ) : (
-                  <div>{toLogin(navigate)}</div>
+                  <div>
+                    {Swal.fire(
+                      "로그인이 필요합니다.",
+                      "로그인 창으로 이동합니다."
+                    )}
+                    {navigate("/login")}
+                  </div>
                 );
               }}
             >
-              판매하기
+              <input type="radio" id="sell" name="navButton" />
+                    <label for="sell">판매하기</label>
             </CardBody>
 
           </TitleWrapper>
