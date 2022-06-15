@@ -468,7 +468,7 @@ const Post = ({ history }) => {
                 )}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   {postData.isSelling ? (
-                    userInfo.id != postData.seller_id ? (
+                    !token || userInfo.id != postData.seller_id ? (
                       <CardButton
                         style={{
                           width: "140px",
@@ -589,7 +589,7 @@ const Post = ({ history }) => {
                   )}
                 </div>
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
-                  {userInfo.id != postData.seller_id ? (
+                  {!token || userInfo.id != postData.seller_id ? (
                     <CardButton
                       style={{
                         width: "210px",
