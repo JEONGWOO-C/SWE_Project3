@@ -69,34 +69,52 @@ export function PrintProduct(list, start, num, setScore) {
 
         <div>
           <Product item={list[i]} />
-          {list[i].review?null:
-          <CardButton style={{ marginLeft: '64px', width: '128px', marginTop: '-48px' }}
-            onClick={(e) => {
-              const score = [];
-              Swal.fire({
-                title: "평점 등록",
-                text: "평점을 등록해주세요.(1~5)",
-                input: "range",
-                inputAttributes: {
-                  min: 1,
-                  max: 5
-                }
-              }).then(
-                ((result) => {
-                  score.push(result.value);
-                  Swal.fire({
-                    title: "후기 등록",
-                    text: "후기를 입력하세요.",
-                    input: "text",
-                    inputPlaceholder: "후기 입력..",
-                  }).then((result) => {
-                    score.push(result.value);
-                  })
-                }))
-                console.log(score)
-            }}>
-            후기등록
-          </CardButton>
+          {list[i].review ? null :
+            <CardButton style={{ marginLeft: '64px', width: '128px', marginTop: '-48px' }}
+              onClick={(e) => {
+                const score = [];
+                Swal.fire({
+                  title: "평점 / 후기 등록",
+                  text: "평점을 등록해주세요.(1~5)",
+                  input: "range",
+                  inputAttributes: {
+                    min: 1,
+                    max: 5
+                  },
+
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "다음",
+                  cancelButtonText: "취소",
+                  reverseButtons: true,
+                }).then(
+                  ((result) => {
+                    if (result.isConfirmed) {
+                      score.push(result.value);
+                      Swal.fire({
+                        title: "평점 / 후기 등록",
+                        text: "후기를 입력하세요.",
+                        input: "text",
+                        inputPlaceholder: "후기 입력..",
+
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "등록 완료",
+                        cancelButtonText: "취소",
+                        reverseButtons: true
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          score.push(result.value); // 정우 여기에 코드 넣으면댐
+                          console.log(score);
+                        }
+                      })
+                    }
+                  }))
+              }}>
+              평점 / 후기등록
+            </CardButton>
           }
         </div>
         :

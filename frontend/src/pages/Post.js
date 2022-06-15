@@ -527,7 +527,7 @@ const Post = ({ history }) => {
                       width: "210px",
                       height: "60px",
                       fontSize: "20px",
-                      backgroundColor: "lightgray",
+                      backgroundColor: postData.isSelling?"#444":"#888",
                       color: "white",
                     }}
                     onClick={() => {
