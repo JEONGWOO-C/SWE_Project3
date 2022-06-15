@@ -69,7 +69,7 @@ CREATE TABLE photos(
     imgnum int not null,				# 이미지 번호
 	height int not null default 500,	# 이미지 높이
     width int not null default 500,		# 이미지 너비
-    photo varchar(64)					# 이미지 URL
+    photo varchar(512)					# 이미지 URL
     );
 
 # reports Table
