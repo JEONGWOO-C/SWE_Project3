@@ -89,6 +89,7 @@ const WriteQnA = ({ history }) => {
                     textAlign: "center",
                     background: "#033a7a",
                     color: "#fff",
+                    cursor: "pointer"
                   }}
                   onClick={(e) => {
                     setIsOpen(true);
@@ -102,6 +103,7 @@ const WriteQnA = ({ history }) => {
                     width: "80px",
                     textAlign: "center",
                     background: "#ddd",
+                    cursor: "pointer"
                   }}
                   onClick={(e) => {
                     setIsOpen(false);
@@ -118,6 +120,7 @@ const WriteQnA = ({ history }) => {
                     width: "80px",
                     textAlign: "center",
                     background: "#ddd",
+                    cursor: "pointer"
                   }}
                   onClick={(e) => {
                     setIsOpen(true);
@@ -132,6 +135,7 @@ const WriteQnA = ({ history }) => {
                     textAlign: "center",
                     background: "#033a7a",
                     color: "#fff",
+                    cursor: "pointer"
                   }}
                   onClick={(e) => {
                     setIsOpen(false);
@@ -152,6 +156,7 @@ const WriteQnA = ({ history }) => {
             <div style={{ marginTop: "-28px" }}>
               <InputText
                 placeholder="비밀번호 4자를 입력해주세요."
+                type="password"
                 style={{ height: "25px", width: "20%" }}
                 onChange={(e) => setPassword(e.target.value)}
               />
