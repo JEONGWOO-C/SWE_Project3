@@ -259,6 +259,9 @@ const Post = ({ history }) => {
       .then(({ data }) => setIsFavorite(data));
   }, []);
 
+  console.log(userInfo);
+  console.log(postData);
+
   return (
     <Body>
       <CardWrapper>
@@ -435,7 +438,8 @@ const Post = ({ history }) => {
                     }}
                   />}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
-                  {postData.isSelling ?
+                  {postData.isSelling ?    
+                    userInfo.id!=postData.seller_id?
                     <CardButton
                       style={{
                         width: "140px",
@@ -509,6 +513,21 @@ const Post = ({ history }) => {
                       구매하기
                     </CardButton>
                     :
+                    <div>
+                      <CardButton
+                      style={{
+                        width: "140px",
+                        height: "60px",
+                        fontSize: "20px",
+                        backgroundColor: "#033a7a",
+                        color: "white",
+                      }}
+                      onClick={(e)=>{navigate('/modifypost', {state:{postData:postData}})}}>
+                        수정하기
+                      </CardButton>
+                    </div>
+                  
+                    :
                     <CardButton style={{
                       width: "140px",
                       height: "60px",
@@ -522,6 +541,7 @@ const Post = ({ history }) => {
 
                 </div>
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
+                  {userInfo.id!=postData.seller_id?
                   <CardButton
                     style={{
                       width: "210px",
@@ -580,6 +600,16 @@ const Post = ({ history }) => {
                   >
                     이 게시글 신고하기
                   </CardButton>
+                  :
+                  <CardButton
+                    style={{
+                      width: "210px",
+                      height: "60px",
+                      fontSize: "20px",
+                      backgroundColor: postData.isSelling?"#444":"#888",
+                      color: "white",
+                    }}>이 게시글 삭제하기</CardButton>
+}
                 </div>
               </div>
             </div>
