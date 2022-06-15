@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   CardWrapper,
@@ -59,48 +59,26 @@ export const StateButton = styled.button`
   text-align: center;
 `;
 
-const upload = async (img, title, category, price, description) => {
-  console.log(
-    "img : " +
-    img +
-    "\ntitle : " +
-    title +
-    "\ncategory : " +
-    category +
-    "\nprice : " +
-    price +
-    "\ndescription : " +
-    description
-  );
-  var info = getInfoFromCookie();
-  var uploadData = new FormData();
-  uploadData.append("title", title);
-  uploadData.append("category", category);
-  uploadData.append("price", price);
-  uploadData.append("description", description);
-  uploadData.append("img_file", img);
-  const res = await axios.post("http://localhost:4000/sell_write", uploadData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      token: info.token
-    },
+const modifyPost = async (postnum, title, category, price, descript) => {
+  const res = await axios.post("http://localhost:4000/modifyPost", {
+    postnum: postnum,
+    title: title,
+    category: category,
+    price: price,
+    descript: descript,
   });
-  console.log("결과");
-  console.log(res);
-
-  return res.data;
+  if (res.data.result === true) return true;
+  else return false;
 };
 
+const ModifyPost = ({}) => {
+  var [img, setImg] = useState("");
+  var [title, setTitle] = useState("");
+  var [category, setCategory] = useState("");
+  var [price, setPrice] = useState("");
+  var [description, setDescription] = useState("");
 
-
-const ModifyPost = ({ }) => {
-  const [img, setImg] = useState("");
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [imageUrl, setImageUrl] = useState(null);
+  var [imageUrl, setImageUrl] = useState(null);
 
   const [catList, setCatList] = useState([
     "여성의류",
@@ -124,6 +102,7 @@ const ModifyPost = ({ }) => {
 
   const navigateState = useLocation().state;
   const postData = navigateState && navigateState.postData;
+  console.log(postData);
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -144,9 +123,12 @@ const ModifyPost = ({ }) => {
     let array = [];
     for (let i = 0; i < catList.length; i++)
       if (catList[i] == category)
-        array.push(<option value={catList[i]} selected>{catList[i]}</option>)
-      else
-        array.push(<option value={catList[i]}>{catList[i]}</option>)
+        array.push(
+          <option value={catList[i]} selected>
+            {catList[i]}
+          </option>
+        );
+      else array.push(<option value={catList[i]}>{catList[i]}</option>);
     return array;
   }
   return (
@@ -157,9 +139,7 @@ const ModifyPost = ({ }) => {
         <SubTitle>
           상품사진
           <div style={{ marginTop: "-27px", marginLeft: "200px" }}>
-            <img
-              src={postData.photo}
-            />
+            <img src={postData.photo} />
           </div>
         </SubTitle>
 
@@ -238,7 +218,7 @@ const ModifyPost = ({ }) => {
               boxShadow: 0,
             }}
             onClick={async (e) => {
-              navigate(-1)
+              navigate(-1);
             }}
           >
             취소
@@ -256,43 +236,36 @@ const ModifyPost = ({ }) => {
               boxShadow: 0,
             }}
             onClick={async (e) => {
-              if (img === "")
+              if (
+                title === undefined &&
+                category === undefined &&
+                price === undefined &&
+                description === undefined
+              )
                 Swal.fire(
-                  "이미지를 추가해주세요.",
-                  "상품 수정에 실패하였습니다.",
-                  "error"
-                );
-              else if (title === "")
-                Swal.fire(
-                  "상품제목을 입력하세요.",
-                  "상품 수정에 실패하셨습니다.",
-                  "error"
-                );
-              else if (category === "")
-                Swal.fire(
-                  "카테고리를 선택하세요.",
-                  "상품 수정에 실패하셨습니다.",
-                  "error"
-                );
-              else if (price === "")
-                Swal.fire(
-                  "상품가격을 입력하세요.",
-                  "상품 수정에 실패하셨습니다.",
-                  "error"
-                );
-              else if (description === "")
-                Swal.fire(
-                  "상품설명을 입력하세요.",
+                  "수정할 데이터가 존재하지 않습니다.",
                   "상품 수정에 실패하셨습니다.",
                   "error"
                 );
               else {
-                if (await upload(img, title, category, price, description)) {
+                if (title === "") title = postData.title;
+                if (category === "") category = postData.category;
+                if (price === "") price = postData.price;
+                if (description === "") description = postData.descript;
+                if (
+                  await modifyPost(
+                    postData.postnum,
+                    title,
+                    category,
+                    price,
+                    description
+                  )
+                ) {
                   Swal.fire({
                     title: "상품 수정에 성공하셨습니다.",
                     icon: "success",
                   });
-                  navigate("/");
+                  navigate("/post", { state: { postnum: postData.postnum } });
                 }
               }
             }}

@@ -31,9 +31,9 @@ export const handleLogin = async (id, pw) => {
     pw: pw,
   });
   if (res.data) {
-    console.log("RESDATA : "+res.data)
-    if(res.data === 'isBanned'){
-      return 'isBanned';
+    console.log("RESDATA : " + res.data);
+    if (res.data === "isBanned") {
+      return "isBanned";
     }
     console.log("로그인 성공!");
     setTokenToCookie(res.data.token); // cookie에 refresh_token 저장
