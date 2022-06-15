@@ -278,6 +278,7 @@ const Post = ({ history }) => {
   console.log(userInfo);
   console.log(postData);
 
+  let phone = postData.phone.substr(0,3)+'-'+postData.phone.substr(3,4)+'-'+postData.phone.substr(7,4)
   return (
     <Body>
       <CardWrapper>
@@ -355,7 +356,7 @@ const Post = ({ history }) => {
                   onClick={() => {
                     Swal.fire(
                       "'" + postData.username + "'님의 연락처",
-                      "전화번호: 000-0000-0000 / 이메일: zzzzz@zzz.zzz"
+                      "전화번호: "+phone+"<br>이메일: "+postData.email
                     );
                   }}
                 >
