@@ -38,6 +38,7 @@ const MyShop = ({ history }) => {
   const navigate = useNavigate();
   var [shopInfo, setShopInfo] = useState([]);
   var [userProducts, setUserProducts] = useState([]);
+  const [mainContent, setMainContent] = useState(true);
   console.log(shopInfo);
   useEffect(() => {
     axios
@@ -55,21 +56,7 @@ const MyShop = ({ history }) => {
       .then(({ data }) => setUserProducts(data));
   }, []);
   console.log("userProudcts:" + userProducts);
-  function mainContent(content) {
 
-    return (
-      content == 'score' ?
-        <CardBody>
-          <Title>평점 내용</Title>
-        </CardBody>
-        :
-        <CardBody>
-          <Title>판매상품</Title>
-          {PrintProducts(userProducts, userProducts.length, 3)}
-        </CardBody>
-
-    )
-  }
 
   return (
     <Body>
@@ -122,12 +109,14 @@ const MyShop = ({ history }) => {
           </div>
 
           <div style={{ fontWeight: "bold", fontSize: "18px" }}>
-            <div style={{ display: "flex", paddingLeft: "110px" }}>
+            <div style={{ display: "flex", paddingLeft: "110px" }}
+              onClick={() => setMainContent(true)}>
               <div>상품</div>
               {/* 사용자 상품 개수 */}
               <div style={{ paddingLeft: "110px" }}>{userProducts.length}</div>
             </div>
-            <div style={{ display: "flex", paddingLeft: "110px" }}>
+            <div style={{ display: "flex", paddingLeft: "110px", cursor: 'pointer' }}
+              onClick={() => setMainContent(false)}>
               <div>평점</div>
               {/* 사용자 평점 */}
               <div style={{ paddingLeft: "15px" }}>{score_star(shopInfo.score)}</div>
@@ -146,7 +135,17 @@ const MyShop = ({ history }) => {
             </div>
           </div>
         </div>
-        {mainContent()}
+        {mainContent ?
+          <CardBody>
+            <Title>판매상품</Title>
+            {PrintProducts(userProducts, userProducts.length, 3)}
+          </CardBody>
+          :
+          <CardBody>
+            <Title>평점 /  후기</Title>
+            
+          </CardBody>
+        }
       </CardWrapper>
     </Body>
   );

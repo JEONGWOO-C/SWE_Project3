@@ -69,6 +69,7 @@ export function PrintProduct(list, start, num, setScore) {
 
         <div>
           <Product item={list[i]} />
+          {list[i].review?null:
           <CardButton style={{ marginLeft: '64px', width: '128px', marginTop: '-48px' }}
             onClick={(e) => {
               const score = [];
@@ -96,6 +97,7 @@ export function PrintProduct(list, start, num, setScore) {
             }}>
             후기등록
           </CardButton>
+          }
         </div>
         :
         <Product item={list[i]} />

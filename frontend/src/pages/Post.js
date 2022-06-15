@@ -63,16 +63,16 @@ function calDiff(data) {
     // index 0:년, 1:월 2:일 3:시 4:분 5:초
     const start = new Date(
       data_split[0] +
-        "-" +
-        data_split[1] +
-        "-" +
-        data_split[2] +
-        " " +
-        data_split[3] +
-        ":" +
-        data_split[4] +
-        ":" +
-        data_split[5]
+      "-" +
+      data_split[1] +
+      "-" +
+      data_split[2] +
+      " " +
+      data_split[3] +
+      ":" +
+      data_split[4] +
+      ":" +
+      data_split[5]
     );
     const now = new Date();
     const diff = (now.getTime() - start.getTime()) / 1000;
@@ -225,14 +225,14 @@ const Post = ({ history }) => {
     )
   }
 
-  function toLogin(){
+  function toLogin() {
     Swal.fire(
       "로그인이 필요합니다.",
       "로그인 창으로 이동합니다."
     )
     navigate("/login")
   }
-  
+
 
   useEffect(() => {
     axios
@@ -276,42 +276,39 @@ const Post = ({ history }) => {
             />
           </CardBody>
           <CardBody style={{ width: "40%", padding: "64px" }}>
-
-            <div style={{ display: 'flex' }}>
-              {postData.isSelling ? (
-                <div
-                  style={{
-                    padding: "4px 0",
-                    background: "#033a7a",
-                    color: "#fff",
-                    width: "100px",
-                    height: "32px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  판매중
-                </div>
-              ) : (
-                <div
-                  style={{
-                    marginLeft: '200px',
-                    padding: "4px 0",
-                    background: "#888",
-                    width: "160px",
-                    height: "40px",
-                    textAlign: "center",
-                    borderRadius: "5px",
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  판매완료
-                </div>
-              )}
-            </div>
+            {postData.isSelling ? (
+              <div
+                style={{
+                  padding: "4px 0",
+                  background: "#033a7a",
+                  color: "#fff",
+                  width: "100px",
+                  height: "32px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                판매중
+              </div>
+            ) : (
+              <div
+                style={{
+                  padding: "4px 0",
+                  background: "rgb(116,126,155)",
+                  color: "#fff",
+                  width: "160px",
+                  height: "32px",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                판매완료
+              </div>
+            )}
 
             <div
               style={{
@@ -426,17 +423,17 @@ const Post = ({ history }) => {
                   )
                   :
                   <BsHeart
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        paddingRight: "16px",
-                        cursor: "pointer",
-                        color: "red",
-                      }}
-                      onClick={async (e) => {
-                        toLogin(navigate);
-                      }}
-                    />}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      paddingRight: "16px",
+                      cursor: "pointer",
+                      color: "red",
+                    }}
+                    onClick={async (e) => {
+                      toLogin(navigate);
+                    }}
+                  />}
                 <div style={{ paddingRight: "16px", paddingLeft: "16px" }}>
                   {postData.isSelling ?
                     <CardButton
