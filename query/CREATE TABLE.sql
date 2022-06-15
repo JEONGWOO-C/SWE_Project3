@@ -58,6 +58,7 @@ CREATE TABLE product(
     seller_id varchar(32) not null,		# 판매자 ID
     buyer_id varchar(32) default "",	# 구매자 ID
     isSelling boolean default true,		# 판매여부
+    score int default 0,				# 평점
     review varchar(128) default ""		#후기
     );
 
